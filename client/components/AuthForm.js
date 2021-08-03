@@ -40,6 +40,9 @@ const useStyles = makeStyles((theme) => ({
 	},
 }))
 
+//set-up error handling and rendering of same
+//set-up/test store connection and relation to back-end request
+//does the user token get stored?
 const AuthForm = (props) => {
 	const { name, displayName, handleSubmit, error } = props
 	const classes = useStyles()
@@ -62,7 +65,12 @@ const AuthForm = (props) => {
 						Log In to Your Account
 					</Typography>
 				</Grid>
-				<form className={classes.form} noValidate autoComplete='off'>
+				<form
+					className={classes.form}
+					noValidate
+					autoComplete='off'
+					name='logIn'
+				>
 					<Grid container spacing={2} style={{ padding: 10 }}>
 						<Grid item xs={12}>
 							<TextField
@@ -144,25 +152,24 @@ const mapLogin = (state) => {
 	}
 }
 
-const mapSignup = (state) => {
-	return {
-		name: 'signup',
-		displayName: 'Sign Up',
-		error: state.auth.error,
-	}
-}
+// const mapSignup = (state) => {
+// 	return {
+// 		name: 'signup',
+// 		displayName: 'Sign Up',
+// 		error: state.auth.error,
+// 	}
+// }
 
 const mapDispatch = (dispatch) => {
 	return {
 		handleSubmit(evt) {
 			evt.preventDefault()
-			const formName = evt.target.name
 			const username = evt.target.username.value
 			const password = evt.target.password.value
-			dispatch(authenticate(username, password, formName))
+			// dispatch(authenticate(username, password, 'login'))
 		},
 	}
 }
 
 export const Login = connect(mapLogin, mapDispatch)(AuthForm)
-export const Signup = connect(mapSignup, mapDispatch)(AuthForm)
+//export const Signup = connect(mapSignup, mapDispatch)(AuthForm)

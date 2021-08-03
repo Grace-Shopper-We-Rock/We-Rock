@@ -16,7 +16,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete'
 import PersonAddIcon from '@material-ui/icons/PersonAdd'
 import { makeStyles } from '@material-ui/core/styles'
 
-//build in form validation/error handling if input is not allowed, email is already taken, etc.
+//build in form validation/error handling if input is not allowed, passwords don't match, etc.
 //build onSubmit function - redirect user to login page after successful account creation?
 //connect component to needed areas of store
 
@@ -96,6 +96,16 @@ export class SignUp extends React.Component {
 			'WY',
 		]
 	}
+	handleChange(evt) {
+		this.setState({
+			[evt.target.name]: evt.target.value,
+		})
+	}
+	handleSelect(evt) {
+		this.setState({
+			state: evt.target.value,
+		})
+	}
 	useStyles() {
 		return makeStyles((theme) => ({
 			paper: {
@@ -150,7 +160,7 @@ export class SignUp extends React.Component {
 							Make an Account
 						</Typography>
 					</Grid>
-					<form className={classes.form} noValidate>
+					<form className={classes.form} noValidate name='signUp'>
 						<Grid container spacing={2} style={{ padding: 10 }}>
 							<Grid item xs={12} sm={6}>
 								<TextField
@@ -163,6 +173,7 @@ export class SignUp extends React.Component {
 									label='First Name'
 									autoFocus
 									value={firstName}
+									onChange={(event) => this.handleChange(event)}
 								/>
 							</Grid>
 							<Grid item xs={12} sm={6}>
@@ -175,6 +186,7 @@ export class SignUp extends React.Component {
 									name='lastName'
 									autoComplete='lname'
 									value={lastName}
+									onChange={(event) => this.handleChange(event)}
 								/>
 							</Grid>
 							<Grid item xs={12}>
@@ -187,6 +199,7 @@ export class SignUp extends React.Component {
 									id='email'
 									autoComplete='email'
 									value={email}
+									onChange={(event) => this.handleChange(event)}
 								/>
 							</Grid>
 							<Grid item xs={12}>
@@ -199,6 +212,7 @@ export class SignUp extends React.Component {
 									type='password'
 									id='password'
 									value={password}
+									onChange={(event) => this.handleChange(event)}
 								/>
 							</Grid>
 							<Grid item xs={12}>
@@ -211,6 +225,7 @@ export class SignUp extends React.Component {
 									type='password'
 									id='confirmPassword'
 									value={confirmPassword}
+									onChange={(event) => this.handleChange(event)}
 								/>
 							</Grid>
 							<Typography component='h4'>Address</Typography>
@@ -222,6 +237,7 @@ export class SignUp extends React.Component {
 									label='Street Address'
 									id='streetAddress'
 									value={streetAddress}
+									onChange={(event) => this.handleChange(event)}
 								/>
 							</Grid>
 							<Grid item xs={12} sm={6}>
@@ -232,6 +248,7 @@ export class SignUp extends React.Component {
 									label='City'
 									id='city'
 									value={city}
+									onChange={(event) => this.handleChange(event)}
 								/>
 							</Grid>
 							<Grid item xs={12} sm={6}>
@@ -242,6 +259,7 @@ export class SignUp extends React.Component {
 									label='Zip Code'
 									id='zipCode'
 									value={zipCode}
+									onChange={(event) => this.handleChange(event)}
 								/>
 							</Grid>
 							<Grid item xs={12}>
@@ -258,6 +276,8 @@ export class SignUp extends React.Component {
 											label='State'
 											fullWidth
 											value={state}
+											onChange={(event) => this.handleChange(event)}
+											onSelect={(event) => this.handleSelect(event)}
 										/>
 									)}
 								/>
@@ -285,3 +305,22 @@ export class SignUp extends React.Component {
 		)
 	}
 }
+
+const mapState = (state) => {
+	return {
+		error: state.auth.error,
+	}
+}
+
+const mapDispatch = (dispatch) => {
+	return {
+		handleSubmit(evt) {
+			evt.preventDefault()
+			const username = evt.target.email.value
+			const password = evt.target.password.value
+			//dispatch(authenticate(username, password, 'signup'))
+		},
+	}
+}
+
+//export default connect(mapState, mapDispatch)(SignUp)
