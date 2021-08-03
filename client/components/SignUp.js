@@ -18,7 +18,17 @@ import { makeStyles } from '@material-ui/core/styles'
 export class SignUp extends React.Component {
 	constructor(props) {
 		super(props)
-		this.state = {}
+		this.state = {
+			firstName: '',
+			lastName: '',
+			email: '',
+			password: '',
+			confirmPassword: '',
+			streetAddress: '',
+			city: '',
+			zipCode: '',
+			state: '',
+		}
 		this.statesAbbreviations = [
 			'AL',
 			'AK',
@@ -88,13 +98,14 @@ export class SignUp extends React.Component {
 				display: 'flex',
 				flexDirection: 'column',
 				alignItems: 'center',
+				justifyContent: 'center',
 			},
 			avatar: {
 				margin: theme.spacing(1),
 				backgroundColor: theme.palette.secondary.main,
 			},
 			form: {
-				width: '100%', // Fix IE 11 issue.
+				width: '100%',
 				marginTop: theme.spacing(3),
 			},
 			submit: {
@@ -104,19 +115,38 @@ export class SignUp extends React.Component {
 	}
 	render() {
 		const classes = this.useStyles()
+		const {
+			firstName,
+			lastName,
+			email,
+			password,
+			confirmPassword,
+			streetAddress,
+			city,
+			zipCode,
+			state,
+		} = this.state
 
 		return (
-			<Container component='main' maxWidth='xs'>
+			<Container component='main' maxWidth='xs' style={{ padding: 20 }}>
 				<CssBaseline />
 				<div className={classes.paper}>
-					<Avatar className={classes.Avatar}>
-						<PersonAddIcon />
-					</Avatar>
-					<Typography component='h1' variant='h5'>
-						Make an Account
-					</Typography>
+					<Grid
+						container
+						direction='column'
+						justifyContent='center'
+						alignItems='center'
+						style={{ padding: 20 }}
+					>
+						<Avatar className={classes.Avatar}>
+							<PersonAddIcon />
+						</Avatar>
+						<Typography component='h1' variant='h5'>
+							Make an Account
+						</Typography>
+					</Grid>
 					<form className={classes.form} noValidate>
-						<Grid container spacing={2}>
+						<Grid container spacing={2} style={{ padding: 10 }}>
 							<Grid item xs={12} sm={6}>
 								<TextField
 									required
@@ -127,6 +157,7 @@ export class SignUp extends React.Component {
 									id='firstName'
 									label='First Name'
 									autoFocus
+									value={firstName}
 								/>
 							</Grid>
 							<Grid item xs={12} sm={6}>
@@ -138,6 +169,7 @@ export class SignUp extends React.Component {
 									label='Last Name'
 									name='lastName'
 									autoComplete='lname'
+									value={lastName}
 								/>
 							</Grid>
 							<Grid item xs={12}>
@@ -149,6 +181,7 @@ export class SignUp extends React.Component {
 									label='Email Address / Username'
 									id='email'
 									autoComplete='email'
+									value={email}
 								/>
 							</Grid>
 							<Grid item xs={12}>
@@ -160,7 +193,19 @@ export class SignUp extends React.Component {
 									label='Password'
 									type='password'
 									id='password'
-									// autoComplete='current-password'
+									value={password}
+								/>
+							</Grid>
+							<Grid item xs={12}>
+								<TextField
+									variant='outlined'
+									required
+									fullWidth
+									name='confirmPassword'
+									label='Confirm Password'
+									type='password'
+									id='confirmPassword'
+									value={confirmPassword}
 								/>
 							</Grid>
 							<Typography component='h4'>Address</Typography>
@@ -171,6 +216,7 @@ export class SignUp extends React.Component {
 									name='streetAddress'
 									label='Street Address'
 									id='streetAddress'
+									value={streetAddress}
 								/>
 							</Grid>
 							<Grid item xs={12} sm={6}>
@@ -180,6 +226,7 @@ export class SignUp extends React.Component {
 									name='city'
 									label='City'
 									id='city'
+									value={city}
 								/>
 							</Grid>
 							<Grid item xs={12} sm={6}>
@@ -189,23 +236,27 @@ export class SignUp extends React.Component {
 									name='zipCode'
 									label='Zip Code'
 									id='zipCode'
+									value={zipCode}
 								/>
 							</Grid>
-							<Autocomplete
-								id='state-selection-dropdown'
-								options={this.statesAbbreviations}
-								style={{ width: 150 }}
-								getOptionLabel={(option) => option}
-								renderInput={(params) => (
-									<TextField
-										{...params}
-										name='state'
-										variant='outlined'
-										label='State'
-										fullWidth
-									/>
-								)}
-							/>
+							<Grid item xs={12}>
+								<Autocomplete
+									id='state-selection-dropdown'
+									options={this.statesAbbreviations}
+									style={{ width: 150 }}
+									getOptionLabel={(option) => option}
+									renderInput={(params) => (
+										<TextField
+											{...params}
+											name='state'
+											variant='outlined'
+											label='State'
+											fullWidth
+											value={state}
+										/>
+									)}
+								/>
+							</Grid>
 						</Grid>
 						<Button
 							type='submit'
@@ -216,8 +267,10 @@ export class SignUp extends React.Component {
 						>
 							Sign Up
 						</Button>
-						<Grid container justifyContent='flex-end'>
-							<Link variant='body2'>Already have an account? Sign in</Link>
+						<Grid container justifyContent='flex-end' style={{ padding: 10 }}>
+							<Grid item>
+								<Link variant='body2'>Already have an account? Sign in</Link>
+							</Grid>
 						</Grid>
 					</form>
 				</div>
