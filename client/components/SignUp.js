@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { Link as ReactLink } from 'react-router-dom'
 import { authenticate } from '../store'
 import {
 	Button,
@@ -14,6 +15,10 @@ import {
 import Autocomplete from '@material-ui/lab/Autocomplete'
 import PersonAddIcon from '@material-ui/icons/PersonAdd'
 import { makeStyles } from '@material-ui/core/styles'
+
+//build in form validation/error handling if input is not allowed, email is already taken, etc.
+//build onSubmit function - redirect user to login page after successful account creation?
+//connect component to needed areas of store
 
 export class SignUp extends React.Component {
 	constructor(props) {
@@ -269,7 +274,9 @@ export class SignUp extends React.Component {
 						</Button>
 						<Grid container justifyContent='flex-end' style={{ padding: 10 }}>
 							<Grid item>
-								<Link variant='body2'>Already have an account? Sign in</Link>
+								<ReactLink to='/login'>
+									<Link variant='body2'>Already have an account? Sign in</Link>
+								</ReactLink>
 							</Grid>
 						</Grid>
 					</form>
