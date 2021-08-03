@@ -5,12 +5,14 @@ import { Router } from 'react-router-dom'
 import history from './history'
 import store from './store'
 import App from './App'
+import CssBaseline from '@material-ui/core/CssBaseline'
 
 ReactDOM.render(
-	<Provider store={store}>
-		<Router history={history}>
-			<App />
-		</Router>
-	</Provider>,
-	document.getElementById('app')
+  <Provider store={store}>
+    <Router history={history}>
+      <CssBaseline />
+      <App />
+    </Router>
+  </Provider>,
+  document.getElementById('app')
 )

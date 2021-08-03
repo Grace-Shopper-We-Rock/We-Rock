@@ -1,10 +1,13 @@
 import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import { withRouter, Route, Switch, Redirect } from 'react-router-dom'
+
 import { Login } from './components/AuthForm'
 import { SignUp } from './components/SignUp'
 import Home from './components/Home'
 import { me } from './store'
+import ProductsList from './components/ProductsList';
+
 
 /**
  * COMPONENT
@@ -13,6 +16,7 @@ class Routes extends Component {
 	componentDidMount() {
 		this.props.loadInitialData()
 	}
+
 
 	render() {
 		const { isLoggedIn } = this.props
