@@ -9,7 +9,7 @@ module.exports = db.define("review", {
         },
     },
     text: {
-        type: Sequelize.TEXT,
+        type: Sequelize.STRING,
         allowNull: false,
         validate: {
             notEmpty: true,
