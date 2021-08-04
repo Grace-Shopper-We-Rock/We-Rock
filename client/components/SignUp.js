@@ -167,6 +167,9 @@ export class SignUp extends React.Component {
 						name='signUp'
 						onSubmit={handleSubmit}
 					>
+						<Typography component='h4' style={{ padding: 10 }} color='error'>
+							{error ? error.response.data : ''}
+						</Typography>
 						<Grid container spacing={2} style={{ padding: 10 }}>
 							<Grid item xs={12} sm={6}>
 								<TextField

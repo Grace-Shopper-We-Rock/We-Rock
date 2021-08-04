@@ -72,6 +72,9 @@ const AuthForm = (props) => {
 					name='logIn'
 					onSubmit={handleSubmit}
 				>
+					<Typography component='h4' style={{ padding: 10 }} color='error'>
+						{error ? error.response.data : ''}
+					</Typography>
 					<Grid container spacing={2} style={{ padding: 10 }}>
 						<Grid item xs={12}>
 							<TextField

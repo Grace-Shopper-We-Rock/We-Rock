@@ -25,16 +25,18 @@ router.post('/signup', async (req, res, next) => {
 			state,
 		} = req.body
 		const user = await User.create({ email, firstName, lastName, password })
-		const address = await ShippingAddress.create({
-			firstName,
-			lastName,
-			streetAddress,
-			city,
-			state,
-			zipCode,
-		})
-		//associate the address with the user - magic methods
-		user.addShippingAddress(address)
+		if (streetAddress) {
+			const address = await ShippingAddress.create({
+				firstName,
+				lastName,
+				streetAddress,
+				city,
+				state,
+				zipCode,
+			})
+			//associate the address with the user - magic methods
+			user.addShippingAddress(address)
+		}
 		res.send({ token: await user.generateToken() })
 	} catch (err) {
 		if (err.name === 'SequelizeUniqueConstraintError') {
