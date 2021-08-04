@@ -130,6 +130,7 @@ export class SignUp extends React.Component {
 	}
 	render() {
 		const classes = this.useStyles()
+		const { handleSubmit, error } = this.props
 		const {
 			firstName,
 			lastName,
@@ -160,7 +161,12 @@ export class SignUp extends React.Component {
 							Make an Account
 						</Typography>
 					</Grid>
-					<form className={classes.form} noValidate name='signUp'>
+					<form
+						className={classes.form}
+						noValidate
+						name='signUp'
+						onSubmit={handleSubmit}
+					>
 						<Grid container spacing={2} style={{ padding: 10 }}>
 							<Grid item xs={12} sm={6}>
 								<TextField
@@ -331,8 +337,8 @@ const mapDispatch = (dispatch) => {
 				lastName,
 				streetAddress,
 				city,
-				zipCode,
 				state,
+				zipCode,
 			}
 			dispatch(authenticate(userInfo, 'signup'))
 		},
