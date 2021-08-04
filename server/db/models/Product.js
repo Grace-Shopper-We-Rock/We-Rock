@@ -21,11 +21,11 @@ module.exports = db.define("product", {
         defaultValue: "medium",
     },
     imageUrl: {
-        type: Sequelize.TEXT,
+        type: Sequelize.STRING,
         defaultValue: "https://townsquare.media/site/723/files/2015/04/Pet-Rock-12.jpg?w=980&q=75",
     },
     price: {
-        type: Sequelize.FLOAT,
+        type: Sequelize.INTEGER,
         allowNull: false,
     },
     stockQuantity: {

@@ -1,5 +1,6 @@
 import React from 'react'
 import useStyles from '../../public/useStyles'
+import { Link } from 'react-router-dom'
 
 //Imported UI elements:
 import Card from '@material-ui/core/Card'
@@ -19,7 +20,7 @@ const ProductListItem = (props) => {
             <Card className={classes.card}>
                 <CardMedia
                     className={classes.cardMedia}
-                    image="https://source.unsplash.com/random"
+                    image="/images/defaultPetRock.jpg"
                     title="Image title"
                 />
                 <CardContent className={classes.cardContent}>
@@ -31,9 +32,11 @@ const ProductListItem = (props) => {
                     </Typography>
                 </CardContent>
                 <CardActions>
-                    <Button size="small" color="primary">
-                        View
-                    </Button>
+                    <Link to={`/products/${product.id}`}>
+                        <Button size="small" color="primary">
+                            View
+                        </Button>
+                    </Link>
                     <Button size="small" color="primary">
                         Add to Cart
                     </Button>

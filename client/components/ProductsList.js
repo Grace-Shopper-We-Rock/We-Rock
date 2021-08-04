@@ -10,64 +10,6 @@ import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
 import useStyles from '../../public/useStyles'
 
-//dummy product data: (delete when we get the seed running)
-const dummyProducts = [
-    {
-        id: 1,
-        name: 'Jimmy',
-        description: 'I am the friendliest Rock that ever Rocked',
-        size: 'large',
-        imageUrl: '/defaultImage.jpg',
-        price: 5,
-        stockQuantity: 10
-    },
-    {
-        id: 2,
-        name: 'Henry',
-        description: 'I am the friendliest Rock that ever Rocked',
-        size: 'large',
-        imageUrl: '/defaultImage.jpg',
-        price: 30,
-        stockQuantity: 10
-    },
-    {
-        id: 3,
-        name: 'Phillis',
-        description: 'I am the friendliest Rock that ever Rocked',
-        size: 'large',
-        imageUrl: '/defaultImage.jpg',
-        price: 10,
-        stockQuantity: 10
-    },
-    {
-        id: 4,
-        name: 'Felicia',
-        description: 'I am the friendliest Rock that ever Rocked',
-        size: 'large',
-        imageUrl: '/defaultImage.jpg',
-        price: 5,
-        stockQuantity: 10
-    },
-    {
-        id: 5,
-        name: 'Pikachu',
-        description: 'I am the friendliest Rock that ever Rocked',
-        size: 'large',
-        imageUrl: '/defaultImage.jpg',
-        price: 30,
-        stockQuantity: 10
-    },
-    {
-        id: 6,
-        name: 'Loki',
-        description: 'I am the friendliest Rock that ever Rocked',
-        size: 'large',
-        imageUrl: '/defaultImage.jpg',
-        price: 10,
-        stockQuantity: 10
-    }
-]
-
 class ProductsList extends Component {
     constructor() {
         super()
