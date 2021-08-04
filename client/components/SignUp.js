@@ -130,6 +130,7 @@ export class SignUp extends React.Component {
 	}
 	render() {
 		const classes = this.useStyles()
+		const { handleSubmit, error } = this.props
 		const {
 			firstName,
 			lastName,
@@ -160,7 +161,15 @@ export class SignUp extends React.Component {
 							Make an Account
 						</Typography>
 					</Grid>
-					<form className={classes.form} noValidate name='signUp'>
+					<form
+						className={classes.form}
+						noValidate
+						name='signUp'
+						onSubmit={handleSubmit}
+					>
+						<Typography component='h4' style={{ padding: 10 }} color='error'>
+							{error ? error.response.data : ''}
+						</Typography>
 						<Grid container spacing={2} style={{ padding: 10 }}>
 							<Grid item xs={12} sm={6}>
 								<TextField
@@ -316,11 +325,27 @@ const mapDispatch = (dispatch) => {
 	return {
 		handleSubmit(evt) {
 			evt.preventDefault()
-			const username = evt.target.email.value
+			const email = evt.target.email.value
 			const password = evt.target.password.value
-			//dispatch(authenticate(username, password, 'signup'))
+			const firstName = evt.target.firstName.value
+			const lastName = evt.target.lastName.value
+			const streetAddress = evt.target.streetAddress.value
+			const city = evt.target.city.value
+			const zipCode = evt.target.zipCode.value
+			const state = evt.target.state.value
+			const userInfo = {
+				email,
+				password,
+				firstName,
+				lastName,
+				streetAddress,
+				city,
+				state,
+				zipCode,
+			}
+			dispatch(authenticate(userInfo, 'signup'))
 		},
 	}
 }
 
-//export default connect(mapState, mapDispatch)(SignUp)
+export default connect(mapState, mapDispatch)(SignUp)

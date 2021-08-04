@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { withRouter, Route, Switch, Redirect } from 'react-router-dom'
 
 import { Login } from './components/AuthForm'
-import { SignUp } from './components/SignUp'
+import SignUp from './components/SignUp'
 import Home from './components/Home'
 import { me } from './store'
 import ProductsList from './components/ProductsList'
@@ -17,7 +17,6 @@ class Routes extends Component {
 	componentDidMount() {
 		this.props.loadInitialData()
 	}
-
 
 	render() {
 		const { isLoggedIn } = this.props
