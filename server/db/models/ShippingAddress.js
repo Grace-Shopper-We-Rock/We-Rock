@@ -31,13 +31,13 @@ const ShippingAddress = db.define("shippingAddress", {
             isAlphanumeric: true,
         },
     },
-    // state: {
-    //     stype: Sequelize.STRING,
-    //     allowNull: false,
-    //     validate: {
-    //         len: [2]
-    //     }
-    // },
+    state: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        validate: {
+            len: [2]
+        }
+    },
     zipCode: {
         type: Sequelize.STRING,
         allowNull: false,

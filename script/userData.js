@@ -1,0 +1,22 @@
+const users = [{ "email": "zmanifold0@goodreads.com", "firstName": "Zonnya", "lastName": "Manifold", "password": "sgXYaKq47R" },
+{ "email": "eleglise1@hao123.com", "firstName": "Elene", "lastName": "Leglise", "password": "WBsJK6mFVGv" },
+{ "email": "kcairns2@furl.net", "firstName": "Kalinda", "lastName": "Cairns", "password": "FpsvgLMo7M1" },
+{ "email": "mgabbett3@cisco.com", "firstName": "Melinda", "lastName": "Gabbett", "password": "C62dwxASg" },
+{ "email": "hjeffery4@amazonaws.com", "firstName": "Hermon", "lastName": "Jeffery", "password": "WP3j0xtKJPW" },
+{ "email": "qgladdor5@creativecommons.org", "firstName": "Quintana", "lastName": "Gladdor", "password": "pJZdJY52jJ1" },
+{ "email": "cbroz6@ucoz.com", "firstName": "Conny", "lastName": "Broz", "password": "EcLHyKq6" },
+{ "email": "wdansken7@nhs.uk", "firstName": "Will", "lastName": "Dansken", "password": "esBGnueAa" },
+{ "email": "wcastelletti8@who.int", "firstName": "Willamina", "lastName": "Castelletti", "password": "2czrLc5v" },
+{ "email": "elyst9@fc2.com", "firstName": "Ethan", "lastName": "Lyst", "password": "ODyGj3Hcz" },
+{ "email": "mdaetha@youku.com", "firstName": "Mair", "lastName": "D'Aeth", "password": "IyitFdT3" },
+{ "email": "nflohardb@google.co.uk", "firstName": "Nichol", "lastName": "Flohard", "password": "GP1wnuL" },
+{ "email": "rsimmingsc@sitemeter.com", "firstName": "Ryley", "lastName": "Simmings", "password": "Yyuac1NvxXXR" },
+{ "email": "dpoizerd@rambler.ru", "firstName": "Daren", "lastName": "Poizer", "password": "WQwzVYg" },
+{ "email": "alowdee@usda.gov", "firstName": "Adham", "lastName": "Lowde", "password": "RN1El7euS8Ki" },
+{ "email": "fhallibertonf@earthlink.net", "firstName": "Filippo", "lastName": "Halliberton", "password": "QZP8zQ9qRtk" },
+{ "email": "eshafeg@salon.com", "firstName": "El", "lastName": "Shafe", "password": "Jrqi4EfEPTR" },
+{ "email": "gkingeh@booking.com", "firstName": "Gillan", "lastName": "Kinge", "password": "q4KmFSTMuKA" },
+{ "email": "pgwynnei@ameblo.jp", "firstName": "Pail", "lastName": "Gwynne", "password": "GPepta7Mh" },
+{ "email": "rscarlanj@drupal.org", "firstName": "Roby", "lastName": "Scarlan", "password": "0b0PCsknD" }]
+
+module.exports = users
