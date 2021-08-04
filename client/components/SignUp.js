@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Link as ReactLink } from 'react-router-dom'
-import { authenticate } from '../store'
+import { authenticate, clearAuth } from '../store'
 import {
 	Button,
 	Container,
@@ -376,7 +376,9 @@ export class SignUp extends React.Component {
 						<Grid container justifyContent='flex-end' style={{ padding: 10 }}>
 							<Grid item>
 								<ReactLink to='/login'>
-									<Link variant='body2'>Already have an account? Sign in</Link>
+									<Link variant='body2' onClick={this.props.clearAuth()}>
+										Already have an account? Sign in
+									</Link>
 								</ReactLink>
 							</Grid>
 						</Grid>
@@ -397,6 +399,7 @@ const mapDispatch = (dispatch) => {
 	return {
 		authenticate: (userInfo, method) =>
 			dispatch(authenticate(userInfo, method)),
+		clearAuth: () => dispatch(clearAuth()),
 	}
 }
 

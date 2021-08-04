@@ -7,11 +7,13 @@ const TOKEN = 'token'
  * ACTION TYPES
  */
 const SET_AUTH = 'SET_AUTH'
+const CLEAR_AUTH = 'CLEAR_AUTH'
 
 /**
  * ACTION CREATORS
  */
 const setAuth = (auth) => ({ type: SET_AUTH, auth })
+export const clearAuth = () => ({ type: CLEAR_AUTH })
 
 /**
  * THUNK CREATORS
@@ -54,6 +56,8 @@ export default function (state = {}, action) {
 	switch (action.type) {
 		case SET_AUTH:
 			return action.auth
+		case CLEAR_AUTH:
+			return {}
 		default:
 			return state
 	}
