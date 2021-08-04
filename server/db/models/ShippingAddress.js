@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
 
+
 const ShippingAddress = db.define('shippingAddress', {
 	firstName: {
 		type: Sequelize.STRING,
@@ -48,5 +49,6 @@ const ShippingAddress = db.define('shippingAddress', {
 		},
 	},
 })
+
 
 module.exports = ShippingAddress
