@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
 //set-up/test store connection and relation to back-end request
 //does the user token get stored?
 const AuthForm = (props) => {
-	const { name, displayName, handleSubmit, error } = props
+	const { handleSubmit, error } = props
 	const classes = useStyles()
 
 	return (
@@ -70,6 +70,7 @@ const AuthForm = (props) => {
 					noValidate
 					autoComplete='off'
 					name='logIn'
+					onSubmit={handleSubmit}
 				>
 					<Grid container spacing={2} style={{ padding: 10 }}>
 						<Grid item xs={12}>
@@ -146,8 +147,6 @@ const AuthForm = (props) => {
  */
 const mapLogin = (state) => {
 	return {
-		name: 'login',
-		displayName: 'Login',
 		error: state.auth.error,
 	}
 }
@@ -164,9 +163,9 @@ const mapDispatch = (dispatch) => {
 	return {
 		handleSubmit(evt) {
 			evt.preventDefault()
-			const username = evt.target.username.value
+			const email = evt.target.email.value
 			const password = evt.target.password.value
-			// dispatch(authenticate(username, password, 'login'))
+			dispatch(authenticate({ email, password }, 'login'))
 		},
 	}
 }

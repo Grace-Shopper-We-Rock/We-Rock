@@ -316,11 +316,27 @@ const mapDispatch = (dispatch) => {
 	return {
 		handleSubmit(evt) {
 			evt.preventDefault()
-			const username = evt.target.email.value
+			const email = evt.target.email.value
 			const password = evt.target.password.value
-			//dispatch(authenticate(username, password, 'signup'))
+			const firstName = evt.target.firstName.value
+			const lastName = evt.target.lastName.value
+			const streetAddress = evt.target.streetAddress.value
+			const city = evt.target.city.value
+			const zipCode = evt.target.zipCode.value
+			const state = evt.target.state.value
+			const userInfo = {
+				email,
+				password,
+				firstName,
+				lastName,
+				streetAddress,
+				city,
+				zipCode,
+				state,
+			}
+			dispatch(authenticate(userInfo, 'signup'))
 		},
 	}
 }
 
-//export default connect(mapState, mapDispatch)(SignUp)
+export default connect(mapState, mapDispatch)(SignUp)
