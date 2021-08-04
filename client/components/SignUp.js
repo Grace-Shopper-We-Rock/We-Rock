@@ -33,6 +33,7 @@ export class SignUp extends React.Component {
 			city: '',
 			zipCode: '',
 			state: '',
+			errors: [],
 		}
 		this.statesAbbreviations = [
 			'AL',
@@ -95,6 +96,8 @@ export class SignUp extends React.Component {
 			'WI',
 			'WY',
 		]
+		this.validateFormData = this.validateFormData.bind(this)
+		this.handleSubmit = this.handleSubmit.bind(this)
 	}
 	handleChange(evt) {
 		this.setState({
@@ -128,9 +131,68 @@ export class SignUp extends React.Component {
 			},
 		}))
 	}
+	async validateFormData(userInfo) {
+		console.log('validateFormData called')
+		let errors = []
+
+		if (userInfo.password !== this.state.confirmPassword) {
+			errors.push('Passwords do not match.')
+		}
+
+		//if array of address values includes undefined/"" and not every item in the array is undefined/''
+		let addressInfo = [
+			userInfo.streetAddress,
+			userInfo.city,
+			userInfo.zipCode,
+			userInfo.state,
+		]
+		if (addressInfo.includes('')) {
+			for (let i = 0; i < addressInfo.length; i++) {
+				if (addressInfo[i] !== '') {
+					errors.push('Please provide all address information.')
+					break
+				}
+			}
+		}
+
+		let regexZipCode = /^[0-9]{5}(?:-[0-9]{4})?$/
+		if (userInfo.zipCode !== '' && !regexZipCode.test(userInfo.zipCode)) {
+			errors.push('Please provide a valid zip code.')
+		}
+
+		await this.setState({
+			errors: errors,
+		})
+	}
+	async handleSubmit(evt) {
+		evt.preventDefault()
+		console.log('handleSubmit called')
+		const email = evt.target.email.value
+		const password = evt.target.password.value
+		const firstName = evt.target.firstName.value
+		const lastName = evt.target.lastName.value
+		const streetAddress = evt.target.streetAddress.value
+		const city = evt.target.city.value
+		const zipCode = evt.target.zipCode.value
+		const state = evt.target.state.value
+		const userInfo = {
+			email,
+			password,
+			firstName,
+			lastName,
+			streetAddress,
+			city,
+			state,
+			zipCode,
+		}
+		await this.validateFormData(userInfo)
+		if (!this.state.errors.length) {
+			this.props.authenticate(userInfo, 'signup')
+		}
+	}
 	render() {
 		const classes = this.useStyles()
-		const { handleSubmit, error } = this.props
+		const { error } = this.props
 		const {
 			firstName,
 			lastName,
@@ -165,11 +227,21 @@ export class SignUp extends React.Component {
 						className={classes.form}
 						noValidate
 						name='signUp'
-						onSubmit={handleSubmit}
+						onSubmit={this.handleSubmit}
 					>
-						<Typography component='h4' style={{ padding: 10 }} color='error'>
-							{error ? error.response.data : ''}
-						</Typography>
+						{/* if there are errors, map the errors and display them here */}
+						<Grid container spacing={2} style={{ padding: 10 }}>
+							<Typography component='h4' color='error'>
+								{error ? error.response.data : ''}
+							</Typography>
+							{this.state.errors.length
+								? this.state.errors.map((error, index) => (
+										<Typography key={index} color='error' component='h4'>
+											{error}
+										</Typography>
+								  ))
+								: ''}
+						</Grid>
 						<Grid container spacing={2} style={{ padding: 10 }}>
 							<Grid item xs={12} sm={6}>
 								<TextField
@@ -323,28 +395,8 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
 	return {
-		handleSubmit(evt) {
-			evt.preventDefault()
-			const email = evt.target.email.value
-			const password = evt.target.password.value
-			const firstName = evt.target.firstName.value
-			const lastName = evt.target.lastName.value
-			const streetAddress = evt.target.streetAddress.value
-			const city = evt.target.city.value
-			const zipCode = evt.target.zipCode.value
-			const state = evt.target.state.value
-			const userInfo = {
-				email,
-				password,
-				firstName,
-				lastName,
-				streetAddress,
-				city,
-				state,
-				zipCode,
-			}
-			dispatch(authenticate(userInfo, 'signup'))
-		},
+		authenticate: (userInfo, method) =>
+			dispatch(authenticate(userInfo, method)),
 	}
 }
 
