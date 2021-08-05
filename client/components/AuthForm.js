@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
-import { authenticate } from '../store'
+import { authenticate, clearAuth } from '../store'
 import { Link as ReactLink } from 'react-router-dom'
 import {
 	Button,
@@ -19,126 +19,117 @@ import { makeStyles } from '@material-ui/core/styles'
  * COMPONENT
  */
 
-const useStyles = makeStyles((theme) => ({
-	paper: {
-		marginTop: theme.spacing(8),
-		display: 'flex',
-		flexDirection: 'column',
-		alignItems: 'center',
-		justifyContent: 'center',
-	},
-	avatar: {
-		margin: theme.spacing(1),
-		backgroundColor: theme.palette.secondary.main,
-	},
-	form: {
-		width: '100%',
-		marginTop: theme.spacing(3),
-	},
-	submit: {
-		margin: theme.spacing(3, 0, 2),
-	},
-}))
-
 //set-up error handling and rendering of same
 //set-up/test store connection and relation to back-end request
 //does the user token get stored?
-const AuthForm = (props) => {
-	const { handleSubmit, error } = props
-	const classes = useStyles()
 
-	return (
-		<Container component='main' maxWidth='xs' style={{ padding: 20 }}>
-			<CssBaseline />
-			<div className={classes.paper}>
-				<Grid
-					container
-					direction='column'
-					justifyContent='center'
-					alignItems='center'
-					style={{ padding: 20 }}
-				>
-					<Avatar className={classes.Avatar}>
-						<LockOutlinedIcon />
-					</Avatar>
-					<Typography component='h1' variant='h5'>
-						Log In to Your Account
-					</Typography>
-				</Grid>
-				<form
-					className={classes.form}
-					noValidate
-					autoComplete='off'
-					name='logIn'
-					onSubmit={handleSubmit}
-				>
-					<Typography component='h4' style={{ padding: 10 }} color='error'>
-						{error ? error.response.data : ''}
-					</Typography>
-					<Grid container spacing={2} style={{ padding: 10 }}>
-						<Grid item xs={12}>
-							<TextField
-								required
-								name='email'
-								variant='outlined'
-								fullWidth
-								id='email'
-								label='Email Address / Username'
-							/>
-						</Grid>
-						<Grid item xs={12}>
-							<TextField
-								required
-								name='password'
-								variant='outlined'
-								fullWidth
-								id='password'
-								type='password'
-								label='Password'
-							/>
-						</Grid>
-					</Grid>
-					<Button
-						type='submit'
-						fullWidth
-						variant='contained'
-						color='primary'
-						className={classes.submit}
+class AuthForm extends React.Component {
+	constructor(props) {
+		super(props)
+	}
+	useStyles() {
+		return makeStyles((theme) => ({
+			paper: {
+				marginTop: theme.spacing(8),
+				display: 'flex',
+				flexDirection: 'column',
+				alignItems: 'center',
+				justifyContent: 'center',
+			},
+			avatar: {
+				margin: theme.spacing(1),
+				backgroundColor: theme.palette.secondary.main,
+			},
+			form: {
+				width: '100%',
+				marginTop: theme.spacing(3),
+			},
+			submit: {
+				margin: theme.spacing(3, 0, 2),
+			},
+		}))
+	}
+	componentWillUnmount() {
+		if (this.props.error) {
+			this.props.clearAuth()
+		}
+	}
+	render() {
+		const { handleSubmit, error } = this.props
+		const classes = this.useStyles()
+
+		return (
+			<Container component='main' maxWidth='xs' style={{ padding: 20 }}>
+				<CssBaseline />
+				<div className={classes.paper}>
+					<Grid
+						container
+						direction='column'
+						justifyContent='center'
+						alignItems='center'
+						style={{ padding: 20 }}
 					>
-						Log In
-					</Button>
-					<Grid container justifyContent='flex-end' style={{ padding: 10 }}>
-						<Grid item>
-							<ReactLink to='/signup'>
-								<Link variant='body2'>Don't have an account? Sign up</Link>
-							</ReactLink>
-						</Grid>
+						<Avatar className={classes.Avatar}>
+							<LockOutlinedIcon />
+						</Avatar>
+						<Typography component='h1' variant='h5'>
+							Log In to Your Account
+						</Typography>
 					</Grid>
-				</form>
-			</div>
-		</Container>
-	)
-
-	// <div>
-	// 	<form onSubmit={handleSubmit} name={name}>
-	// 		<div>
-	// 			<label htmlFor='username'>
-	// 				<small>Username</small>
-	// 			</label>
-	// 			<input name='username' type='text' />
-	// 		</div>
-	// 		<div>
-	// 			<label htmlFor='password'>
-	// 				<small>Password</small>
-	// 			</label>
-	// 			<input name='password' type='password' />
-	// 		</div>
-	// 		<div>
-	// 			<button type='submit'>{displayName}</button>
-	// 		</div>
-	// 		{error && error.response && <div> {error.response.data} </div>}
-	// 	</form>
-	// </div>
+					<form
+						className={classes.form}
+						noValidate
+						autoComplete='off'
+						name='logIn'
+						onSubmit={handleSubmit}
+					>
+						<Typography component='h4' style={{ padding: 10 }} color='error'>
+							{error ? error.response.data : ''}
+						</Typography>
+						<Grid container spacing={2} style={{ padding: 10 }}>
+							<Grid item xs={12}>
+								<TextField
+									required
+									name='email'
+									variant='outlined'
+									fullWidth
+									id='email'
+									label='Email Address / Username'
+								/>
+							</Grid>
+							<Grid item xs={12}>
+								<TextField
+									required
+									name='password'
+									variant='outlined'
+									fullWidth
+									id='password'
+									type='password'
+									label='Password'
+								/>
+							</Grid>
+						</Grid>
+						<Button
+							type='submit'
+							fullWidth
+							variant='contained'
+							color='primary'
+							className={classes.submit}
+						>
+							Log In
+						</Button>
+						<Grid container justifyContent='flex-end' style={{ padding: 10 }}>
+							<Grid item>
+								<ReactLink to='/signup'>
+									<Link variant='body2'>Don't have an account? Sign up</Link>
+								</ReactLink>
+							</Grid>
+						</Grid>
+					</form>
+				</div>
+			</Container>
+		)
+	}
 }
 
 /**
@@ -170,6 +161,7 @@ const mapDispatch = (dispatch) => {
 			const password = evt.target.password.value
 			dispatch(authenticate({ email, password }, 'login'))
 		},
+		clearAuth: () => dispatch(clearAuth()),
 	}
 }
 
