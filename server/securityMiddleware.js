@@ -12,9 +12,13 @@ const requireToken = async (req, res, next) => {
 	}
 }
 
-const isAdmin = async (req, res, next) => {
+const isAdmin = (req, res, next) => {
 	try {
-		next()
+		if (!req.user.isAdmin) {
+			return res.status(403).send('Access not permitted.')
+		} else {
+			next()
+		}
 	} catch (error) {
 		next(error)
 	}
