@@ -1,4 +1,7 @@
-const users = [{ "email": "zmanifold0@goodreads.com", "firstName": "Zonnya", "lastName": "Manifold", "password": "sgXYaKq47R" },
+const users = [{ "email": "alex@yourock.com", "firstName": "Alex", "lastName": "Fox", "password": "afox", "isAdmin": true },
+{ "email": "tika@yourock.com", "firstName": "Tika", "lastName": "Llyn", "password": "tllyn", "isAdmin": true },
+{ "email": "julia@yourock.com", "firstName": "Julia", "lastName": "Crooijmans", "password": "jcroo", "isAdmin": true },
+{ "email": "zmanifold0@goodreads.com", "firstName": "Zonnya", "lastName": "Manifold", "password": "sgXYaKq47R" },
 { "email": "eleglise1@hao123.com", "firstName": "Elene", "lastName": "Leglise", "password": "WBsJK6mFVGv" },
 { "email": "kcairns2@furl.net", "firstName": "Kalinda", "lastName": "Cairns", "password": "FpsvgLMo7M1" },
 { "email": "mgabbett3@cisco.com", "firstName": "Melinda", "lastName": "Gabbett", "password": "C62dwxASg" },

@@ -8,6 +8,7 @@ import Home from './components/Home'
 import { me } from './store'
 import ProductsList from './components/ProductsList'
 import SingleProduct from './components/SingleProduct'
+import Reviews from './components/Reviews'
 
 
 /**
@@ -17,6 +18,7 @@ class Routes extends Component {
 	componentDidMount() {
 		this.props.loadInitialData()
 	}
+
 
 	render() {
 		const { isLoggedIn } = this.props

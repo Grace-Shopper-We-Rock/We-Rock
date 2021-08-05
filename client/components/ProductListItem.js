@@ -28,17 +28,17 @@ const ProductListItem = (props) => {
                         {product.name}
                     </Typography>
                     <Typography>
-                        {product.price}$
+                        {product.price / 100}$
                     </Typography>
                 </CardContent>
                 <CardActions>
                     <Link to={`/products/${product.id}`}>
                         <Button size="small" color="primary">
-                            View
+                            Learn More!
                         </Button>
                     </Link>
                     <Button size="small" color="primary">
-                        Add to Cart
+                        Take Me Home!
                     </Button>
                 </CardActions>
             </Card>

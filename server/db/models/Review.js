@@ -20,7 +20,7 @@ module.exports = db.define("review", {
         allowNull: false,
         validate: {
             min: 0,
-            max: 10,
+            max: 5,
         },
     }
 })

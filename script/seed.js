@@ -7,6 +7,7 @@ const users = require('./userData')
 const productInOrders = require('./productInOrderData')
 const orders = require('./orderData')
 const reviews = require('./reviewData')
+const { ContactsTwoTone } = require('@material-ui/icons')
 
 /**
  * seed - this function clears the database, updates tables to
@@ -54,6 +55,8 @@ async function seed() {
     await User4.setOrders([9, 19])
     await User5.setOrders([14])
     await User6.setOrders([15, 16, 17, 18])
+
+
 
     // Create associations between Orders and ProductInOrder
     await Order1.setProductInOrders([1, 2, 3])
@@ -155,6 +158,16 @@ async function seed() {
     await Product48.setReviews([148])
     await Product49.setReviews([149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165])
     await Product50.setReviews([166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 192, 193, 194, 195, 196, 197, 198, 199, 200])
+
+    // Create associates between Users and Reviews
+
+    const arrayOf200 = Array.from(Array(200).keys())
+
+    await User1.setReviews(arrayOf200.slice(0, 50))
+    await User2.setReviews(arrayOf200.slice(51, 80))
+    await User3.setReviews(arrayOf200.slice(81, 120))
+    await User4.setReviews(arrayOf200.slice(121, 170))
+    await User5.setReviews(arrayOf200.slice(171, 200))
 
   } catch (err) {
     console.log(err);
