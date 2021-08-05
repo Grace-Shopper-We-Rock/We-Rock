@@ -1,11 +1,11 @@
 import React from 'react'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 
 /**
  * COMPONENT
  */
-export const Home = props => {
-  const {username} = props
+export const UserHome = props => {
+  const { username } = props
 
   return (
     <div>
@@ -23,4 +23,4 @@ const mapState = state => {
   }
 }
 
-export default connect(mapState)(Home)
+export default connect(mapState)(UserHome)

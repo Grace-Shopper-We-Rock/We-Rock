@@ -4,11 +4,11 @@ import { withRouter, Route, Switch, Redirect } from 'react-router-dom'
 
 import { Login } from './components/AuthForm'
 import SignUp from './components/SignUp'
-import Home from './components/Home'
 import { me } from './store'
 import ProductsList from './components/ProductsList'
 import SingleProduct from './components/SingleProduct'
-import Reviews from './components/Reviews'
+import Cart from './components/Cart'
+import UserHome from './components/UserHome'
 
 
 /**
@@ -19,26 +19,24 @@ class Routes extends Component {
 		this.props.loadInitialData()
 	}
 
-
 	render() {
 		const { isLoggedIn } = this.props
 
 		return (
 			<div>
-				{isLoggedIn ? (
-					<Switch>
-						<Route path='/home' component={Home} />
-						<Redirect to='/home' />
-					</Switch>
-				) : (
-					<Switch>
-						<Route path='/' exact component={ProductsList} />
-						<Route path='/products/:productId' component={SingleProduct} />
-						<Route path='/login' component={Login} />
-						<Route path='/signup' component={SignUp} />
-					</Switch>
-				)}
-			</div>
+				<Switch>
+					<Route path='/' exact component={ProductsList} />
+					<Route path='/products/:productId' component={SingleProduct} />
+					<Route path='/cart' component={Cart} />
+					<Route path='/userhome' component={UserHome} />
+					{!isLoggedIn &&
+						<React.Fragment>
+							<Route path='/login' component={Login} />
+							<Route path='/signup' component={SignUp} />
+						</React.Fragment>
+					}
+				</Switch>
+			</div >
 		)
 	}
 }

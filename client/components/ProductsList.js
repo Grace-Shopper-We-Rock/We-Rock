@@ -32,7 +32,6 @@ class ProductsList extends Component {
 
                 {this.state.loading ? (<p> Loading...</p >) : (
                     <Container className={classes.cardGrid} maxWidth="md">
-                        {/* End Intro */}
                         <Grid container spacing={4}>
                             {products.map((product) => (
                                 <ProductListItem key={product.id} product={product} />

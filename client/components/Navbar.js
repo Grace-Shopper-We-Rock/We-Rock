@@ -5,6 +5,7 @@ import { logout } from '../store'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
 
 const Navbar = ({ handleClick, isLoggedIn }) => (
   <div>
@@ -16,9 +17,12 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
               <div>
                 {/* The navbar will show these links after you log in */}
                 <Link to="/">Rocks!</Link>
+                Hello<Link to="/userhome">userName!</Link>
                 <a href="#" onClick={handleClick}>
                   Logout
                 </a>
+                <Link to="/cart">< ShoppingCartIcon /> </Link>
+
               </div>
             ) : (
               <div>
@@ -26,6 +30,7 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
                 <Link to="/">Rocks!</Link>
                 <Link to="/login">Login</Link>
                 <Link to="/signup">Sign Up</Link>
+                <Link to="/cart">< ShoppingCartIcon /> </Link>
               </div>
             )}
           </Typography>
