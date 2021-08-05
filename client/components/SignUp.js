@@ -190,6 +190,11 @@ export class SignUp extends React.Component {
 			this.props.authenticate(userInfo, 'signup')
 		}
 	}
+	componentWillUnmount() {
+		if (this.props.error) {
+			this.props.clearAuth()
+		}
+	}
 	render() {
 		const classes = this.useStyles()
 		const { error } = this.props
@@ -376,9 +381,7 @@ export class SignUp extends React.Component {
 						<Grid container justifyContent='flex-end' style={{ padding: 10 }}>
 							<Grid item>
 								<ReactLink to='/login'>
-									<Link variant='body2' onClick={this.props.clearAuth()}>
-										Already have an account? Sign in
-									</Link>
+									<Link variant='body2'>Already have an account? Sign in</Link>
 								</ReactLink>
 							</Grid>
 						</Grid>

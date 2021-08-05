@@ -1,12 +1,12 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { logout, clearAuth } from '../store'
+import { logout } from '../store'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 
-const Navbar = ({ handleClick, isLoggedIn, clearAuth }) => (
+const Navbar = ({ handleClick, isLoggedIn }) => (
 	<div>
 		<nav>
 			<AppBar style={{ background: '#D4B8EA' }} position='relative'>
@@ -25,9 +25,7 @@ const Navbar = ({ handleClick, isLoggedIn, clearAuth }) => (
 								{/* The navbar will show these links before you log in */}
 								<Link to='/'>Rocks!</Link>
 								<Link to='/login'>Login</Link>
-								<Link to='/signup' onClick={clearAuth}>
-									Sign Up
-								</Link>
+								<Link to='/signup'>Sign Up</Link>
 							</div>
 						)}
 					</Typography>
@@ -52,7 +50,6 @@ const mapDispatch = (dispatch) => {
 		handleClick() {
 			dispatch(logout())
 		},
-		clearAuth: () => dispatch(clearAuth()),
 	}
 }
 
