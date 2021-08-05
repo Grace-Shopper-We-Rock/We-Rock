@@ -10,7 +10,6 @@ import ProductsList from './components/ProductsList'
 import SingleProduct from './components/SingleProduct'
 import Reviews from './components/Reviews'
 
-
 /**
  * COMPONENT
  */
