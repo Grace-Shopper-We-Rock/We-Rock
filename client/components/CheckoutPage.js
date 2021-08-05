@@ -1,6 +1,8 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import {
+	Container,
+	Grid,
 	Paper,
 	Stepper,
 	Step,
@@ -8,11 +10,12 @@ import {
 	Button,
 	Link,
 	Typography,
-} from 'material-ui'
+	CssBaseline,
+} from '@material-ui/core'
 import { NameEmailForm } from './NameEmailForm'
 import { AddressForm } from './AddressForm'
 
-export class Checkout extends React.Component {
+export default class Checkout extends React.Component {
 	constructor(props) {
 		super(props)
 		this.steps = ['Shipping address', 'Review your order']
@@ -27,6 +30,7 @@ export class Checkout extends React.Component {
 		}
 		this.handleChange = this.handleChange.bind(this)
 		this.handleSelect = this.handleSelect.bind(this)
+		this.getStepContent = this.getStepContent.bind(this)
 	}
 	useStyles() {
 		return makeStyles((theme) => ({
@@ -89,7 +93,7 @@ export class Checkout extends React.Component {
 		switch (step) {
 			case 0:
 				return (
-					<Grid container spacing={2} style={{ padding: 10 }}>
+					<Grid container spacing={3} styles={{ padding: 30 }}>
 						<NameEmailForm
 							firstName={this.state.firstName}
 							lastName={this.state.lastName}
@@ -102,9 +106,12 @@ export class Checkout extends React.Component {
 							zipCode={this.state.zipCode}
 							state={this.state.state}
 							handleSelect={this.handleSelect}
+							required
 						/>
 					</Grid>
 				)
+			case 1:
+				return <h1>This is rendering</h1>
 			default:
 				throw new Error('Unknown step')
 		}
@@ -113,7 +120,12 @@ export class Checkout extends React.Component {
 		const classes = this.useStyles()
 
 		return (
-			<main className={classes.layout}>
+			<Container
+				component='main'
+				className={classes.layout}
+				maxWidth='md'
+				styles={{ padding: 30 }}
+			>
 				<Paper className={classes.paper}>
 					<Typography component='h1' variant='h4' align='center'>
 						Checkout
@@ -123,15 +135,22 @@ export class Checkout extends React.Component {
 						className={classes.stepper}
 					>
 						{this.steps.map((label) => {
-							;<Step key={label}>
-								<StepLabel>{label}</StepLabel>
-							</Step>
+							return (
+								<Step key={label}>
+									<StepLabel>{label}</StepLabel>
+								</Step>
+							)
 						})}
 					</Stepper>
 					<React.Fragment>
 						{/* insert rendering of confirmation page if active step is steps.lenght */}
 						{this.state.activeStep === this.steps.length ? null : (
-							<React.Fragment>
+							<Grid
+								container
+								justifyContent='flex-end'
+								alignItems='center'
+								style={{ padding: 20 }}
+							>
 								{this.getStepContent(this.state.activeStep)}
 								<div className={classes.buttons}>
 									{this.state.activeStep !== 0 && (
@@ -148,16 +167,16 @@ export class Checkout extends React.Component {
 										onClick={() => this.handleNext()}
 										className={classes.button}
 									>
-										{this.state.activeStep === step.length - 1
+										{this.state.activeStep === this.steps.length - 1
 											? 'Place Order'
 											: 'Next'}
 									</Button>
 								</div>
-							</React.Fragment>
+							</Grid>
 						)}
 					</React.Fragment>
 				</Paper>
-			</main>
+			</Container>
 		)
 	}
 }

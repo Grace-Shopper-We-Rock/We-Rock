@@ -9,6 +9,7 @@ import { me } from './store'
 import ProductsList from './components/ProductsList'
 import SingleProduct from './components/SingleProduct'
 import Reviews from './components/Reviews'
+import Checkout from './components/CheckoutPage'
 
 /**
  * COMPONENT
@@ -17,7 +18,6 @@ class Routes extends Component {
 	componentDidMount() {
 		this.props.loadInitialData()
 	}
-
 
 	render() {
 		const { isLoggedIn } = this.props
@@ -35,6 +35,7 @@ class Routes extends Component {
 						<Route path='/products/:productId' component={SingleProduct} />
 						<Route path='/login' component={Login} />
 						<Route path='/signup' component={SignUp} />
+						<Route path='/checkout' component={Checkout} />
 					</Switch>
 				)}
 			</div>

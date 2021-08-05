@@ -70,13 +70,22 @@ const stateAbbreviations = [
 ]
 
 export const AddressForm = (props) => {
-	const { streetAddress, handleChange, city, zipCode, state, handleSelect } =
-		props
+	const {
+		streetAddress,
+		handleChange,
+		city,
+		zipCode,
+		state,
+		handleSelect,
+		required,
+	} = props
+	console.log('ADDRESS PROPS: ', props)
 
 	return (
 		<React.Fragment>
 			<Grid item xs={12}>
 				<TextField
+					// {...props}
 					variant='outlined'
 					fullWidth
 					name='streetAddress'
@@ -84,10 +93,12 @@ export const AddressForm = (props) => {
 					id='streetAddress'
 					value={streetAddress}
 					onChange={(event) => handleChange(event)}
+					{...{ required }}
 				/>
 			</Grid>
 			<Grid item xs={12} sm={6}>
 				<TextField
+					// {...props}
 					variant='outlined'
 					fullWidth
 					name='city'
@@ -95,10 +106,12 @@ export const AddressForm = (props) => {
 					id='city'
 					value={city}
 					onChange={(event) => handleChange(event)}
+					{...{ required }}
 				/>
 			</Grid>
 			<Grid item xs={12} sm={6}>
 				<TextField
+					// {...props}
 					variant='outlined'
 					fullWidth
 					name='zipCode'
@@ -106,6 +119,7 @@ export const AddressForm = (props) => {
 					id='zipCode'
 					value={zipCode}
 					onChange={(event) => handleChange(event)}
+					{...{ required }}
 				/>
 			</Grid>
 			<Grid item xs={12}>
@@ -117,6 +131,7 @@ export const AddressForm = (props) => {
 					renderInput={(params) => (
 						<TextField
 							{...params}
+							// {...props}
 							name='state'
 							variant='outlined'
 							label='State'
@@ -124,6 +139,7 @@ export const AddressForm = (props) => {
 							value={state}
 							onChange={(event) => handleChange(event)}
 							onSelect={(event) => handleSelect(event)}
+							{...{ required }}
 						/>
 					)}
 				/>
