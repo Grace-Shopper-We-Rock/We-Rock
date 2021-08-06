@@ -1,7 +1,8 @@
 const router = require('express').Router()
 const {
-	models: { User },
+	models: { User, ShippingAddress },
 } = require('../db')
+const { requireToken } = require('../securityMiddleware')
 module.exports = router
 
 router.get('/', async (req, res, next) => {
@@ -15,5 +16,22 @@ router.get('/', async (req, res, next) => {
 		res.json(users)
 	} catch (err) {
 		next(err)
+	}
+})
+
+router.get('/:userId/addresses', requireToken, async (req, res, next) => {
+	try {
+		const { id } = req.user
+		if (id !== Number(req.params.userId)) {
+			return res.status(403).send('Access not permitted.')
+		}
+		const addresses = await ShippingAddress.findAll({
+			where: {
+				userId: id,
+			},
+		})
+		res.json(addresses)
+	} catch (error) {
+		next(error)
 	}
 })
