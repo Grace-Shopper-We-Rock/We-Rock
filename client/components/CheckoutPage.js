@@ -121,18 +121,11 @@ export class Checkout extends React.Component {
 				throw new Error('Unknown step')
 		}
 	}
-	componentDidMount() {
+	async componentDidMount() {
 		const userId = this.props.auth.id
 		if (userId) {
-			this.props.fetchUserAddresses(userId)
-		}
-	}
-	componentDidUpdate(prevProps) {
-		console.log('PrevProps: ', prevProps)
-		if (
-			prevProps.addresses.length !== this.props.addresses.length &&
-			this.props.addresses.length !== 0
-		) {
+			await this.props.fetchUserAddresses(userId)
+
 			const {
 				firstName,
 				lastName,

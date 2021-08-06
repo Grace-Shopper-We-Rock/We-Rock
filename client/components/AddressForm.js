@@ -123,6 +123,7 @@ export const AddressForm = (props) => {
 					id='state-selection-dropdown'
 					options={stateAbbreviations}
 					style={{ width: 150 }}
+					value={state}
 					getOptionLabel={(option) => option}
 					renderInput={(params) => (
 						<TextField
