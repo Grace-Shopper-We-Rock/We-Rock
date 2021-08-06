@@ -9,35 +9,45 @@ import CardActions from '@material-ui/core/CardActions'
 import CardContent from '@material-ui/core/CardContent'
 import Grid from '@material-ui/core/Grid'
 import Container from '@material-ui/core/Container'
+import { StyledRating } from '../../public/useStyles'
+import FavoriteIcon from '@material-ui/icons/Favorite'
 
 const Reviews = (props) => {
     const { classes } = props
     const reviews = props.reviews
-    console.log(props)
+
     return (
-        <Container>
-            {!reviews.length ? (
-                <Grid item xs={12} sm={6} md={4}>
-                    <div>
-                        No Reviews Yet!
-                    </div>
+        !reviews.length ? (
+            <Container>
+                <div>
+                    No Reviews Yet!
+                </div>
+            </Container>
+        ) : (
+            <Container className={classes.cardGrid} maxWidth="sm">
+                <Grid container spacing={4}>
+                    {reviews.map(review => (
+                        <Grid item key={review.id} xs={12} sm={12} md={12}>
+                            <Card className={classes.card}>
+                                <CardContent className={classes.cardContent}>
+                                    {review.text}
+                                </CardContent>
+                                <CardActions>
+                                    <StyledRating
+                                        name="customized-color"
+                                        defaultValue={0}
+                                        value={review.rating} readOnly
+                                        icon={<FavoriteIcon fontSize="small" />}
+                                    />
+                                    by {review.user.firstName} {review.user.lastName[0]}.
+                                </CardActions>
+                            </Card>
+                        </Grid>
+                    ))}
                 </Grid>
-            ) : (
-                reviews.map(review => (
-                    <Container className={classes.cardGrid} maxWidth="sm">
-                        <Card className={classes.card}>
-                            <CardContent className={classes.cardContent}>
-                                {review.text}
-                            </CardContent>
-                            <CardActions>
-                                {review.rating}*
-                                {review.user.firstName}
-                            </CardActions>
-                        </Card>
-                    </Container>
-                ))
-            )}
-        </Container>
+            </Container >
+
+        )
     )
 }
 

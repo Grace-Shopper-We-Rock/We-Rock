@@ -1,4 +1,16 @@
 //CSS styles for Material UI
+import { withStyles } from '@material-ui/core/styles'
+import Rating from '@material-ui/lab/Rating'
+
+export const StyledRating = withStyles({
+    iconFilled: {
+        color: '#ff6d75',
+    },
+    iconHover: {
+        color: '#ff3d47',
+    },
+})(Rating)
+
 
 const useStyles = (theme) => ({
     icon: {
@@ -14,6 +26,20 @@ const useStyles = (theme) => ({
     cardGrid: {
         paddingTop: theme.spacing(8),
         paddingBottom: theme.spacing(8),
+    },
+    cartGrid: {
+        display: 'flex',
+        flexDirection: 'row',
+        paddingTop: theme.spacing(5),
+        paddingBottom: theme.spacing(5),
+    },
+    cartCard: {
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        maxWidth: 450,
+        paddingTop: theme.spacing(5),
+        paddingBottom: theme.spacing(5),
     },
     card: {
         height: '100%',

@@ -4,10 +4,12 @@ import { withRouter, Route, Switch, Redirect } from 'react-router-dom'
 
 import { Login } from './components/AuthForm'
 import SignUp from './components/SignUp'
-import Home from './components/Home'
 import { me } from './store'
 import ProductsList from './components/ProductsList'
 import SingleProduct from './components/SingleProduct'
+import Cart from './components/Cart'
+import Home from './components/Home'
+import Welcome from './components/Welcome'
 import ConfirmationPage from './components/ConfirmationPage'
 import Reviews from './components/Reviews'
 import Checkout from './components/CheckoutPage'
@@ -25,23 +27,23 @@ class Routes extends Component {
 
 		return (
 			<div>
-				{isLoggedIn ? (
-					<Switch>
-						<Route path='/home' component={Home} />
-						<Redirect to='/home' />
-					</Switch>
-				) : (
-					<Switch>
-						<Route path='/' exact component={ProductsList} />
-						<Route path='/products/:productId' component={SingleProduct} />
-						<Route path='/login' component={Login} />
-						<Route path='/signup' component={SignUp} />
-						<Route path='/confirmationpage/:orderId' component={ConfirmationPage} />
-						<Route path='/checkout' component={Checkout} />
-
-    	    </Switch>
-				)}
-			</div>
+				<Switch>
+					<Route path='/' exact component={Welcome} />
+					<Route path='/products' exact component={ProductsList} />
+					<Route path='/products/:productId' component={SingleProduct} />
+					<Route path='/cart' component={Cart} />
+          <Route path='/confirmationpage/:orderId' component={ConfirmationPage} />
+					<Route path='/checkout' component={Checkout} />
+					{!isLoggedIn ? (
+						<React.Fragment>
+							<Route path='/login' component={Login} />
+							<Route path='/signup' component={SignUp} />
+						</React.Fragment>
+					) : (
+						<Route path='/home' exact component={Home} />
+					)}
+				</Switch>
+			</div >
 		)
 	}
 }

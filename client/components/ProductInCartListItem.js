@@ -13,10 +13,10 @@ import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 
 
-const ProductListItem = (props) => {
-    const { product, classes } = props
+const ProductInCartListItem = (props) => {
+    const { classes, product, quantity } = props
     return (
-        <Grid item key={product.id}>
+        <Grid item key={product.id} md={8}>
             <Card className={classes.card}>
                 <CardMedia
                     className={classes.cardMedia}
@@ -29,16 +29,16 @@ const ProductListItem = (props) => {
                     </Typography>
                     <Typography>
                         {product.price / 100}$
+                        <br />
+                        {(product.price * quantity) / 100}$
                     </Typography>
                 </CardContent>
                 <CardActions>
-                    <Link to={`/products/${product.id}`}>
-                        <Button size="small" color="primary">
-                            Learn More!
-                        </Button>
-                    </Link>
                     <Button size="small" color="primary">
-                        Take Me Home!
+                        Update quantity
+                    </Button>
+                    <Button size="small" color="primary">
+                        Remove
                     </Button>
                 </CardActions>
             </Card>
@@ -46,4 +46,4 @@ const ProductListItem = (props) => {
     )
 }
 
-export default withStyles(useStyles)(ProductListItem)
+export default withStyles(useStyles)(ProductInCartListItem)
