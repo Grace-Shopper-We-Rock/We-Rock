@@ -28,7 +28,6 @@ const ShippingAddress = db.define('shippingAddress', {
 		allowNull: false,
 		validate: {
 			notEmpty: true,
-			isAlphanumeric: true,
 		},
 	},
 	state: {
