@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { fetchProducts } from '../store/products'
-import { Link } from 'react-router-dom'
 
 //Matieral-UI elements:
 import useStyles from '../../public/useStyles'
@@ -70,11 +69,9 @@ class Cart extends Component {
 							</Typography>
 						</CardContent>
 						<CardActions>
-							<Link to='/checkout'>
-								<Button variant='contained' color='primary'>
-									CheckOut
-								</Button>
-							</Link>
+							<Button variant='contained' color='primary'>
+								CheckOut
+							</Button>
 						</CardActions>
 					</Card>
 				</Box>
