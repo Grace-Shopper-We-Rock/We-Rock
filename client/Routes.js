@@ -12,7 +12,7 @@ import Home from './components/Home'
 import Welcome from './components/Welcome'
 import ConfirmationPage from './components/ConfirmationPage'
 import Reviews from './components/Reviews'
-// import Checkout from './components/CheckoutPage'
+import Checkout from './components/CheckoutPage'
 
 /**
  * COMPONENT
@@ -36,7 +36,7 @@ class Routes extends Component {
 						path='/confirmationpage/:orderId'
 						component={ConfirmationPage}
 					/>
-					{/* <Route path='/checkout' component={Checkout} /> */}
+					<Route path='/checkout' component={Checkout} />
 					{!isLoggedIn ? (
 						<React.Fragment>
 							<Route path='/login' component={Login} />
