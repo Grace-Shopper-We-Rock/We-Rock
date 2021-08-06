@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Link as ReactLink } from 'react-router-dom'
-import { authenticate } from '../store'
+import { authenticate, clearAuth } from '../store'
 import {
 	Button,
 	Container,
@@ -12,9 +12,10 @@ import {
 	Typography,
 	Avatar,
 } from '@material-ui/core'
-import Autocomplete from '@material-ui/lab/Autocomplete'
 import PersonAddIcon from '@material-ui/icons/PersonAdd'
 import { makeStyles } from '@material-ui/core/styles'
+import { NameEmailForm } from './NameEmailForm'
+import { AddressForm } from './AddressForm'
 
 //build in form validation/error handling if input is not allowed, passwords don't match, etc.
 //build onSubmit function - redirect user to login page after successful account creation?
@@ -33,68 +34,12 @@ export class SignUp extends React.Component {
 			city: '',
 			zipCode: '',
 			state: '',
+			errors: [],
 		}
-		this.statesAbbreviations = [
-			'AL',
-			'AK',
-			'AS',
-			'AZ',
-			'AR',
-			'CA',
-			'CO',
-			'CT',
-			'DE',
-			'DC',
-			'FM',
-			'FL',
-			'GA',
-			'GU',
-			'HI',
-			'ID',
-			'IL',
-			'IN',
-			'IA',
-			'KS',
-			'KY',
-			'LA',
-			'ME',
-			'MH',
-			'MD',
-			'MA',
-			'MI',
-			'MN',
-			'MS',
-			'MO',
-			'MT',
-			'NE',
-			'NV',
-			'NH',
-			'NJ',
-			'NM',
-			'NY',
-			'NC',
-			'ND',
-			'MP',
-			'OH',
-			'OK',
-			'OR',
-			'PW',
-			'PA',
-			'PR',
-			'RI',
-			'SC',
-			'SD',
-			'TN',
-			'TX',
-			'UT',
-			'VT',
-			'VI',
-			'VA',
-			'WA',
-			'WV',
-			'WI',
-			'WY',
-		]
+		this.validateFormData = this.validateFormData.bind(this)
+		this.handleSubmit = this.handleSubmit.bind(this)
+		this.handleChange = this.handleChange.bind(this)
+		this.handleSelect = this.handleSelect.bind(this)
 	}
 	handleChange(evt) {
 		this.setState({
@@ -128,9 +73,73 @@ export class SignUp extends React.Component {
 			},
 		}))
 	}
+	async validateFormData(userInfo) {
+		console.log('validateFormData called')
+		let errors = []
+
+		if (userInfo.password !== this.state.confirmPassword) {
+			errors.push('Passwords do not match.')
+		}
+
+		//if array of address values includes undefined/"" and not every item in the array is undefined/''
+		let addressInfo = [
+			userInfo.streetAddress,
+			userInfo.city,
+			userInfo.zipCode,
+			userInfo.state,
+		]
+		if (addressInfo.includes('')) {
+			for (let i = 0; i < addressInfo.length; i++) {
+				if (addressInfo[i] !== '') {
+					errors.push('Please provide all address information.')
+					break
+				}
+			}
+		}
+
+		let regexZipCode = /^[0-9]{5}(?:-[0-9]{4})?$/
+		if (userInfo.zipCode !== '' && !regexZipCode.test(userInfo.zipCode)) {
+			errors.push('Please provide a valid zip code.')
+		}
+
+		await this.setState({
+			errors: errors,
+		})
+	}
+	async handleSubmit(evt) {
+		evt.preventDefault()
+		console.log('handleSubmit called')
+		const email = evt.target.email.value
+		const password = evt.target.password.value
+		const firstName = evt.target.firstName.value
+		const lastName = evt.target.lastName.value
+		const streetAddress = evt.target.streetAddress.value
+		const city = evt.target.city.value
+		const zipCode = evt.target.zipCode.value
+		const state = evt.target.state.value
+		const userInfo = {
+			email,
+			password,
+			firstName,
+			lastName,
+			streetAddress,
+			city,
+			state,
+			zipCode,
+		}
+		await this.validateFormData(userInfo)
+		if (!this.state.errors.length) {
+			this.props.authenticate(userInfo, 'signup')
+		}
+	}
+	componentWillUnmount() {
+		if (this.props.error) {
+			this.props.clearAuth()
+		}
+	}
 	render() {
 		const classes = this.useStyles()
-		const { handleSubmit, error } = this.props
+		const { error } = this.props
 		const {
 			firstName,
 			lastName,
@@ -165,52 +174,27 @@ export class SignUp extends React.Component {
 						className={classes.form}
 						noValidate
 						name='signUp'
-						onSubmit={handleSubmit}
+						onSubmit={this.handleSubmit}
 					>
-						<Typography component='h4' style={{ padding: 10 }} color='error'>
-							{error ? error.response.data : ''}
-						</Typography>
+						{/* if there are errors, map the errors and display them here */}
 						<Grid container spacing={2} style={{ padding: 10 }}>
-							<Grid item xs={12} sm={6}>
-								<TextField
-									required
-									autoComplete='fname'
-									name='firstName'
-									variant='outlined'
-									fullWidth
-									id='firstName'
-									label='First Name'
-									autoFocus
-									value={firstName}
-									onChange={(event) => this.handleChange(event)}
-								/>
-							</Grid>
-							<Grid item xs={12} sm={6}>
-								<TextField
-									variant='outlined'
-									required
-									fullWidth
-									id='lastName'
-									label='Last Name'
-									name='lastName'
-									autoComplete='lname'
-									value={lastName}
-									onChange={(event) => this.handleChange(event)}
-								/>
-							</Grid>
-							<Grid item xs={12}>
-								<TextField
-									variant='outlined'
-									required
-									fullWidth
-									name='email'
-									label='Email Address / Username'
-									id='email'
-									autoComplete='email'
-									value={email}
-									onChange={(event) => this.handleChange(event)}
-								/>
-							</Grid>
+							<Typography component='h4' color='error'>
+								{error ? error.response.data : ''}
+							</Typography>
+							{this.state.errors.length
+								? this.state.errors.map((error, index) => (
+										<Typography key={index} color='error' component='h4'>
+											{error}
+										</Typography>
+								  ))
+								: ''}
+						</Grid>
+						<Grid container spacing={2} style={{ padding: 10 }}>
+							<NameEmailForm
+								firstName={firstName}
+								lastName={lastName}
+								handleChange={this.handleChange}
+							/>
 							<Grid item xs={12}>
 								<TextField
 									variant='outlined'
@@ -238,59 +222,14 @@ export class SignUp extends React.Component {
 								/>
 							</Grid>
 							<Typography component='h4'>Address</Typography>
-							<Grid item xs={12}>
-								<TextField
-									variant='outlined'
-									fullWidth
-									name='streetAddress'
-									label='Street Address'
-									id='streetAddress'
-									value={streetAddress}
-									onChange={(event) => this.handleChange(event)}
-								/>
-							</Grid>
-							<Grid item xs={12} sm={6}>
-								<TextField
-									variant='outlined'
-									fullWidth
-									name='city'
-									label='City'
-									id='city'
-									value={city}
-									onChange={(event) => this.handleChange(event)}
-								/>
-							</Grid>
-							<Grid item xs={12} sm={6}>
-								<TextField
-									variant='outlined'
-									fullWidth
-									name='zipCode'
-									label='Zip Code'
-									id='zipCode'
-									value={zipCode}
-									onChange={(event) => this.handleChange(event)}
-								/>
-							</Grid>
-							<Grid item xs={12}>
-								<Autocomplete
-									id='state-selection-dropdown'
-									options={this.statesAbbreviations}
-									style={{ width: 150 }}
-									getOptionLabel={(option) => option}
-									renderInput={(params) => (
-										<TextField
-											{...params}
-											name='state'
-											variant='outlined'
-											label='State'
-											fullWidth
-											value={state}
-											onChange={(event) => this.handleChange(event)}
-											onSelect={(event) => this.handleSelect(event)}
-										/>
-									)}
-								/>
-							</Grid>
+							<AddressForm
+								streetAddress={streetAddress}
+								handleChange={this.handleChange}
+								city={city}
+								zipCode={zipCode}
+								state={state}
+								handleSelect={this.handleSelect}
+							/>
 						</Grid>
 						<Button
 							type='submit'
@@ -323,28 +262,9 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
 	return {
-		handleSubmit(evt) {
-			evt.preventDefault()
-			const email = evt.target.email.value
-			const password = evt.target.password.value
-			const firstName = evt.target.firstName.value
-			const lastName = evt.target.lastName.value
-			const streetAddress = evt.target.streetAddress.value
-			const city = evt.target.city.value
-			const zipCode = evt.target.zipCode.value
-			const state = evt.target.state.value
-			const userInfo = {
-				email,
-				password,
-				firstName,
-				lastName,
-				streetAddress,
-				city,
-				state,
-				zipCode,
-			}
-			dispatch(authenticate(userInfo, 'signup'))
-		},
+		authenticate: (userInfo, method) =>
+			dispatch(authenticate(userInfo, method)),
+		clearAuth: () => dispatch(clearAuth()),
 	}
 }
 
