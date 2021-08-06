@@ -14,6 +14,7 @@ import {
 } from '@material-ui/core'
 import { NameEmailForm } from './NameEmailForm'
 import { AddressForm } from './AddressForm'
+import { ReviewOrder } from './ReviewOrder'
 
 export default class Checkout extends React.Component {
 	constructor(props) {
@@ -111,7 +112,7 @@ export default class Checkout extends React.Component {
 					</Grid>
 				)
 			case 1:
-				return <h1>This is rendering</h1>
+				return <ReviewOrder />
 			default:
 				throw new Error('Unknown step')
 		}
