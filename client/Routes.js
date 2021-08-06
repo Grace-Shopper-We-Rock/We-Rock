@@ -8,6 +8,7 @@ import Home from './components/Home'
 import { me } from './store'
 import ProductsList from './components/ProductsList'
 import SingleProduct from './components/SingleProduct'
+import ConfirmationPage from './components/ConfirmationPage'
 import Reviews from './components/Reviews'
 
 /**
@@ -35,6 +36,7 @@ class Routes extends Component {
 						<Route path='/products/:productId' component={SingleProduct} />
 						<Route path='/login' component={Login} />
 						<Route path='/signup' component={SignUp} />
+						<Route path='/confirmationpage/:orderId' component={ConfirmationPage} />
 					</Switch>
 				)}
 			</div>
