@@ -16,7 +16,7 @@ import Button from '@material-ui/core/Button'
 const ProductListItem = (props) => {
     const { product, classes } = props
     return (
-        <Grid item key={product.id} xs={12} sm={6} md={4}>
+        <Grid item key={product.id}>
             <Card className={classes.card}>
                 <CardMedia
                     className={classes.cardMedia}

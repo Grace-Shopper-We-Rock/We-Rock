@@ -25,9 +25,11 @@ const Welcome = (props) => {
                 <div className={classes.heroButtons}>
                     <Grid container spacing={2} justifyContent="center">
                         <Grid item>
-                            <Button variant="contained" color="primary">
-                                Browse Rocks
-                            </Button>
+                            <Link to='/products'>
+                                <Button variant="contained" color="primary">
+                                    See All Rocks
+                                </Button>
+                            </Link>
                         </Grid>
                         <Grid item>
                             <Link to={`/products/${Math.floor(Math.random() * 100)}`}>

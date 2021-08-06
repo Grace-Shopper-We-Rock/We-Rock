@@ -6,6 +6,7 @@ import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
+import HomeIcon from '@material-ui/icons/Home'
 import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles((theme) => ({
@@ -18,17 +19,8 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
-  sectionLogin: {
-    display: 'none',
-    [theme.breakpoints.up('md')]: {
-      display: 'flex',
-    },
-  },
-  cartButton: {
+  rightNav: {
     display: 'flex',
-    [theme.breakpoints.up('md')]: {
-      display: 'flex',
-    },
   },
 }));
 
@@ -38,23 +30,24 @@ const Navbar = ({ user, handleClick, isLoggedIn }) => {
   return (
     <div>
       <nav>
-        <AppBar style={{ background: '#D4B8EA' }} position="static">
+        <AppBar style={{ background: '#D4B8EA' }} position="relative">
           <Toolbar>
+            <Link to="/">< HomeIcon /> </Link>
             <Typography className={classes.title} variant="h6" noWrap>
-              <Link to="/">Rocks!</Link>
+              <Link to="/products">Meet Our Rocks!</Link>
             </Typography>
             {isLoggedIn ? (
-              <div className={classes.sectionLogin}>
-                <Link to="/userhome">Hi {user.firstName}!</Link>
+              <div className={classes.rightNav}>
+                <Link to="/home">Hi {user.firstName}!</Link>
                 <a href="#" onClick={handleClick}> Logout </a>
               </div>
             ) : (
-              <div className={classes.sectionLogin}>
+              <div className={classes.rightNav}>
                 <Link to="/login">Login</Link>
                 <Link to="/signup">Sign Up</Link>
               </div>
             )}
-            <div className={classes.cartButton}>
+            <div className={classes.rightNav}>
               <Link to="/cart">< ShoppingCartIcon /> </Link>
             </div>
 

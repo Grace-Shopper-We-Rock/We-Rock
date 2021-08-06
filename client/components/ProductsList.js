@@ -28,8 +28,6 @@ class ProductsList extends Component {
         const { classes, products } = this.props
         return (
             <main>
-                <Welcome />
-
                 {this.state.loading ? (<p> Loading...</p >) : (
                     <Container className={classes.cardGrid} maxWidth="md">
                         <Grid container spacing={4}>

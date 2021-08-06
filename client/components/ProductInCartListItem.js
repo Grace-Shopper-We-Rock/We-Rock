@@ -13,10 +13,10 @@ import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 
 
-const ProductInCart = (props) => {
+const ProductInCartListItem = (props) => {
     const { classes, product, quantity } = props
     return (
-        <Grid item key={product.id} xs={12} sm={6} md={4}>
+        <Grid item key={product.id} md={8}>
             <Card className={classes.card}>
                 <CardMedia
                     className={classes.cardMedia}
@@ -46,4 +46,4 @@ const ProductInCart = (props) => {
     )
 }
 
-export default withStyles(useStyles)(ProductInCart)
+export default withStyles(useStyles)(ProductInCartListItem)

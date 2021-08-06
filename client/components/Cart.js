@@ -13,7 +13,10 @@ import Card from '@material-ui/core/Card'
 import CardActions from '@material-ui/core/CardActions'
 import CardContent from '@material-ui/core/CardContent'
 import CardHeader from '@material-ui/core/CardHeader'
-import ProductInCart from './ProductInCart'
+import Grid from '@material-ui/core/Grid'
+import Box from '@material-ui/core/Box'
+import ProductInCart from './ProductInCartListItem'
+import CartItems from './CartItems'
 
 class Cart extends Component {
     constructor() {
@@ -36,35 +39,37 @@ class Cart extends Component {
         const { classes, products } = this.props
 
         if (this.state.loading) return <p> Loading...</p>
-        else return (
-            this.props.products.length && //For now I have this bc it was trying to map before products loaded??
-            <Container className={classes.cardGrid} maxWidth="sm">
-                {this.state.productsInOrder.map(product =>
-                    <ProductInCart
-                        key={product.productId} quantity={product.quantity}
-                        product={products.find(prod => prod.id === product.productId)}
-                    />
-                )}
-                <Card className={classes.card}>
-                    <CardHeader
-                        title={`Order Summary`}
-                        style={{ textAlign: 'center' }}
-                    />
-                    <CardContent className={classes.cardContent}>
-                        <Typography variant="h5" align="center" color="textSecondary" paragraph>
-                            total price $
-                        </Typography>
-                        <Typography align="center" color="textSecondary" paragraph>
-                            Ready to meet your new friends?
-                        </Typography>
-                    </CardContent>
-                    <CardActions>
-                        <Button variant="contained" color="primary">
-                            CheckOut
-                        </Button>
-                    </CardActions>
-                </Card>
-            </Container>
+        return (
+            <Container className={classes.cartGrid} maxWidth="md">
+                <Grid container spacing={2} >
+                    <Grid item xs={10} sm={10} md={10}>
+                        <CartItems />
+                    </Grid>
+                </Grid>
+
+                <Box width={450} maxHeight={300}>
+                    < Card className={classes.cartCard}>
+                        <CardHeader
+                            title={`Order Summary`}
+                            style={{ textAlign: 'center' }}
+                        />
+                        <CardContent className={classes.cardContent}>
+                            <Typography variant="h5" align="center" color="textSecondary" paragraph>
+                                total price $
+                            </Typography>
+                            <Typography align="center" color="textSecondary" paragraph>
+                                Ready to meet your new friends?
+                            </Typography>
+                        </CardContent>
+                        <CardActions>
+                            <Button variant="contained" color="primary">
+                                CheckOut
+                            </Button>
+                        </CardActions>
+                    </Card >
+                </Box>
+
+            </Container >
         )
     }
 }
