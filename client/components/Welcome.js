@@ -1,5 +1,6 @@
 import React from 'react'
 import useStyles from '../../public/useStyles'
+import { Link } from 'react-router-dom'
 
 //Imported UI elements:
 import Grid from '@material-ui/core/Grid'
@@ -11,6 +12,7 @@ import Container from '@material-ui/core/Container'
 
 const Welcome = (props) => {
     const { classes } = props
+
     return (
         <div className={classes.heroContent}>
             <Container maxWidth="sm">
@@ -28,9 +30,11 @@ const Welcome = (props) => {
                             </Button>
                         </Grid>
                         <Grid item>
-                            <Button variant="outlined" color="primary">
-                                Meet a Random Rock
-                            </Button>
+                            <Link to={`/products/${Math.floor(Math.random() * 100)}`}>
+                                <Button variant="contained" color="primary">
+                                    Meet a Random Rock!
+                                </Button>
+                            </Link>
                         </Grid>
                     </Grid>
                 </div>

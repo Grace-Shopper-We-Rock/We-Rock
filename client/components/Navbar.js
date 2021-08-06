@@ -6,47 +6,73 @@ import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
+import { makeStyles } from '@material-ui/core/styles'
 
-const Navbar = ({ handleClick, isLoggedIn }) => (
-  <div>
-    <nav>
-      <AppBar style={{ background: '#D4B8EA' }} position="relative">
-        <Toolbar>
-          <Typography variant="h6" color="inherit" noWrap>
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+  },
+  title: {
+    flexGrow: 1,
+  },
+  sectionLogin: {
+    display: 'none',
+    [theme.breakpoints.up('md')]: {
+      display: 'flex',
+    },
+  },
+  cartButton: {
+    display: 'flex',
+    [theme.breakpoints.up('md')]: {
+      display: 'flex',
+    },
+  },
+}));
+
+const Navbar = ({ user, handleClick, isLoggedIn }) => {
+  const classes = useStyles()
+
+  return (
+    <div>
+      <nav>
+        <AppBar style={{ background: '#D4B8EA' }} position="static">
+          <Toolbar>
+            <Typography className={classes.title} variant="h6" noWrap>
+              <Link to="/">Rocks!</Link>
+            </Typography>
             {isLoggedIn ? (
-              <div>
-                {/* The navbar will show these links after you log in */}
-                <Link to="/">Rocks!</Link>
-                Hello<Link to="/userhome">userName!</Link>
-                <a href="#" onClick={handleClick}>
-                  Logout
-                </a>
-                <Link to="/cart">< ShoppingCartIcon /> </Link>
-
+              <div className={classes.sectionLogin}>
+                <Link to="/userhome">Hi {user.firstName}!</Link>
+                <a href="#" onClick={handleClick}> Logout </a>
               </div>
             ) : (
-              <div>
-                {/* The navbar will show these links before you log in */}
-                <Link to="/">Rocks!</Link>
+              <div className={classes.sectionLogin}>
                 <Link to="/login">Login</Link>
                 <Link to="/signup">Sign Up</Link>
-                <Link to="/cart">< ShoppingCartIcon /> </Link>
               </div>
             )}
-          </Typography>
-        </Toolbar>
-      </AppBar>
-    </nav>
-    <hr />
-  </div >
-)
+            <div className={classes.cartButton}>
+              <Link to="/cart">< ShoppingCartIcon /> </Link>
+            </div>
+
+          </Toolbar>
+        </AppBar>
+      </nav>
+      <hr />
+    </div >
+  )
+}
 
 /**
  * CONTAINER
  */
 const mapState = state => {
   return {
-    isLoggedIn: !!state.auth.id
+    isLoggedIn: !!state.auth.id,
+    user: state.auth
   }
 }
 
