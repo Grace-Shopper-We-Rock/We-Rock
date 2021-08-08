@@ -2,7 +2,7 @@ import React from 'react'
 import { Grid, TextField } from '@material-ui/core'
 
 export const NameEmailForm = (props) => {
-	const { firstName, lastName, email, handleChange } = props
+	const { firstName, lastName, email, handleChange, required } = props
 
 	return (
 		<React.Fragment>
@@ -18,6 +18,7 @@ export const NameEmailForm = (props) => {
 					autoFocus
 					value={firstName}
 					onChange={(event) => handleChange(event)}
+					{...{ required }}
 				/>
 			</Grid>
 			<Grid item xs={12} sm={6}>
@@ -31,6 +32,7 @@ export const NameEmailForm = (props) => {
 					autoComplete='lname'
 					value={lastName}
 					onChange={(event) => handleChange(event)}
+					{...{ required }}
 				/>
 			</Grid>
 			<Grid item xs={12}>
@@ -44,6 +46,7 @@ export const NameEmailForm = (props) => {
 					autoComplete='email'
 					value={email}
 					onChange={(event) => handleChange(event)}
+					{...{ required }}
 				/>
 			</Grid>
 		</React.Fragment>

@@ -103,6 +103,7 @@ export class Checkout extends React.Component {
 							lastName={this.state.lastName}
 							email={this.state.email}
 							handleChange={this.handleChange}
+							required
 						/>
 						<AddressForm
 							streetAddress={this.state.streetAddress}
