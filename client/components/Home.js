@@ -14,7 +14,6 @@ import Container from '@material-ui/core/Container'
  * COMPONENT
  */
 export const UserHome = (props) => {
-	console.log(props)
 	const { classes, user, isLoggedIn } = props
 
 	return (

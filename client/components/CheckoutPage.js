@@ -142,7 +142,7 @@ export class Checkout extends React.Component {
 			if (formInfo[element] === '') {
 				errors.push('Please fill out all required fields.')
 				break
-			} 
+			}
 		}
 
 		await this.setState({
@@ -154,25 +154,26 @@ export class Checkout extends React.Component {
 		if (userId) {
 			await this.props.fetchUserAddresses(userId)
 
-			const {
-				firstName,
-				lastName,
-				email,
-				streetAddress,
-				city,
-				zipCode,
-				state,
-			} = this.props.addresses[0]
-
-			this.setState({
-				firstName,
-				lastName,
-				email,
-				streetAddress,
-				city,
-				zipCode,
-				state,
-			})
+			if (this.props.addresses.length) {
+				const {
+					firstName,
+					lastName,
+					email,
+					streetAddress,
+					city,
+					zipCode,
+					state,
+				} = this.props.addresses[0]
+				this.setState({
+					firstName,
+					lastName,
+					email,
+					streetAddress,
+					city,
+					zipCode,
+					state,
+				})
+			}
 		}
 	}
 	render() {

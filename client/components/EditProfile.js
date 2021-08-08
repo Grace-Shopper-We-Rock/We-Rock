@@ -14,7 +14,8 @@ import { makeStyles } from '@material-ui/core/styles'
 import { NameEmailForm } from './NameEmailForm'
 import { AddressForm } from './AddressForm'
 import { PasswordForm } from './PasswordForm'
-import { fetchUserAddresses } from '../store/address'
+import { fetchUserAddresses, updateUserAddress } from '../store/address'
+import { updateUserInfo } from '../store/auth'
 
 export class EditProfile extends React.Component {
 	constructor(props) {
@@ -112,7 +113,6 @@ export class EditProfile extends React.Component {
 			lastName,
 			email,
 			password,
-			confirmPassword,
 			addressFirstName,
 			addressLastName,
 			streetAddress,
@@ -120,20 +120,37 @@ export class EditProfile extends React.Component {
 			zipCode,
 			state,
 		} = this.state
+		const { id } = this.props.auth
+		console.log('ID: ', id)
 		//await validation of the data - zipcode if changed and passwords match?
 
 		//if there are no errors
 		if (!this.state.errors.length) {
 			if (password) {
-				//dispatch the action with firstName, lastName, email and password
+				this.props.updateUserInfo(
+					{ firstName, lastName, email, password },
+					this.props.auth.id
+				)
 			} else {
-				//dispatch without password
+				this.props.updateUserInfo(
+					{ firstName, lastName, email },
+					this.props.auth.id
+				)
 			}
-
-			//dispatch address update information w/ all address fields included
+			//dispatch address update information w/ all address fields included AND email
+			this.props.updateUserAddress(
+				{
+					email,
+					addressFirstName,
+					addressLastName,
+					streetAddress,
+					city,
+					zipCode,
+					state,
+				},
+				this.props.auth.id
+			)
 		}
-		//dispatch any user or address changes w/ thunk creators
-		//do any necessary redirects/set states
 	}
 	async componentDidMount() {
 		//console.log('component has mounted')
@@ -141,23 +158,29 @@ export class EditProfile extends React.Component {
 		if (userId) {
 			//console.log('userId is present on auth')
 			await this.props.fetchUserAddresses(userId)
-			const { firstName, lastName, streetAddress, city, zipCode, state } =
-				this.props.addresses[0]
+			if (this.props.addresses.length) {
+				const { firstName, lastName, streetAddress, city, zipCode, state } =
+					this.props.addresses[0]
+				this.setState({
+					addressFirstName: firstName,
+					addressLastName: lastName,
+					streetAddress,
+					city,
+					zipCode,
+					state,
+				})
+			}
+
 			this.setState({
 				firstName: this.props.auth.firstName,
 				lastName: this.props.auth.lastName,
 				email: this.props.auth.email,
-				addressFirstName: firstName,
-				addressLastName: lastName,
-				streetAddress,
-				city,
-				zipCode,
-				state,
 			})
 		}
 	}
 	render() {
 		const classes = this.useStyles()
+		const { auth, addresses } = this.props
 
 		return (
 			<Container
@@ -186,6 +209,12 @@ export class EditProfile extends React.Component {
 					>
 						<Grid container spacing={3} styles={{ padding: 30 }}>
 							<Grid item style={{ padding: 10 }} md={12}>
+								<Typography component='h4' color='error'>
+									{auth.error ? auth.error.response.data : ''}
+								</Typography>
+								<Typography component='h4' color='error'>
+									{addresses.error ? addresses.error.response.data : ''}
+								</Typography>
 								{this.state.errors.length
 									? this.state.errors.map((error, index) => (
 											<Typography key={index} color='error' component='h4'>
@@ -218,7 +247,7 @@ export class EditProfile extends React.Component {
 							<Grid item xs={12} sm={6}>
 								<TextField
 									autoComplete='fname'
-									name='firstName'
+									name='addressFirstName'
 									variant='outlined'
 									fullWidth
 									id='addressFirstName'
@@ -235,7 +264,7 @@ export class EditProfile extends React.Component {
 									fullWidth
 									id='addressLastName'
 									label='Last Name'
-									name='lastName'
+									name='addressLastName'
 									autoComplete='lname'
 									value={this.state.addressLastName}
 									onChange={(event) => this.handleChange(event)}
@@ -292,6 +321,8 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
 	return {
 		fetchUserAddresses: (userId) => dispatch(fetchUserAddresses(userId)),
+		updateUserAddress: (newInfo, userId) => dispatch(updateUserAddress(userId)),
+		updateUserInfo: (newInfo, userId) => dispatch(updateUserInfo(userId)),
 	}
 }
 

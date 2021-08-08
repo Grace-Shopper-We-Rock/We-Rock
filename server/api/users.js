@@ -76,12 +76,19 @@ router.put(
 					userId: id,
 				},
 			})
+
 			if (!addresses.length) {
 				const newAddress = await ShippingAddress.create(req.body)
-				res.json(newAddress)
+				req.user.addShippingAddress(newAddress)
+				res.json([newAddress])
 			} else {
 				const updatedAddress = await addresses[0].update(req.body)
-				res.json(updatedAddress)
+				const allAddresses = await ShippingAddress.findAll({
+					where: {
+						userId: id,
+					},
+				})
+				res.json(allAddresses)
 			}
 		} catch (error) {
 			next(error)
