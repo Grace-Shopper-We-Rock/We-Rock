@@ -31,6 +31,7 @@ export class EditProfile extends React.Component {
 			city: '',
 			zipCode: '',
 			state: '',
+			errors: [],
 		}
 		this.handleChange = this.handleChange.bind(this)
 		this.handleSelect = this.handleSelect.bind(this)
@@ -73,11 +74,72 @@ export class EditProfile extends React.Component {
 			state: evt.target.value,
 		})
 	}
+	async validateFormData(info) {
+		let errors = []
+
+		let allDataKeys = Object.keys(info)
+		console.log(allDataKeys)
+		for (const element of allDataKeys) {
+			if (
+				info[element] === '' &&
+				element !== 'password' &&
+				element !== 'confirmPassword'
+			) {
+				errors.push('Please fill out all required fields.')
+				break
+			}
+		}
+
+		if (info.password !== this.state.confirmPassword) {
+			errors.push('Passwords do not match.')
+		}
+
+		let regexZipCode = /^[0-9]{5}(?:-[0-9]{4})?$/
+		if (info.zipCode !== '' && !regexZipCode.test(info.zipCode)) {
+			errors.push('Please provide a valid zip code.')
+		}
+
+		await this.setState({
+			errors: errors,
+		})
+	}
+	async handleSubmit() {
+		//pull all the current form data from state
+		console.log('handle submit called')
+		await this.validateFormData(this.state)
+		const {
+			firstName,
+			lastName,
+			email,
+			password,
+			confirmPassword,
+			addressFirstName,
+			addressLastName,
+			streetAddress,
+			city,
+			zipCode,
+			state,
+		} = this.state
+		//await validation of the data - zipcode if changed and passwords match?
+
+		//if there are no errors
+		if (!this.state.errors.length) {
+			if (password) {
+				//dispatch the action with firstName, lastName, email and password
+			} else {
+				//dispatch without password
+			}
+
+			//dispatch address update information w/ all address fields included
+		}
+		//dispatch any user or address changes w/ thunk creators
+		//do any necessary redirects/set states
+	}
 	async componentDidMount() {
-		console.log('component has mounted')
+		//console.log('component has mounted')
 		const userId = this.props.auth.id
 		if (userId) {
-			console.log('userId is present on auth')
+			//console.log('userId is present on auth')
 			await this.props.fetchUserAddresses(userId)
 			const { firstName, lastName, streetAddress, city, zipCode, state } =
 				this.props.addresses[0]
@@ -124,6 +186,15 @@ export class EditProfile extends React.Component {
 					>
 						<Grid container spacing={3} styles={{ padding: 30 }}>
 							<Grid item style={{ padding: 10 }} md={12}>
+								{this.state.errors.length
+									? this.state.errors.map((error, index) => (
+											<Typography key={index} color='error' component='h4'>
+												{error}
+											</Typography>
+									  ))
+									: ''}
+							</Grid>
+							<Grid item style={{ padding: 10 }} md={12}>
 								<Typography component='h4'>Name and Email:</Typography>
 							</Grid>
 							<NameEmailForm
@@ -131,6 +202,7 @@ export class EditProfile extends React.Component {
 								lastName={this.state.lastName}
 								email={this.state.email}
 								handleChange={this.handleChange}
+								required
 							/>
 							<Grid item style={{ padding: 10 }} md={12}>
 								<Typography component='h4'>Change Password:</Typography>
@@ -145,7 +217,6 @@ export class EditProfile extends React.Component {
 							</Grid>
 							<Grid item xs={12} sm={6}>
 								<TextField
-									required
 									autoComplete='fname'
 									name='firstName'
 									variant='outlined'
@@ -155,12 +226,12 @@ export class EditProfile extends React.Component {
 									autoFocus
 									value={this.state.addressFirstName}
 									onChange={(event) => this.handleChange(event)}
+									required
 								/>
 							</Grid>
 							<Grid item xs={12} sm={6}>
 								<TextField
 									variant='outlined'
-									required
 									fullWidth
 									id='addressLastName'
 									label='Last Name'
@@ -168,6 +239,7 @@ export class EditProfile extends React.Component {
 									autoComplete='lname'
 									value={this.state.addressLastName}
 									onChange={(event) => this.handleChange(event)}
+									required
 								/>
 							</Grid>
 							<AddressForm
@@ -177,6 +249,7 @@ export class EditProfile extends React.Component {
 								zipCode={this.state.zipCode}
 								state={this.state.state}
 								handleSelect={this.handleSelect}
+								required
 							/>
 						</Grid>
 						<Grid container justifyContent='flex-end' spacing={2}>
@@ -196,6 +269,7 @@ export class EditProfile extends React.Component {
 									variant='contained'
 									color='primary'
 									className={classes.button}
+									onClick={() => this.handleSubmit()}
 								>
 									Submit Changes
 								</Button>

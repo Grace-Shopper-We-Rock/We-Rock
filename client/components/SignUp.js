@@ -82,6 +82,16 @@ export class SignUp extends React.Component {
 			errors.push('Passwords do not match.')
 		}
 
+		let requiredInfo = [
+			userInfo.firstName,
+			userInfo.lastName,
+			userInfo.password,
+			this.state.confirmPassword,
+		]
+		if (requiredInfo.includes('')) {
+			errors.push('Please fill out all required fields.')
+		}
+
 		//if array of address values includes undefined/"" and not every item in the array is undefined/''
 		let addressInfo = [
 			userInfo.streetAddress,

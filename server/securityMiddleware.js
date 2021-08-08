@@ -12,6 +12,18 @@ const requireToken = async (req, res, next) => {
 	}
 }
 
+const tokenMatchRequest = async (req, res, next) => {
+	try {
+		if (req.user.id !== Number(req.params.userId)) {
+			return res.status(403).send('Access not permitted.')
+		} else {
+			next()
+		}
+	} catch (error) {
+		next(error)
+	}
+}
+
 const isAdmin = (req, res, next) => {
 	try {
 		if (!req.user.isAdmin) {
@@ -26,5 +38,6 @@ const isAdmin = (req, res, next) => {
 
 module.exports = {
 	requireToken,
+	tokenMatchRequest,
 	isAdmin,
 }

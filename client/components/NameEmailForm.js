@@ -41,7 +41,7 @@ export const NameEmailForm = (props) => {
 					required
 					fullWidth
 					name='email'
-					label='Email Address / Username'
+					label='Email Address'
 					id='email'
 					autoComplete='email'
 					value={email}

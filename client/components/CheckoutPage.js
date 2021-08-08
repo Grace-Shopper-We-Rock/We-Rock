@@ -31,6 +31,7 @@ export class Checkout extends React.Component {
 			city: '',
 			zipCode: '',
 			state: '',
+			errors: [],
 		}
 		this.handleChange = this.handleChange.bind(this)
 		this.handleSelect = this.handleSelect.bind(this)
@@ -71,11 +72,17 @@ export class Checkout extends React.Component {
 			},
 		}))
 	}
-	handleNext() {
+	async handleNext() {
 		const currentStep = this.state.activeStep
-		this.setState({
-			activeStep: currentStep + 1,
-		})
+		if (currentStep === 0) {
+			await this.validateFormData(this.state)
+		}
+
+		if (!this.state.errors.length) {
+			this.setState({
+				activeStep: currentStep + 1,
+			})
+		}
 	}
 	handleBack() {
 		const currentStep = this.state.activeStep
@@ -121,6 +128,26 @@ export class Checkout extends React.Component {
 			default:
 				throw new Error('Unknown step')
 		}
+	}
+	async validateFormData(formInfo) {
+		let errors = []
+
+		let regexZipCode = /^[0-9]{5}(?:-[0-9]{4})?$/
+		if (formInfo.zipCode !== '' && !regexZipCode.test(formInfo.zipCode)) {
+			errors.push('Please provide a valid zip code.')
+		}
+
+		let allDataKeys = Object.keys(formInfo)
+		for (const element of allDataKeys) {
+			if (formInfo[element] === '') {
+				errors.push('Please fill out all required fields.')
+				break
+			} 
+		}
+
+		await this.setState({
+			errors: errors,
+		})
 	}
 	async componentDidMount() {
 		const userId = this.props.auth.id
@@ -175,7 +202,23 @@ export class Checkout extends React.Component {
 						})}
 					</Stepper>
 					<React.Fragment>
-						{/* insert rendering of confirmation page if active step is steps.lenght */}
+						<Grid
+							container
+							direction='column'
+							justifyContent='center'
+							alignItems='center'
+						>
+							{this.state.errors.length
+								? this.state.errors.map((error, index) => (
+										<Grid item style={{ padding: 5 }}>
+											<Typography key={index} color='error' component='h4'>
+												{error}
+											</Typography>
+										</Grid>
+								  ))
+								: ''}
+						</Grid>
+						{/* insert rendering of confirmation page where says null if active step is steps.lenght */}
 						{this.state.activeStep === this.steps.length ? null : (
 							<Grid
 								container
