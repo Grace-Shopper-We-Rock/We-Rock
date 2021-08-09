@@ -8,6 +8,7 @@ const TOKEN = 'token'
  */
 const SET_AUTH = 'SET_AUTH'
 const CLEAR_AUTH = 'CLEAR_AUTH'
+const UPDATE_USER_INFO = 'UPDATE_USER_INFO'
 
 /**
  * ACTION CREATORS
@@ -18,6 +19,25 @@ export const clearAuth = () => ({ type: CLEAR_AUTH })
 /**
  * THUNK CREATORS
  */
+
+export const updateUserInfo = (newInfo, userId) => {
+	return async (dispatch) => {
+		try {
+			const token = window.localStorage.getItem(TOKEN)
+			if (token) {
+				const { data } = await axios.put(`/api/users/${userId}`, newInfo, {
+					headers: {
+						authorization: token,
+					},
+				})
+				dispatch(setAuth(data))
+			}
+		} catch (error) {
+			dispatch(setAuth({ error: error }))
+		}
+	}
+}
+
 export const me = () => async (dispatch) => {
 	const token = window.localStorage.getItem(TOKEN)
 	if (token) {

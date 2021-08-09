@@ -13,6 +13,7 @@ import Welcome from './components/Welcome'
 import ConfirmationPage from './components/ConfirmationPage'
 import Reviews from './components/Reviews'
 import Checkout from './components/CheckoutPage'
+import EditProfile from './components/EditProfile'
 
 /**
  * COMPONENT
@@ -33,6 +34,10 @@ class Routes extends Component {
 					<Route path='/products/:productId' component={SingleProduct} />
 					<Route path='/cart' component={Cart} />
 					<Route path='/confirmationpage/:orderId' component={ConfirmationPage} />
+					<Route
+						path='/confirmationpage/:orderId'
+						component={ConfirmationPage}
+					/>
 					<Route path='/checkout' component={Checkout} />
 					{!isLoggedIn ? (
 						<React.Fragment>
@@ -40,10 +45,19 @@ class Routes extends Component {
 							<Route path='/signup' component={SignUp} />
 						</React.Fragment>
 					) : (
-						<Route path='/home' exact component={Home} />
+						<React.Fragment>
+							<Route path='/home' exact component={Home} />
+							<Route path='/login'>
+								<Redirect to='/' />
+							</Route>
+							<Route path='/signup'>
+								<Redirect to='/' />
+							</Route>
+							<Route path='/editProfile' component={EditProfile} />
+						</React.Fragment>
 					)}
 				</Switch>
-			</div >
+			</div>
 		)
 	}
 }

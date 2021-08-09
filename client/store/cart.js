@@ -1,15 +1,15 @@
 import axios from 'axios'
 
 //PRODUCTS ACTIONS:
-const SET_CART_ITEMS = 'SET_CART_ITEMS'
+const SET_CART = 'SET_CART'
 const UPDATE_CART_ITEMS = 'UPDATE_CART_ITEMS'
 const ADD_CART_ITEM = 'ADD_CART_ITEM'
 const DELETE_CART_ITEM = 'DELETE_CART_ITEM'
 
 //ACTION CREATORS:
-export const setCartItems = (cart) => {
+export const setCart = (cart) => {
     return {
-        type: SET_CART_ITEMS,
+        type: SET_CART,
         cart
     }
 }
@@ -39,9 +39,8 @@ export const updateCartItem = (product) => {
 export const fetchCartItems = (userId) => {
     return async (dispatch) => {
         try {
-            //this api route should have a findorcreate order option.
-            const { data } = await axios.get(`/api/orders/cart/${userId}`)
-            dispatch(setCartItems(data))
+            const { data } = await axios.get(`/api/orders/${userId}/cart`)
+            dispatch(setCart(data))
         } catch (err) {
             console.log(err)
         }
@@ -50,14 +49,14 @@ export const fetchCartItems = (userId) => {
 
 export const addCartItemThunk = (productInOrder) => {
     return async (dispatch) => {
-        const { data: created } = await axios.post('/api/orders/cart/', productInOrder)
+        const { data: created } = await axios.post(`/api/orders/${userId}/cart`, productInOrder)
         dispatch(addCartItem(created))
     }
 }
 
-export const deleteCartItemThunk = (id) => {
+export const deleteCartItemThunk = (prodId) => {
     return async (dispatch) => {
-        const { data: productInOrder } = await axios.delete(`/api/orders/cart/${userId}/${id}`)
+        const { data: productInOrder } = await axios.delete(`/api/orders/${userId}/cart/${prodId}`)
         dispatch(deleteCartItem(productInOrder))
     }
 };
@@ -65,16 +64,16 @@ export const deleteCartItemThunk = (id) => {
 export const updateCartItemsThunk = (userId) => {
     return async (dispatch) => {
         //should find or create a productInCart item then add/update to array of products
-        const { data: updated } = await axios.put(`/api/orders/cart/${userId}`);
+        const { data: updated } = await axios.put(`/api/orders/${userId}/cart`);
         dispatch(updateCartItems(updated));
     }
 };
 
 //CART ITEMS REDUCER:
-export default function (state = [], action) {
+export default function (state = {}, action) {
     switch (action.type) {
-        case SET_CART_ITEMS:
-            return action.products
+        case SET_CART:
+            return action.cart
         case ADD_CART_ITEM:
             return [...state, action.robot]
         case DELETE_CART_ITEM:
