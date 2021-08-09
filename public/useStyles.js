@@ -37,13 +37,13 @@ const useStyles = (theme) => ({
         height: '100%',
         display: 'flex',
         flexDirection: 'column',
-        maxWidth: 450,
         paddingTop: theme.spacing(5),
         paddingBottom: theme.spacing(5),
     },
     card: {
         height: '100%',
         display: 'flex',
+        width: 280,
         flexDirection: 'column',
     },
     cardMedia: {
