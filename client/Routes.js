@@ -13,6 +13,7 @@ import Welcome from './components/Welcome'
 import ConfirmationPage from './components/ConfirmationPage'
 import Reviews from './components/Reviews'
 import Checkout from './components/CheckoutPage'
+import EditProfile from './components/EditProfile'
 
 /**
  * COMPONENT
@@ -51,6 +52,7 @@ class Routes extends Component {
 							<Route path='/signup'>
 								<Redirect to='/' />
 							</Route>
+							<Route path='/editProfile' component={EditProfile} />
 						</React.Fragment>
 					)}
 				</Switch>

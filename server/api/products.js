@@ -30,14 +30,6 @@ router.get('/:productId', async (req, res, next) => {
 //POST Request - admin add new product to system
 router.post('/', requireToken, isAdmin, async (req, res, next) => {
 	try {
-		// const { name, description, price, stockQuantity, size, imageUrl } = req.body
-		// const newProductInfo = { name, description, price, stockQuantity }
-		// if (size) {
-		// 	newProductInfo.size = size
-		// }
-		// if (imageUrl) {
-		// 	newProductInfo.imageUrl = imageUrl
-		// }
 		const newProduct = await Product.create(req.body)
 		res.json(newProduct)
 	} catch (error) {

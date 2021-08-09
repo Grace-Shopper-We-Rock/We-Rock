@@ -13,47 +13,64 @@ import Container from '@material-ui/core/Container'
 /**
  * COMPONENT
  */
-export const UserHome = props => {
-  console.log(props)
-  const { classes, user, isLoggedIn } = props
+export const UserHome = (props) => {
+	const { classes, user, isLoggedIn } = props
 
-  return (
-    <div className={classes.heroContent}>
-      <Container maxWidth="sm">
-        <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
-          <h3>Welcome, {user.firstName}!</h3>
-        </Typography>
-        <Typography variant="h5" align="center" color="textSecondary" paragraph>
-          Maybe a little intro text?
-        </Typography>
-        <div className={classes.heroButtons}>
-          <Grid container spacing={2} justifyContent="center">
-            <Grid item>
-              <Link to='/cart'>
-                <Button variant="contained" color="primary">
-                  Pick up where you left off!
-                </Button>
-              </Link>
-            </Grid>
-            <Grid item>
-              <Button variant="contained" color="primary">
-                Previous Orders!
-              </Button>
-            </Grid>
-          </Grid>
-        </div>
-      </Container>
-    </div>
-  )
+	return (
+		<div className={classes.heroContent}>
+			<Container maxWidth='md'>
+				<Typography
+					component='h1'
+					variant='h2'
+					align='center'
+					color='textPrimary'
+					gutterBottom
+				>
+					Welcome, {user.firstName}!
+				</Typography>
+				<Typography variant='h5' align='center' color='textSecondary' paragraph>
+					Maybe a little intro text?
+				</Typography>
+				<div className={classes.heroButtons}>
+					<Grid
+						container
+						spacing={3}
+						justifyContent='center'
+						alignItems='center'
+					>
+						<Grid item sm={5}>
+							<Link to='/cart'>
+								<Button variant='contained' color='primary'>
+									Pick up where you left off!
+								</Button>
+							</Link>
+						</Grid>
+						<Grid item sm={4}>
+							<Button variant='contained' color='primary'>
+								Previous Orders!
+							</Button>
+						</Grid>
+						<Grid item sm={3}>
+							<Link to='/editProfile'>
+								<Button variant='contained' color='primary'>
+									Edit Profile
+								</Button>
+							</Link>
+						</Grid>
+					</Grid>
+				</div>
+			</Container>
+		</div>
+	)
 }
 
 /**
  * CONTAINER
  */
-const mapState = state => {
-  return {
-    user: state.auth,
-  }
+const mapState = (state) => {
+	return {
+		user: state.auth,
+	}
 }
 
 export default withStyles(useStyles)(connect(mapState)(UserHome))
