@@ -9,7 +9,9 @@ import {
 	TextField,
 	Grid,
 	Typography,
+	Snackbar,
 } from '@material-ui/core'
+import Alert from '@material-ui/lab/Alert'
 import { makeStyles } from '@material-ui/core/styles'
 import { NameEmailForm } from './NameEmailForm'
 import { AddressForm } from './AddressForm'
@@ -33,9 +35,11 @@ export class EditProfile extends React.Component {
 			zipCode: '',
 			state: '',
 			errors: [],
+			snackbarOpen: false,
 		}
 		this.handleChange = this.handleChange.bind(this)
 		this.handleSelect = this.handleSelect.bind(this)
+		this.handleClose = this.handleClose.bind(this)
 	}
 	useStyles() {
 		return makeStyles((theme) => ({
@@ -73,6 +77,16 @@ export class EditProfile extends React.Component {
 	handleSelect(evt) {
 		this.setState({
 			state: evt.target.value,
+		})
+	}
+	handleClose() {
+		this.setState({
+			snackbarOpen: false,
+		})
+	}
+	handleOpen() {
+		this.setState({
+			snackbarOpen: true,
 		})
 	}
 	async validateFormData(info) {
@@ -150,6 +164,8 @@ export class EditProfile extends React.Component {
 				},
 				this.props.auth.id
 			)
+
+			this.handleOpen()
 		}
 	}
 	async componentDidMount() {
@@ -187,7 +203,7 @@ export class EditProfile extends React.Component {
 				component='main'
 				className={classes.layout}
 				maxWidth='md'
-				styles={{ padding: 30 }}
+				style={{ padding: 30 }}
 			>
 				<Paper className={classes.paper}>
 					<Grid
@@ -207,7 +223,7 @@ export class EditProfile extends React.Component {
 						alignItems='center'
 						style={{ padding: 20 }}
 					>
-						<Grid container spacing={3} styles={{ padding: 30 }}>
+						<Grid container spacing={3} style={{ padding: 30 }}>
 							<Grid item style={{ padding: 10 }} md={12}>
 								<Typography component='h4' color='error'>
 									{auth.error ? auth.error.response.data : ''}
@@ -303,6 +319,23 @@ export class EditProfile extends React.Component {
 									Submit Changes
 								</Button>
 							</Grid>
+							{this.state.snackbarOpen ? (
+								<Snackbar
+									open={this.state.snackbarOpen}
+									autoHideDuration={6000}
+									onClose={this.handleClose}
+									anchorOrigin={{
+										vertical: 'bottom',
+										horizontal: 'right',
+									}}
+								>
+									<React.Fragment>
+										<Alert onClose={this.handleClose} severity='success'>
+											Changes Saved!
+										</Alert>
+									</React.Fragment>
+								</Snackbar>
+							) : null}
 						</Grid>
 					</Grid>
 				</Paper>
