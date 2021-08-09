@@ -56,7 +56,7 @@ class Routes extends Component {
 						</React.Fragment>
 					)}
 				</Switch>
-			</div>
+			</div >
 		)
 	}
 }
