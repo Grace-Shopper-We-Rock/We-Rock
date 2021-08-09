@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import {
 	Button,
 	Paper,
@@ -109,10 +109,11 @@ export class EditProfile extends React.Component {
 			errors.push('Passwords do not match.')
 		}
 
-		let regexZipCode = /^[0-9]{5}(?:-[0-9]{4})?$/
-		if (info.zipCode !== '' && !regexZipCode.test(info.zipCode)) {
-			errors.push('Please provide a valid zip code.')
-		}
+    //check done on backend
+		// let regexZipCode = /^[0-9]{5}(?:-[0-9]{4})?$/
+		// if (info.zipCode !== '' && !regexZipCode.test(info.zipCode)) {
+		// 	errors.push('Please provide a valid zip code.')
+		// }
 
 		await this.setState({
 			errors: errors,
@@ -321,26 +322,25 @@ export class EditProfile extends React.Component {
 									Submit Changes
 								</Button>
 							</Grid>
-							{this.state.snackbarOpen
-								? ((
-										<Snackbar
-											open={this.state.snackbarOpen}
-											autoHideDuration={6000}
-											onClose={this.handleClose}
-											anchorOrigin={{
-												vertical: 'bottom',
-												horizontal: 'right',
-											}}
-										>
-											<React.Fragment>
-												<Alert onClose={this.handleClose} severity='success'>
-													Changes Saved!
-												</Alert>
-											</React.Fragment>
-										</Snackbar>
-								  ),
-								  (<Redirect to='/home' />))
-								: null}
+							{this.state.snackbarOpen ? (
+								<Snackbar
+									open={this.state.snackbarOpen}
+									autoHideDuration={6000}
+									onClose={this.handleClose}
+									anchorOrigin={{
+										vertical: 'bottom',
+										horizontal: 'right',
+									}}
+								>
+									<React.Fragment>
+										<Alert onClose={this.handleClose} severity='success'>
+											Changes Saved!
+										</Alert>
+									</React.Fragment>
+								</Snackbar>
+							) : //can either redirect to home or do a toast/snackbar
+							// (<Redirect to='/home' />))
+							null}
 						</Grid>
 					</Grid>
 				</Paper>
