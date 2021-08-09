@@ -1,12 +1,13 @@
 'use strict'
 
-const { db, models: { User, Product, ProductInOrder, Order, Review } } = require('../server/db')
+const { db, models: { User, Product, ProductInOrder, Order, Review, ShippingAddress } } = require('../server/db')
 
 const products = require('./productData')
 const users = require('./userData')
 const productInOrders = require('./productInOrderData')
 const orders = require('./orderData')
 const reviews = require('./reviewData')
+const addresses = require('./shippingAddressData')
 const { ContactsTwoTone } = require('@material-ui/icons')
 
 /**
@@ -17,6 +18,11 @@ async function seed() {
   try {
     await db.sync({ force: true }) // clears db and matches models to tables
     console.log('db synced!')
+
+    // Creating Addresses
+    const addressInstances = await Promise.all(addresses.map(address => {
+      return ShippingAddress.create(address);
+    }));
 
     // Creating Products
     const productInstances = await Promise.all(products.map(product => {
@@ -47,6 +53,24 @@ async function seed() {
     const [Order1, Order2, Order3, Order4, Order5, Order6, Order7, Order8, Order9, Order10, Order11, Order12, Order13, Order14, Order15] = orderInstances;
     const [ProductInOrder1, ProductInOrder2, ProductInOrder3, ProductInOrder4, ProductInOrder5, ProductInOrder6, ProductInOrder7, ProductInOrder8, ProductInOrder9, ProductInOrder10, ProductInOrder11, ProductInOrder12, ProductInOrder13, ProductInOrder14, ProductInOrder15, ProductInOrder16, ProductInOrder17, ProductInOrder18, ProductInOrder19, ProductInOrder20, ProductInOrder21, ProductInOrder22, ProductInOrder23, ProductInOrder24, ProductInOrder25, ProductInOrder26, ProductInOrder27, ProductInOrder28, ProductInOrder29, ProductInOrder30] = productInOrderInstances;
     const [Product1, Product2, Product3, Product4, Product5, Product6, Product7, Product8, Product9, Product10, Product11, Product12, Product13, Product14, Product15, Product16, Product17, Product18, Product19, Product20, Product21, Product22, Product23, Product24, Product25, Product26, Product27, Product28, Product29, Product30, Product31, Product32, Product33, Product34, Product35, Product36, Product37, Product38, Product39, Product40, Product41, Product42, Product43, Product44, Product45, Product46, Product47, Product48, Product49, Product50] = productInstances;
+    const [Address1, Address2, Address3, Address4, Address5, Address6, Address7, Address8, Address9, Address10, Address11, Address12, Address13, Address14, Address15, Address16, Address17, Address18, Address19, Address20, Address21, Address22, Address23, Address24, Address25, Address26, Address27, Address28, Address29, Address30, Address31, Address32, Address33, Address34, Address35, Address36, Address37, Address38, Address39, Address40, Address41, Address42, Address43, Address44, Address45, Address46, Address47, Address48, Address49, Address50] = addressInstances;
+
+    // Create associations between Shipping Address and Orders
+    await Address1.setOrders([1])
+    await Address2.setOrders([2])
+    await Address3.setOrders([3])
+    await Address4.setOrders([4])
+    await Address5.setOrders([5])
+    await Address6.setOrders([6])
+    await Address7.setOrders([7])
+    await Address8.setOrders([8])
+    await Address9.setOrders([9])
+    await Address10.setOrders([10])
+    await Address11.setOrders([11])
+    await Address12.setOrders([12])
+    await Address13.setOrders([13])
+    await Address14.setOrders([14])
+    await Address15.setOrders([15])
 
     // Create associations between Users and Orders
     await User1.setOrders([1, 7])
@@ -55,8 +79,6 @@ async function seed() {
     await User4.setOrders([9, 19])
     await User5.setOrders([14])
     await User6.setOrders([15, 16, 17, 18])
-
-
 
     // Create associations between Orders and ProductInOrder
     await Order1.setProductInOrders([1, 2, 3])
@@ -178,6 +200,7 @@ async function seed() {
   console.log(`seeded ${productInOrders.length} product in orders`)
   console.log(`seeded ${orders.length} orders`)
   console.log(`seeded ${reviews.length} reviews`)
+  console.log(`seeded ${addresses.length} shipping addresses`)
   console.log(`seeded successfully`)
 }
 

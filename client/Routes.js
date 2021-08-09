@@ -25,6 +25,7 @@ class Routes extends Component {
 
 		return (
 			<div>
+<<<<<<< HEAD
 				{isLoggedIn ? (
 					<Switch>
 						<Route path='/home' component={Home} />
@@ -42,6 +43,25 @@ class Routes extends Component {
     	    </Switch>
 				)}
 			</div>
+=======
+				<Switch>
+					<Route path='/' exact component={Welcome} />
+					<Route path='/products' exact component={ProductsList} />
+					<Route path='/products/:productId' component={SingleProduct} />
+					<Route path='/cart' component={Cart} />
+					<Route path='/confirmationpage/:orderId' component={ConfirmationPage} />
+					<Route path='/checkout' component={Checkout} />
+					{!isLoggedIn ? (
+						<React.Fragment>
+							<Route path='/login' component={Login} />
+							<Route path='/signup' component={SignUp} />
+						</React.Fragment>
+					) : (
+						<Route path='/home' exact component={Home} />
+					)}
+				</Switch>
+			</div >
+>>>>>>> 646a613 (confirmation)
 		)
 	}
 }
