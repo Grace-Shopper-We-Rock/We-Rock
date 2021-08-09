@@ -1,4 +1,5 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles'
 import {
 	Container,
@@ -15,8 +16,9 @@ import {
 import { NameEmailForm } from './NameEmailForm'
 import { AddressForm } from './AddressForm'
 import { ReviewOrder } from './ReviewOrder'
+import { fetchUserAddresses } from '../store/address'
 
-export default class Checkout extends React.Component {
+export class Checkout extends React.Component {
 	constructor(props) {
 		super(props)
 		this.steps = ['Shipping address', 'Review your order']
@@ -24,6 +26,7 @@ export default class Checkout extends React.Component {
 			activeStep: 0,
 			firstName: '',
 			lastName: '',
+			email: '',
 			streetAddress: '',
 			city: '',
 			zipCode: '',
@@ -98,6 +101,7 @@ export default class Checkout extends React.Component {
 						<NameEmailForm
 							firstName={this.state.firstName}
 							lastName={this.state.lastName}
+							email={this.state.email}
 							handleChange={this.handleChange}
 						/>
 						<AddressForm
@@ -115,6 +119,32 @@ export default class Checkout extends React.Component {
 				return <ReviewOrder />
 			default:
 				throw new Error('Unknown step')
+		}
+	}
+	async componentDidMount() {
+		const userId = this.props.auth.id
+		if (userId) {
+			await this.props.fetchUserAddresses(userId)
+
+			const {
+				firstName,
+				lastName,
+				email,
+				streetAddress,
+				city,
+				zipCode,
+				state,
+			} = this.props.addresses[0]
+
+			this.setState({
+				firstName,
+				lastName,
+				email,
+				streetAddress,
+				city,
+				zipCode,
+				state,
+			})
 		}
 	}
 	render() {
@@ -181,3 +211,18 @@ export default class Checkout extends React.Component {
 		)
 	}
 }
+
+const mapState = (state) => {
+	return {
+		auth: state.auth,
+		addresses: state.userAddresses,
+	}
+}
+
+const mapDispatch = (dispatch) => {
+	return {
+		fetchUserAddresses: (userId) => dispatch(fetchUserAddresses(userId)),
+	}
+}
+
+export default connect(mapState, mapDispatch)(Checkout)

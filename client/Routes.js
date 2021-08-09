@@ -32,7 +32,10 @@ class Routes extends Component {
 					<Route path='/products' exact component={ProductsList} />
 					<Route path='/products/:productId' component={SingleProduct} />
 					<Route path='/cart' component={Cart} />
-          <Route path='/confirmationpage/:orderId' component={ConfirmationPage} />
+					<Route
+						path='/confirmationpage/:orderId'
+						component={ConfirmationPage}
+					/>
 					<Route path='/checkout' component={Checkout} />
 					{!isLoggedIn ? (
 						<React.Fragment>
@@ -40,10 +43,18 @@ class Routes extends Component {
 							<Route path='/signup' component={SignUp} />
 						</React.Fragment>
 					) : (
-						<Route path='/home' exact component={Home} />
+						<React.Fragment>
+							<Route path='/home' exact component={Home} />
+							<Route path='/login'>
+								<Redirect to='/' />
+							</Route>
+							<Route path='/signup'>
+								<Redirect to='/' />
+							</Route>
+						</React.Fragment>
 					)}
 				</Switch>
-			</div >
+			</div>
 		)
 	}
 }
