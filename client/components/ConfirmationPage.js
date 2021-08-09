@@ -40,13 +40,12 @@ class ConfirmationPage extends Component {
     render() {
         const { classes } = this.props
         const order = this.props.singleOrder
-
+        const shippingAddress = order.shippingAddress
 
         // const productsInOrder = order.productInOrders
-        console.log(this.props)
 
         if (this.state.loading) return <p> Loading...</p>
-        // if (!order.id) return <p> Order Not Found! </p>
+        if (!order.id) return <p> Order Not Found! </p>
         return (
             <div className={classes.heroContent}>
                 <Container maxWidth="sm">
@@ -57,7 +56,7 @@ class ConfirmationPage extends Component {
                         Your order number is {order.id}
                     </Typography>
                     <Typography variant="h5" align="center" color="textSecondary" paragraph>
-                        {/* Your order will be shipped to {order.shippingAddress} */}
+                        Delivery address: {shippingAddress.firstName} {shippingAddress.lastName}, {shippingAddress.streetAddress}, {shippingAddress.city}, {shippingAddress.state}, {shippingAddress.zipCode}
                     </Typography>
                     <Typography variant="h5" align="center" color="textSecondary" paragraph>
                         An email will be sent containing information about your purchase. If you have any questions about your purchase please email us at customerservice@yourock.com.

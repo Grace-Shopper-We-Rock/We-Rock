@@ -47,13 +47,13 @@ class OrderDetails extends Component {
             <div className={classes.heroContent}>
                 <Container maxWidth="sm">
                     <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
-                        {/* Order #{order.id} */}
+                        Order #{order.id}
                     </Typography>
                     <Typography variant="h5" align="center" color="textSecondary" paragraph>
-                        {/* Your order is {order.status} */}
+                        Your order is {order.status}
                     </Typography>
                     <Typography variant="h5" align="center" color="textSecondary" paragraph>
-                        {/* Delivery address: {order.shippingAddress} */}
+                        Delivery address: {order.shippingAddress.streetAddress}, {order.shippingAddress.city}, {order.shippingAddress.state}, {order.shippingAddress.zipCode}
                     </Typography>
                     <Typography variant="h5" align="center" color="textSecondary" paragraph>
                         Order details:
