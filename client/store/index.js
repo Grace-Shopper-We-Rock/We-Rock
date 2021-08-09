@@ -10,20 +10,16 @@ import cartItems from './cartItems'
 import userAddresses from './address'
 
 const reducer = combineReducers({
-	auth,
-	products,
-	singleProduct,
-	cartItems,
-	userAddresses,
+  auth,
+  products,
+  singleProduct,
+  cartItems,
+  userAddresses,
+  singleOrder,
 })
 
-
-<<<<<<< HEAD
-const reducer = combineReducers({ auth, products, singleProduct, singleOrder, cartItems })
-=======
->>>>>>> 6ae27072408c0b51944c8c9e6f2ce28f0aa05ee7
 const middleware = composeWithDevTools(
-	applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))
+  applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))
 )
 const store = createStore(reducer, middleware)
 

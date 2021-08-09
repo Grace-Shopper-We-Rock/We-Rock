@@ -20,6 +20,7 @@ router.get('/:orderId', async (req, res, next) => {
     try {
         const order = await Order.findByPk(req.params.orderId, {
             include: [{ model: User }, { model: ProductInOrder, include: { model: Product } }, { model: ShippingAddress }]
+
         })
         if (order) res.json(order)
         else res.status(404).json('Sorry! We can\'t find this order!')
@@ -33,6 +34,7 @@ router.get('/:userId/', async (req, res, next) => {
     try {
         const order = await Order.findByPk(req.params.orderId, {
             include: [{ model: User }, { model: ProductInOrder, include: { model: Product } }, { model: ShippingAddress }]
+
         })
         if (order) res.json(order)
         else res.status(404).json('Sorry! We can\'t find this order!')
@@ -43,7 +45,7 @@ router.get('/:userId/', async (req, res, next) => {
 })
 
 //POST ROUTES:
-//starting a new cart & hitting submit
+
 router.post('/', async (req, res, next) => {
     try {
         res.status(201).send(await Order.create(req.body));
@@ -51,7 +53,6 @@ router.post('/', async (req, res, next) => {
         next(error);
     }
 });
-
 
 //PUT ROUTES:
 //DEFAULT UPDATE CART ROUTE
