@@ -239,8 +239,10 @@ export class EditProfile extends React.Component {
 									  ))
 									: ''}
 							</Grid>
-							<Grid item style={{ padding: 10 }} md={12}>
-								<Typography component='h4'>Name and Email:</Typography>
+							<Grid item style={{ padding: 10, width: '100%' }} md={12}>
+								<Typography component='h4' display='block'>
+									Name and Email:
+								</Typography>
 							</Grid>
 							<NameEmailForm
 								firstName={this.state.firstName}
@@ -249,7 +251,7 @@ export class EditProfile extends React.Component {
 								handleChange={this.handleChange}
 								required
 							/>
-							<Grid item style={{ padding: 10 }} md={12}>
+							<Grid item style={{ padding: 10, width: '100%' }} md={12}>
 								<Typography component='h4'>Change Password:</Typography>
 							</Grid>
 							<PasswordForm
@@ -257,7 +259,7 @@ export class EditProfile extends React.Component {
 								confirmPassword={this.state.confirmPassword}
 								handleChange={this.handleChange}
 							/>
-							<Grid item style={{ padding: 10 }} md={12}>
+							<Grid item style={{ padding: 10, width: '100%' }} md={12}>
 								<Typography component='h4'>Shipping Address:</Typography>
 							</Grid>
 							<Grid item xs={12} sm={6}>
