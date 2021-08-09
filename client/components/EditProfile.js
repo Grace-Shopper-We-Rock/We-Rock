@@ -141,8 +141,8 @@ export class EditProfile extends React.Component {
 			this.props.updateUserAddress(
 				{
 					email,
-					addressFirstName,
-					addressLastName,
+					firstName: addressFirstName,
+					lastName: addressLastName,
 					streetAddress,
 					city,
 					zipCode,
@@ -321,8 +321,10 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
 	return {
 		fetchUserAddresses: (userId) => dispatch(fetchUserAddresses(userId)),
-		updateUserAddress: (newInfo, userId) => dispatch(updateUserAddress(userId)),
-		updateUserInfo: (newInfo, userId) => dispatch(updateUserInfo(userId)),
+		updateUserAddress: (newInfo, userId) =>
+			dispatch(updateUserAddress(newInfo, userId)),
+		updateUserInfo: (newInfo, userId) =>
+			dispatch(updateUserInfo(newInfo, userId)),
 	}
 }
 

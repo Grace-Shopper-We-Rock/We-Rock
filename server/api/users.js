@@ -76,7 +76,6 @@ router.put(
 					userId: id,
 				},
 			})
-
 			if (!addresses.length) {
 				const newAddress = await ShippingAddress.create(req.body)
 				req.user.addShippingAddress(newAddress)

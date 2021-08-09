@@ -25,7 +25,7 @@ export const updateUserInfo = (newInfo, userId) => {
 		try {
 			const token = window.localStorage.getItem(TOKEN)
 			if (token) {
-				const { data } = await axios.put(`/api/users/${userId}`, {
+				const { data } = await axios.put(`/api/users/${userId}`, newInfo, {
 					headers: {
 						authorization: token,
 					},

@@ -35,11 +35,15 @@ export const updateUserAddress = (newInfo, userId) => {
 		try {
 			const token = window.localStorage.getItem(TOKEN)
 			if (token) {
-				const { data } = await axios.put(`/api/users/${userId}/addresses`, {
-					headers: {
-						authorization: token,
-					},
-				})
+				const { data } = await axios.put(
+					`/api/users/${userId}/addresses`,
+					newInfo,
+					{
+						headers: {
+							authorization: token,
+						},
+					}
+				)
 				dispatch(haveAddresses(data))
 			}
 		} catch (error) {
