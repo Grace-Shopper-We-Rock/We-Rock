@@ -53,7 +53,7 @@ router.post('/', async (req, res, next) => {
 //PUT ROUTES:
 router.put('/:orderId', async (req, res, next) => {
     try {
-        const order = await Order.findByPk(req.params.orderId);
+        const order = await Order.findByPk(req.params.orderId)
         res.send(await order.update(req.body))
     } catch (error) {
         next(error);

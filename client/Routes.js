@@ -32,7 +32,7 @@ class Routes extends Component {
 					<Route path='/products' exact component={ProductsList} />
 					<Route path='/products/:productId' component={SingleProduct} />
 					<Route path='/cart' component={Cart} />
-          <Route path='/confirmationpage/:orderId' component={ConfirmationPage} />
+					<Route path='/confirmationpage/:orderId' component={ConfirmationPage} />
 					<Route path='/checkout' component={Checkout} />
 					{!isLoggedIn ? (
 						<React.Fragment>
