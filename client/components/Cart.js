@@ -25,8 +25,6 @@ class Cart extends Component {
             loading: true,
             productsInOrder: [{ productId: 1, quantity: 1 }, { productId: 2, quantity: 3 }],
             totalAmount: 0,
-            status: 'cart',
-            addressId: null,
         }
     }
 
