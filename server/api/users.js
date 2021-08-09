@@ -2,11 +2,13 @@ const router = require('express').Router()
 const {
 	models: { User, ShippingAddress },
 } = require('../db')
+
 const {
 	requireToken,
 	tokenMatchRequest,
 	isAdmin,
 } = require('../securityMiddleware')
+
 module.exports = router
 
 router.get('/', requireToken, isAdmin, async (req, res, next) => {

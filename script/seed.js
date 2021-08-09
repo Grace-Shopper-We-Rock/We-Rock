@@ -1,14 +1,13 @@
 'use strict'
-const {
-	db,
-	models: { User, Product, ProductInOrder, Order, Review, ShippingAddress },
-} = require('../server/db')
+
+const { db, models: { User, Product, ProductInOrder, Order, Review, ShippingAddress } } = require('../server/db')
 
 const products = require('./productData')
 const users = require('./userData')
 const productInOrders = require('./productInOrderData')
 const orders = require('./orderData')
 const reviews = require('./reviewData')
+const addresses = require('./shippingAddressData')
 const { ContactsTwoTone } = require('@material-ui/icons')
 
 /**

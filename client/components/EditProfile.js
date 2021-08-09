@@ -321,23 +321,26 @@ export class EditProfile extends React.Component {
 									Submit Changes
 								</Button>
 							</Grid>
-							{this.state.snackbarOpen ? (
-								<Snackbar
-									open={this.state.snackbarOpen}
-									autoHideDuration={6000}
-									onClose={this.handleClose}
-									anchorOrigin={{
-										vertical: 'bottom',
-										horizontal: 'right',
-									}}
-								>
-									<React.Fragment>
-										<Alert onClose={this.handleClose} severity='success'>
-											Changes Saved!
-										</Alert>
-									</React.Fragment>
-								</Snackbar>
-							) : null}
+							{this.state.snackbarOpen
+								? ((
+										<Snackbar
+											open={this.state.snackbarOpen}
+											autoHideDuration={6000}
+											onClose={this.handleClose}
+											anchorOrigin={{
+												vertical: 'bottom',
+												horizontal: 'right',
+											}}
+										>
+											<React.Fragment>
+												<Alert onClose={this.handleClose} severity='success'>
+													Changes Saved!
+												</Alert>
+											</React.Fragment>
+										</Snackbar>
+								  ),
+								  (<Redirect to='/home' />))
+								: null}
 						</Grid>
 					</Grid>
 				</Paper>

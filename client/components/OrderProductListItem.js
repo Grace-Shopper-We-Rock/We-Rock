@@ -13,10 +13,10 @@ import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 
 
-const ProductListItem = (props) => {
+const OrderProductListItem = (props) => {
     const { product, classes } = props
     return (
-        <Grid item key={product.id} xs={12} sm={6} md={4}>
+        <Grid item key={product.id}>
             <Card className={classes.card}>
                 <CardMedia
                     className={classes.cardMedia}
@@ -34,16 +34,13 @@ const ProductListItem = (props) => {
                 <CardActions>
                     <Link to={`/products/${product.id}`}>
                         <Button size="small" color="primary">
-                            Learn More!
+                            See more
                         </Button>
                     </Link>
-                    <Button size="small" color="primary">
-                        Take Me Home!
-                    </Button>
                 </CardActions>
             </Card>
         </Grid>
     )
 }
 
-export default withStyles(useStyles)(ProductListItem)
+export default withStyles(useStyles)(OrderProductListItem)

@@ -17,6 +17,7 @@ const reducer = combineReducers({
 	userAddresses,
 	singleOrder,
 })
+
 const middleware = composeWithDevTools(
 	applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))
 )
