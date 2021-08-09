@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { fetchProducts } from '../store/products'
-
+import { Link } from 'react-router-dom'
 
 //Matieral-UI elements:
 import useStyles from '../../public/useStyles'
@@ -33,41 +33,52 @@ class Cart extends Component {
         this.setState({ loading: false })
     }
 
+    componentDidMount() {
+        this.props.getProducts()
+        this.setState({ loading: false })
+    }
+
     render() {
         const { classes, products } = this.props
 
         if (this.state.loading) return <p> Loading...</p>
         return (
-            <Container className={classes.cartGrid} maxWidth="md">
-                <Grid container spacing={2} >
+            <Container className={classes.cartGrid} maxWidth='md'>
+                <Grid container spacing={2}>
                     <Grid item xs={10} sm={10} md={10}>
                         <CartItems />
                     </Grid>
                 </Grid>
 
                 <Box width={450} maxHeight={300}>
-                    < Card className={classes.cartCard}>
+                    <Card className={classes.cartCard}>
                         <CardHeader
                             title={`Order Summary`}
                             style={{ textAlign: 'center' }}
                         />
                         <CardContent className={classes.cardContent}>
-                            <Typography variant="h5" align="center" color="textSecondary" paragraph>
+                            <Typography
+                                variant='h5'
+                                align='center'
+                                color='textSecondary'
+                                paragraph
+                            >
                                 total price $
                             </Typography>
-                            <Typography align="center" color="textSecondary" paragraph>
+                            <Typography align='center' color='textSecondary' paragraph>
                                 Ready to meet your new friends?
                             </Typography>
                         </CardContent>
                         <CardActions>
-                            <Button variant="contained" color="primary">
-                                CheckOut
-                            </Button>
+                            <Link to='/checkout'>
+                                <Button variant='contained' color='primary'>
+                                    CheckOut
+                                </Button>
+                            </Link>
                         </CardActions>
-                    </Card >
+                    </Card>
                 </Box>
-
-            </Container >
+            </Container>
         )
     }
 }
@@ -75,7 +86,7 @@ class Cart extends Component {
 const mapState = (state) => {
     return {
         cart: state.cart,
-        products: state.products
+        products: state.products,
     }
 }
 

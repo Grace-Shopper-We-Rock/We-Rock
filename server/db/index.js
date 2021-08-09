@@ -29,7 +29,7 @@ ProductInOrder.belongsTo(Order)
 
 // foreign key: addressId
 ShippingAddress.hasMany(Order)
-Order.belongsTo(ShippingAddress, { through: 'OrderDetail', foreignKey: 'addressId' })
+Order.belongsTo(ShippingAddress, { through: 'OrderDetail', foreignKey: 'shippingAddressId' })
 
 // foreign key: addressId
 // ShippingAddress.belongsToMany(User, { through: 'UserShipping' })

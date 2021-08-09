@@ -79,13 +79,11 @@ export const AddressForm = (props) => {
 		handleSelect,
 		required,
 	} = props
-	console.log('ADDRESS PROPS: ', props)
 
 	return (
 		<React.Fragment>
 			<Grid item xs={12}>
 				<TextField
-					// {...props}
 					variant='outlined'
 					fullWidth
 					name='streetAddress'
@@ -98,7 +96,6 @@ export const AddressForm = (props) => {
 			</Grid>
 			<Grid item xs={12} sm={6}>
 				<TextField
-					// {...props}
 					variant='outlined'
 					fullWidth
 					name='city'
@@ -111,7 +108,6 @@ export const AddressForm = (props) => {
 			</Grid>
 			<Grid item xs={12} sm={6}>
 				<TextField
-					// {...props}
 					variant='outlined'
 					fullWidth
 					name='zipCode'
@@ -127,11 +123,11 @@ export const AddressForm = (props) => {
 					id='state-selection-dropdown'
 					options={stateAbbreviations}
 					style={{ width: 150 }}
+					value={state}
 					getOptionLabel={(option) => option}
 					renderInput={(params) => (
 						<TextField
 							{...params}
-							// {...props}
 							name='state'
 							variant='outlined'
 							label='State'

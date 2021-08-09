@@ -16,6 +16,7 @@ import PersonAddIcon from '@material-ui/icons/PersonAdd'
 import { makeStyles } from '@material-ui/core/styles'
 import { NameEmailForm } from './NameEmailForm'
 import { AddressForm } from './AddressForm'
+import { PasswordForm } from './PasswordForm'
 
 //build in form validation/error handling if input is not allowed, passwords don't match, etc.
 //build onSubmit function - redirect user to login page after successful account creation?
@@ -74,11 +75,21 @@ export class SignUp extends React.Component {
 		}))
 	}
 	async validateFormData(userInfo) {
-		console.log('validateFormData called')
+		// console.log('validateFormData called')
 		let errors = []
 
 		if (userInfo.password !== this.state.confirmPassword) {
 			errors.push('Passwords do not match.')
+		}
+
+		let requiredInfo = [
+			userInfo.firstName,
+			userInfo.lastName,
+			userInfo.password,
+			this.state.confirmPassword,
+		]
+		if (requiredInfo.includes('')) {
+			errors.push('Please fill out all required fields.')
 		}
 
 		//if array of address values includes undefined/"" and not every item in the array is undefined/''
@@ -108,7 +119,7 @@ export class SignUp extends React.Component {
 	}
 	async handleSubmit(evt) {
 		evt.preventDefault()
-		console.log('handleSubmit called')
+		// console.log('handleSubmit called')
 		const email = evt.target.email.value
 		const password = evt.target.password.value
 		const firstName = evt.target.firstName.value
@@ -194,33 +205,14 @@ export class SignUp extends React.Component {
 								firstName={firstName}
 								lastName={lastName}
 								handleChange={this.handleChange}
+								required
 							/>
-							<Grid item xs={12}>
-								<TextField
-									variant='outlined'
-									required
-									fullWidth
-									name='password'
-									label='Password'
-									type='password'
-									id='password'
-									value={password}
-									onChange={(event) => this.handleChange(event)}
-								/>
-							</Grid>
-							<Grid item xs={12}>
-								<TextField
-									variant='outlined'
-									required
-									fullWidth
-									name='confirmPassword'
-									label='Confirm Password'
-									type='password'
-									id='confirmPassword'
-									value={confirmPassword}
-									onChange={(event) => this.handleChange(event)}
-								/>
-							</Grid>
+							<PasswordForm
+								password={password}
+								confirmPassword={confirmPassword}
+								handleChange={this.handleChange}
+								required
+							/>
 							<Typography component='h4'>Address</Typography>
 							<AddressForm
 								streetAddress={streetAddress}

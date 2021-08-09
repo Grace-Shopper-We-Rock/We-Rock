@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { fetchSingleOrder } from '../store/singleOrder'
+import OrderProductList from './OrderProductList'
 
 //Matieral-UI elements:
 import useStyles from '../../public/useStyles'
@@ -19,7 +20,7 @@ import Box from '@material-ui/core/Box'
 import Rating from '@material-ui/lab/Rating'
 import Grid from '@material-ui/core/Grid'
 
-class ConfirmationPage extends Component {
+class OrderDetails extends Component {
     constructor() {
         super()
         this.state = {
@@ -31,7 +32,6 @@ class ConfirmationPage extends Component {
         try {
             this.props.loadSingleOrder(this.props.match.params.orderId)
             this.setState({ loading: false })
-            console.log(this.props)
         } catch (err) {
             console.error(err)
         }
@@ -41,38 +41,34 @@ class ConfirmationPage extends Component {
         const { classes } = this.props
         const order = this.props.singleOrder
 
-
-        // const productsInOrder = order.productInOrders
-        console.log(this.props)
-
         if (this.state.loading) return <p> Loading...</p>
         // if (!order.id) return <p> Order Not Found! </p>
         return (
             <div className={classes.heroContent}>
                 <Container maxWidth="sm">
                     <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
-                        Thank you, your order has been confirmed!
+                        {/* Order #{order.id} */}
                     </Typography>
                     <Typography variant="h5" align="center" color="textSecondary" paragraph>
-                        Your order number is {order.id}
+                        {/* Your order is {order.status} */}
                     </Typography>
                     <Typography variant="h5" align="center" color="textSecondary" paragraph>
-                        {/* Your order will be shipped to {order.shippingAddress} */}
+                        {/* Delivery address: {order.shippingAddress} */}
                     </Typography>
                     <Typography variant="h5" align="center" color="textSecondary" paragraph>
-                        An email will be sent containing information about your purchase. If you have any questions about your purchase please email us at customerservice@yourock.com.
+                        Order details:
                     </Typography>
-                    {/* <main>
+                    <main>
                         {this.state.loading ? (<p> Loading...</p >) : (
                             <Container className={classes.cardGrid} maxWidth="md">
-                                <Grid container spacing={4}>
-                                    {productsInOrder.map((product) => (
-                                        <ProductListItem key={product.id} product={product} />
-                                    ))}
+                                <Grid container spacing={2} >
+                                    <Grid item xs={10} sm={10} md={10}>
+                                        <OrderProductList />
+                                    </Grid>
                                 </Grid>
                             </Container>
                         )}
-                    </main > */}
+                    </main >
                     <div className={classes.heroButtons}>
                         <Grid container spacing={2} justifyContent="center">
                             <Grid item>
