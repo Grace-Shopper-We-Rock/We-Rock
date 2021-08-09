@@ -17,15 +17,7 @@ import CardMedia from '@material-ui/core/CardMedia'
 import CardHeader from '@material-ui/core/CardHeader'
 import FavoriteIcon from '@material-ui/icons/Favorite'
 import Box from '@material-ui/core/Box'
-import Rating from '@material-ui/lab/Rating'
-const StyledRating = withStyles({
-    iconFilled: {
-        color: '#ff6d75',
-    },
-    iconHover: {
-        color: '#ff3d47',
-    },
-})(Rating)
+import { StyledRating } from '../../public/useStyles'
 class SingleProduct extends Component {
     constructor() {
         super()
