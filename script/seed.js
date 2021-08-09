@@ -49,6 +49,9 @@ async function seed() {
     const [Product1, Product2, Product3, Product4, Product5, Product6, Product7, Product8, Product9, Product10, Product11, Product12, Product13, Product14, Product15, Product16, Product17, Product18, Product19, Product20, Product21, Product22, Product23, Product24, Product25, Product26, Product27, Product28, Product29, Product30, Product31, Product32, Product33, Product34, Product35, Product36, Product37, Product38, Product39, Product40, Product41, Product42, Product43, Product44, Product45, Product46, Product47, Product48, Product49, Product50] = productInstances;
 
     // Create associations between Users and Orders
+    await [Order1, Order7].map(order => order.belongsTo(User1))
+
+
     await User1.setOrders([1, 7])
     await User2.setOrders([3])
     await User3.setOrders([2, 10, 12])
