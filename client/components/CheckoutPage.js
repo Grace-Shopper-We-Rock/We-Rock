@@ -132,6 +132,7 @@ export class Checkout extends React.Component {
 	async validateFormData(formInfo) {
 		let errors = []
 
+		// o: look into using backend validation for this instead of both
 		let regexZipCode = /^[0-9]{5}(?:-[0-9]{4})?$/
 		if (formInfo.zipCode !== '' && !regexZipCode.test(formInfo.zipCode)) {
 			errors.push('Please provide a valid zip code.')
@@ -151,6 +152,7 @@ export class Checkout extends React.Component {
 	}
 	async componentDidMount() {
 		const userId = this.props.auth.id
+		
 		if (userId) {
 			await this.props.fetchUserAddresses(userId)
 
@@ -164,6 +166,7 @@ export class Checkout extends React.Component {
 					zipCode,
 					state,
 				} = this.props.addresses[0]
+
 				this.setState({
 					firstName,
 					lastName,

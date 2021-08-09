@@ -28,6 +28,7 @@ class CartItems extends Component {
     render() {
         const { classes, products } = this.props
 
+        // o: is this an either or situation
         if (this.state.loading) return <p> Loading...</p>
         return (
             this.props.products.length ? (

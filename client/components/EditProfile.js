@@ -92,6 +92,7 @@ export class EditProfile extends React.Component {
 	async validateFormData(info) {
 		let errors = []
 
+		// o: what is happening here?
 		let allDataKeys = Object.keys(info)
 		console.log(allDataKeys)
 		for (const element of allDataKeys) {

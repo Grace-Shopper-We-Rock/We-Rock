@@ -22,6 +22,7 @@ router.get('/:orderId', async (req, res, next) => {
             include: [{ model: User }, { model: ProductInOrder, include: { model: Product } }, { model: ShippingAddress }]
 
         })
+        // o: you can also send this to the error handler
         if (order) res.json(order)
         else res.status(404).json('Sorry! We can\'t find this order!')
     }
@@ -36,6 +37,8 @@ router.get('/:userId/', async (req, res, next) => {
             include: [{ model: User }, { model: ProductInOrder, include: { model: Product } }, { model: ShippingAddress }]
 
         })
+        
+        // o: you can also send this to the error handler
         if (order) res.json(order)
         else res.status(404).json('Sorry! We can\'t find this order!')
     }
