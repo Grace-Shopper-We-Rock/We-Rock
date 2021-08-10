@@ -15,7 +15,10 @@ const requireToken = async (req, res, next) => {
 const tokenMatchRequest = async (req, res, next) => {
 	try {
 		if (req.user.id !== Number(req.params.userId)) {
-			return res.status(403).send('Access not permitted.')
+			return next({
+				status: 403,
+				message: 'Access not permitted.',
+			})
 		} else {
 			next()
 		}
@@ -27,7 +30,10 @@ const tokenMatchRequest = async (req, res, next) => {
 const isAdmin = (req, res, next) => {
 	try {
 		if (!req.user.isAdmin) {
-			return res.status(403).send('Access not permitted.')
+			return next({
+				status: 403,
+				message: 'Access not permitted.',
+			})
 		} else {
 			next()
 		}

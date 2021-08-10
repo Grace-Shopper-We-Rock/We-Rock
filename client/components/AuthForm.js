@@ -49,9 +49,12 @@ class AuthForm extends React.Component {
 			},
 		}))
 	}
-	componentWillUnmount() {
+	async componentWillUnmount() {
+		// console.log('this.props.error: ', this.props.error)
+		// console.log('this.props.auth.id: ', this.props.auth.id)
+		console.log('clear auth running now')
 		if (this.props.error) {
-			this.props.clearAuth()
+			await this.props.clearAuth()
 		}
 	}
 	render() {
@@ -142,24 +145,18 @@ class AuthForm extends React.Component {
 const mapLogin = (state) => {
 	return {
 		error: state.auth.error,
+		auth: state.auth,
 	}
 }
 
-// const mapSignup = (state) => {
-// 	return {
-// 		name: 'signup',
-// 		displayName: 'Sign Up',
-// 		error: state.auth.error,
-// 	}
-// }
-
 const mapDispatch = (dispatch) => {
 	return {
-		handleSubmit(evt) {
+		async handleSubmit(evt) {
 			evt.preventDefault()
 			const email = evt.target.email.value
 			const password = evt.target.password.value
-			dispatch(authenticate({ email, password }, 'login'))
+			console.log('authenticate running now')
+			await dispatch(authenticate({ email, password }, 'login'))
 		},
 		clearAuth: () => dispatch(clearAuth()),
 	}
