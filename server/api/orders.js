@@ -96,6 +96,41 @@ router.put('/:orderId', async (req, res, next) => {
 	}
 })
 
+//creating a new address and associating with order - also associates address w/ User id provided
+//needs orderId in params, userId is optional - req.body includes new address information
+router.put('/:orderId/address/:userId', async (req, res, next) => {
+	try {
+		const [address, wasCreated] = await ShippingAddress.findOrCreate({
+			where: req.body,
+		})
+
+		//const address = await ShippingAddress.create(req.body)
+		const order = await Order.findByPk(req.params.orderId)
+		await address.addOrder(order)
+		if (req.params.userId) {
+			const user = await User.findByPk(Number(req.params.userId))
+			await user.addShippingAddress(address)
+		}
+		res.json(address)
+	} catch (error) {
+		next(error)
+	}
+})
+
+//finds a users existing address OR creates a new address if there are changes and associates with the order
+router.put('/:orderId/:addressId', async (req, res, next) => {
+	try {
+		const address = await ShippingAddress.findByPk(
+			Number(req.params.address.id)
+		)
+		const order = await Order.findByPk(Number(req.params.orderId))
+		await address.addOrder(order)
+		res.status(200).json(address)
+	} catch (error) {
+		next(error)
+	}
+})
+
 //DELETE ROUTES:
 router.delete('/:orderId', async (req, res, next) => {
 	try {

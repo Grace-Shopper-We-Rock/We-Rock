@@ -17,7 +17,11 @@ import { NameEmailForm } from './NameEmailForm'
 import { AddressForm } from './AddressForm'
 import { ReviewOrder } from './ReviewOrder'
 import ConfirmationPage from './ConfirmationPage'
-import { fetchUserAddresses } from '../store/address'
+import {
+	fetchUserAddresses,
+	createNewOrderAddress,
+	associateAddressToOrder,
+} from '../store/address'
 import { updateCartThunk } from '../store/cart'
 
 export class Checkout extends React.Component {
@@ -105,8 +109,30 @@ export class Checkout extends React.Component {
 	}
 	async handleConfirm() {
 		if (this.state.activeStep === 1) {
+			const {
+				firstName,
+				lastName,
+				email,
+				streetAddress,
+				city,
+				zipCode,
+				state,
+			} = this.state
+			let userId = this.props.auth.id
+			await this.props.createNewOrderAddress(
+				this.props.cart.id,
+				{
+					email,
+					firstName,
+					lastName,
+					streetAddress,
+					city,
+					zipCode,
+					state,
+				},
+				userId
+			)
 			await this.props.updateCart({ status: 'inProcess' }, this.props.cart.id)
-			//dispatch a thunk that will create a user's address and associate it with the order ID
 			this.setState({ confirmationPage: true })
 		}
 	}
@@ -288,6 +314,10 @@ const mapDispatch = (dispatch) => {
 	return {
 		fetchUserAddresses: (userId) => dispatch(fetchUserAddresses(userId)),
 		updateCart: (update, cartId) => dispatch(updateCartThunk(update, cartId)),
+		associateAddressToOrder: (orderId, addressId) =>
+			dispatch(associateAddressToOrder(orderId, addressId)),
+		createNewOrderAddress: (orderId, newAddressInfo, userId) =>
+			dispatch(createNewOrderAddress(orderId, newAddressInfo, userId)),
 	}
 }
 

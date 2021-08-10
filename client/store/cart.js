@@ -117,8 +117,12 @@ export default function (state = {}, action) {
 		case SET_CART:
 			return action.cart
 		case ADD_CART_ITEM:
-			let newProductsArray = [...state.productInOrders, action.product]
-			return { ...state, productInOrders: newProductsArray }
+			if (state.productInOrders) {
+				let newProductsArray = [...state.productInOrders, action.product]
+				return { ...state, productInOrders: newProductsArray }
+			} else {
+				return { ...state, productInOrders: action.product }
+			}
 		case DELETE_CART_ITEM:
 			let deletedProductsArray = state.productInOrders.filter(
 				(product) => product.id !== action.prodId
