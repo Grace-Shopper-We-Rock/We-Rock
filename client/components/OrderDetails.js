@@ -5,7 +5,7 @@ import { fetchSingleOrder } from '../store/singleOrder'
 import OrderProductListItem from './OrderProductListItem'
 import OrderProductList from './OrderProductList'
 
-//Matieral-UI elements:
+// Matieral-UI elements:
 import useStyles from '../../public/useStyles'
 import { withStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
@@ -83,7 +83,7 @@ class OrderDetails extends Component {
                     <div className={classes.heroButtons}>
                         <Grid container spacing={2} justifyContent="center">
                             <Grid item>
-                                <Link to={`/orderdetails`}>
+                                <Link to={`/orders/user/${order.user.id}`}>
                                     <Button variant="outlined" color="primary">
                                         Return to all orders
                                     </Button>

@@ -21,28 +21,26 @@ router.get('/', async (req, res, next) => {
 	}
 })
 
-//user auth middleware
-router.get('/:orderId', async (req, res, next) => {
+// get orders for specific user
+router.get('/user/:userId', async (req, res, next) => {
 	try {
-		const order = await Order.findByPk(req.params.orderId, {
-			include: [
+		const orders = await Order.findAll({
+			where: {
+				userId: req.params.userId
+			}, include: [
 				{ model: User },
 				{ model: ProductInOrder, include: { model: Product } },
 				{ model: ShippingAddress },
 			],
 		})
-		if (order) res.json(order)
-		else
-			next({
-				status: 404,
-				message: "Sorry! We can't find this order!",
-			})
+		res.json(orders)
 	} catch (err) {
 		next(err)
 	}
 })
 
-router.get('/:orderId/', async (req, res, next) => {
+//user auth middleware
+router.get('/:orderId', async (req, res, next) => {
 	try {
 		const order = await Order.findByPk(req.params.orderId, {
 			include: [
@@ -66,19 +64,14 @@ router.get('/:orderId/', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
 	try {
-		res.status(201).send(
-			await Order.create(req.body, {
-				include: [
-					{ model: User },
-					{ model: ProductInOrder, include: { model: Product } },
-					{ model: ShippingAddress },
-				],
-			})
-		)
+		res.status(201).send(await Order.create(req.body, {
+			include: [{ model: User }, { model: ProductInOrder, include: { model: Product } }, { model: ShippingAddress }]
+		}));
 	} catch (error) {
-		next(error)
+		next(error);
 	}
-})
+});
+
 
 //PUT ROUTES:
 //DEFAULT UPDATE CART ROUTE

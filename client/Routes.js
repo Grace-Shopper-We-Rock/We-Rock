@@ -15,8 +15,7 @@ import Reviews from './components/Reviews'
 import Checkout from './components/CheckoutPage'
 import EditProfile from './components/EditProfile'
 import OrderDetails from './components/OrderDetails'
-import AllOrders from './components/AllOrders'
-import { fetchCart } from './store/cart'
+import AllUserOrders from './components/AllUserOrders'
 
 /**
  * COMPONENT
@@ -37,12 +36,18 @@ class Routes extends Component {
 					<Route path='/products' exact component={ProductsList} />
 					<Route path='/products/:productId' component={SingleProduct} />
 					<Route path='/cart' component={Cart} />
+<<<<<<< HEAD
 					<Route
 						path='/confirmationpage/:orderId'
 						component={ConfirmationPage}
 					/>
 					<Route path='/orderdetails' exact component={AllOrders} />
 					<Route path='/orderdetails/:orderId' component={OrderDetails} />
+=======
+					<Route path='/confirmationpage/:orderId' component={ConfirmationPage} />
+					<Route path='/orders/user/:userId' exact component={AllUserOrders} />
+					<Route path='/orders/:orderId' component={OrderDetails} />
+>>>>>>> fc9d0b2a3d21193e8eb111c14396e1660eaece57
 					<Route path='/checkout' component={Checkout} />
 					{!isLoggedIn ? (
 						<React.Fragment>

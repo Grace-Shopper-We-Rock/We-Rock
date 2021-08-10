@@ -27,10 +27,10 @@ class ProductsList extends Component {
 	}
 
 	render() {
-		const { classes, products, cart } = this.props
+		const { classes, products, cart, isLoggedIn } = this.props
 		return (
 			<main>
-				{this.state.loading ? (
+				{this.state.loading || (isLoggedIn && cart.status === 'noCart') ? (
 					<p> Loading...</p>
 				) : (
 					<Container className={classes.cardGrid} maxWidth='md'>
@@ -50,6 +50,7 @@ const mapState = (state) => {
 	return {
 		products: state.products,
 		cart: state.cart,
+		isLoggedIn: !!state.auth.id,
 	}
 }
 

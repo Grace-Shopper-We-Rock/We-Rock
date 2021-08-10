@@ -79,7 +79,7 @@ class ConfirmationPage extends Component {
                                         View more pet rocks!
                                     </Button>
                                 </Link>
-                                <Link to={`/orderdetails/${order.id}`}>
+                                <Link to={`/orders/${order.id}`}>
                                     <Button variant="outlined" color="primary">
                                         Check order status
                                     </Button>
