@@ -53,7 +53,7 @@ class SingleProduct extends Component {
         if (!product.id) return <p> Rock Not Found! </p>
         return (
             <Container className={classes.cardGrid} maxWidth="sm">
-                <Card className={classes.card}>
+                <Card>
                     <CardHeader
                         title={`Hi, my name is ${product.name}!`}
                         style={{ textAlign: 'center' }}
@@ -66,6 +66,8 @@ class SingleProduct extends Component {
                     <CardContent className={classes.cardContent}>
                         <Typography variant="h5" align="center" color="textSecondary" paragraph>
                             {product.description}
+                            <hr />
+                            {product.price / 100}$
                         </Typography>
                         <Box component="fieldset" mb={3} borderColor="transparent" align="center">
                             <Typography component="legend">Avg Support Rating</Typography>

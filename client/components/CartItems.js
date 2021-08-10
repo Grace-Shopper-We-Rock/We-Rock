@@ -10,31 +10,41 @@ import Container from '@material-ui/core/Container'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import ProductInCartListItem from './ProductInCartListItem'
+import { addCartItemThunk, fetchCart, deleteCartItemThunk } from '../store/cart'
 
 class CartItems extends Component {
     constructor() {
         super()
         this.state = {
             loading: true,
-            productsInOrder: [{ productId: 1, quantity: 1 }, { productId: 2, quantity: 3 }],
+            selectedProduct: {}
         }
     }
 
     componentDidMount() {
-        this.props.getProducts()
         this.setState({ loading: false })
+    }
+
+    handleAddToCart(evt) {
+        evt.preventDefault();
+        this.props.cart.id ? (
+            this.props.addCartItem({ ...this.state.selectedProduct })
+        ) : (
+            this.setState({ productsInGuestOrder: [...productsInGuestOrder, selectedProduct] })
+        )
+        this.setState({ selectedProduct: {} })
     }
 
     render() {
         const { classes, products } = this.props
 
         if (this.state.loading) return <p> Loading...</p>
-        return (
-            this.props.products.length ? (
-                this.state.productsInOrder.map(product =>
+        else return (
+            this.props.cart.productInOrders ? (
+                this.props.cart.productInOrders.map(prodInOrder =>
                     <ProductInCartListItem
-                        key={product.productId} quantity={product.quantity}
-                        product={products.find(prod => prod.id === product.productId)}
+                        key={prodInOrder.productId} quantity={prodInOrder.quantity}
+                        product={prodInOrder.product}
                     />
                 )
             ) : (
@@ -50,13 +60,15 @@ class CartItems extends Component {
 
 const mapState = (state) => {
     return {
-        products: state.products
+        products: state.products,
+        cart: state.cart
     }
 }
 
 const mapDispatch = (dispatch) => {
     return {
         getProducts: () => dispatch(fetchProducts()),
+        loadCart: (userId) => dispatch(fetchCart(userId))
     }
 }
 

@@ -28,7 +28,7 @@ const Reviews = (props) => {
                 <Grid container spacing={4}>
                     {reviews.map(review => (
                         <Grid item key={review.id} xs={12} sm={12} md={12}>
-                            <Card className={classes.card}>
+                            <Card>
                                 <CardContent className={classes.cardContent}>
                                     {review.text}
                                 </CardContent>

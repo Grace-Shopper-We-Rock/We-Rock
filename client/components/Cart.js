@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { fetchProducts } from '../store/products'
 import { Link } from 'react-router-dom'
 
 //Matieral-UI elements:
@@ -15,31 +14,25 @@ import CardContent from '@material-ui/core/CardContent'
 import CardHeader from '@material-ui/core/CardHeader'
 import Grid from '@material-ui/core/Grid'
 import Box from '@material-ui/core/Box'
-import ProductInCart from './ProductInCartListItem'
 import CartItems from './CartItems'
+import { addCartItemThunk, fetchCart, deleteCartItemThunk } from '../store/cart'
 
 class Cart extends Component {
     constructor() {
         super()
         this.state = {
             loading: true,
-            productsInOrder: [{ productId: 1, quantity: 1 }, { productId: 2, quantity: 3 }],
-            totalAmount: 0,
         }
     }
 
     componentDidMount() {
-        this.props.getProducts()
+        this.props.loadCart(undefined, 3)
         this.setState({ loading: false })
     }
 
-    componentDidMount() {
-        this.props.getProducts()
-        this.setState({ loading: false })
-    }
 
     render() {
-        const { classes, products } = this.props
+        const { classes, cart } = this.props
 
         if (this.state.loading) return <p> Loading...</p>
         return (
@@ -63,7 +56,7 @@ class Cart extends Component {
                                 color='textSecondary'
                                 paragraph
                             >
-                                total price $
+                                {cart.totalAmount / 100} $
                             </Typography>
                             <Typography align='center' color='textSecondary' paragraph>
                                 Ready to meet your new friends?
@@ -92,8 +85,9 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
     return {
-        getProducts: () => dispatch(fetchProducts()),
-        // loadCart: (userId) => dispatch(fetchCart(userId))
+        addToCart: (newProductInOrder) => dispatch(addCartItemThunk(newProductInOrder)),
+        updateCart: (userId) => dispatch(updateCartItemsThunk(userId)),
+        loadCart: (userId, orderId) => dispatch(fetchCart(userId, orderId))
     }
 }
 

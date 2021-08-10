@@ -6,16 +6,16 @@ import auth from './auth'
 import products from './products'
 import singleProduct from './singleProduct'
 import singleOrder from './singleOrder'
-import cartItems from './cartItems'
+import cart from './cart'
 import userAddresses from './address'
 
 const reducer = combineReducers({
 	auth,
 	products,
 	singleProduct,
-	cartItems,
+	cart,
 	userAddresses,
-  singleOrder,
+	singleOrder,
 })
 
 const middleware = composeWithDevTools(

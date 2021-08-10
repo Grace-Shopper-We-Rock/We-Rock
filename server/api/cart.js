@@ -32,10 +32,10 @@ router.get('/:userId', async (req, res, next) => {
 })
 
 //POST ROUTES:
-//Create a new ProductInCart:
+//Create a new ProductInOrder:
 router.post('/products', async (req, res, next) => {
     try {
-        res.status(201).send(await ProductInCart.create(req.body));
+        res.status(201).send(await ProductInOrder.create(req.body));
     } catch (error) {
         next(error);
     }
@@ -43,10 +43,10 @@ router.post('/products', async (req, res, next) => {
 
 
 //PUT ROUTES:
-//UPDATE ProductInCart:
-router.put('/products/:productInCartId', async (req, res, next) => {
+//UPDATE ProductInOrder:
+router.put('/products/:productInOrderId', async (req, res, next) => {
     try {
-        const order = await ProductInCart.findByPk(req.params.productInCartId);
+        const order = await ProductInOrder.findByPk(req.params.productInOrderId);
         res.send(await order.update(req.body))
     } catch (error) {
         next(error);
@@ -54,10 +54,10 @@ router.put('/products/:productInCartId', async (req, res, next) => {
 });
 
 //DELETE ROUTES:
-//delete ProductInCart:
-router.delete('/products/:productInCartId', async (req, res, next) => {
+//delete ProductInOrder:
+router.delete('/products/:productInOrderId', async (req, res, next) => {
     try {
-        const product = await ProductInCart.findByPk(req.params.productInCartId);
+        const product = await ProductInOrder.findByPk(req.params.productInOrderId);
         await product.destroy();
         res.json(product);
     } catch (error) {
