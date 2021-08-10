@@ -47,17 +47,11 @@ class Routes extends Component {
 					) : (
 						<React.Fragment>
 							<Route path='/home' exact component={Home} />
-							<Route path='/login'>
-								<Redirect to='/' />
-							</Route>
-							<Route path='/signup'>
-								<Redirect to='/' />
-							</Route>
 							<Route path='/editProfile' component={EditProfile} />
 						</React.Fragment>
 					)}
 				</Switch>
-			</div >
+			</div>
 		)
 	}
 }

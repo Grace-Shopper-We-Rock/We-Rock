@@ -41,12 +41,20 @@ router.post('/', requireToken, isAdmin, async (req, res, next) => {
 router.put('/:productId', requireToken, isAdmin, async (req, res, next) => {
 	try {
 		const productId = Number(req.params.productId)
-		const product = await Product.findByPk(productId)
-		if (!product) {
-			return res.status(404).send(`Product with id ${productId} not found.`)
+		console.log(req.body)
+		const [numAffected, affectedRows] = await Product.update(req.body, {
+			where: { id: productId },
+			returning: true,
+		})
+
+		if (!numAffected) {
+			return next({
+				status: 404,
+				message: `Product with id ${productId} not found.`,
+			})
 		}
-		const updatedProduct = await product.update(req.body)
-		res.json(updatedProduct)
+
+		res.json(affectedRows)
 	} catch (error) {
 		next(error)
 	}
@@ -57,15 +65,22 @@ router.delete('/:productId', requireToken, isAdmin, async (req, res, next) => {
 	try {
 		const productId = Number(req.params.productId)
 		if (isNaN(productId)) {
-			return res.status(400).send('Invalid product id.')
+			return next({
+				status: 400,
+				message: 'Invalid product id.',
+			})
 		}
+
 		const deletedProducts = await Product.destroy({
 			where: {
 				id: productId,
 			},
 		})
 		if (!deletedProducts) {
-			res.status(404).send(`Product with id ${productId} not found.`)
+			return next({
+				stats: 404,
+				message: `Product with id ${productId} not found.`,
+			})
 		} else {
 			res.sendStatus(204)
 		}

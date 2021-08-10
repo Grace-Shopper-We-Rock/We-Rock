@@ -132,10 +132,11 @@ export class Checkout extends React.Component {
 	async validateFormData(formInfo) {
 		let errors = []
 
-		let regexZipCode = /^[0-9]{5}(?:-[0-9]{4})?$/
-		if (formInfo.zipCode !== '' && !regexZipCode.test(formInfo.zipCode)) {
-			errors.push('Please provide a valid zip code.')
-		}
+		//check done on backend
+		// let regexZipCode = /^[0-9]{5}(?:-[0-9]{4})?$/
+		// if (formInfo.zipCode !== '' && !regexZipCode.test(formInfo.zipCode)) {
+		// 	errors.push('Please provide a valid zip code.')
+		// }
 
 		let allDataKeys = Object.keys(formInfo)
 		for (const element of allDataKeys) {

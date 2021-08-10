@@ -4,7 +4,6 @@ const db = require('../db')
 const ShippingAddress = db.define('shippingAddress', {
 	email: {
 		type: Sequelize.STRING,
-		unique: true,
 		allowNull: false,
 		validate: {
 			isEmail: true,
@@ -51,6 +50,7 @@ const ShippingAddress = db.define('shippingAddress', {
 		validate: {
 			notEmpty: true,
 			len: [5],
+			is: /^[0-9]{5}(?:-[0-9]{4})?$/,
 			isNumeric: true,
 		},
 	},

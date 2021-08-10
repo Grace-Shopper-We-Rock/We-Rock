@@ -108,11 +108,6 @@ export class SignUp extends React.Component {
 			}
 		}
 
-		let regexZipCode = /^[0-9]{5}(?:-[0-9]{4})?$/
-		if (userInfo.zipCode !== '' && !regexZipCode.test(userInfo.zipCode)) {
-			errors.push('Please provide a valid zip code.')
-		}
-
 		await this.setState({
 			errors: errors,
 		})
