@@ -5,7 +5,7 @@ import { fetchSingleOrder } from '../store/singleOrder'
 import OrderProductListItem from './OrderProductListItem'
 import OrderProductList from './OrderProductList'
 
-//Matieral-UI elements:
+// Matieral-UI elements:
 import useStyles from '../../public/useStyles'
 import { withStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
