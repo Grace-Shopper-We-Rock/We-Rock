@@ -40,6 +40,9 @@ const useStyles = (theme) => ({
         paddingTop: theme.spacing(5),
         paddingBottom: theme.spacing(5),
     },
+    cartList: {
+        flexDirection: 'column'
+    },
     card: {
         height: '100%',
         display: 'flex',

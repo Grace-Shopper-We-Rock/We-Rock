@@ -35,6 +35,7 @@ class ProductListItem extends Component {
     }
 
     async updateTotal(cartId) {
+        console.log(this.props.cart.productInOrders)
         let newTotal = this.props.cart.productInOrders.reduce((acc, curr) => acc + curr.product.price * curr.quantity, 0)
         await this.props.updateCart({ totalAmount: newTotal }, cartId)
         this.props.loadCart(undefined, cartId)
@@ -46,8 +47,14 @@ class ProductListItem extends Component {
 
     async handleSubmit(evt, cartId) {
         evt.preventDefault();
-        await this.props.updateProductInCart({ quantity: this.state.quantity }, this.state.productInCartId)
-        this.updateTotal(cartId)
+        if (this.state.productInCartId) {
+            await this.props.updateProductInCart({ quantity: this.state.quantity }, this.state.productInCartId)
+            this.updateTotal(cartId)
+        } else {
+            await this.props.addToCart({ quantity: this.state.quantity, product: this.props.product }, cartId)
+            this.updateTotal(cartId)
+        }
+
     }
 
 
@@ -100,7 +107,8 @@ class ProductListItem extends Component {
 
                             </React.Fragment>
                         ) : (
-                            <Button size="small" color="primary">
+                            <Button size="small" color="primary"
+                                onClick={(evt) => this.handleSubmit(evt, cart.id)}>
                                 Add to Cart!
                             </Button>
                         )

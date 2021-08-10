@@ -35,7 +35,9 @@ router.get('/:userId', async (req, res, next) => {
 //Create a new ProductInOrder:
 router.post('/products', async (req, res, next) => {
     try {
-        res.status(201).send(await ProductInOrder.create(req.body));
+        res.status(201).send(await ProductInOrder.create(req.body, {
+            include: [{ model: Product }]
+        }));
     } catch (error) {
         next(error);
     }

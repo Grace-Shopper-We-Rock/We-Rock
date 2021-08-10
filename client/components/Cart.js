@@ -30,18 +30,17 @@ class Cart extends Component {
         this.setState({ loading: false })
     }
 
-
     render() {
         const { classes, cart } = this.props
 
         if (this.state.loading) return <p> Loading...</p>
         return (
-            <Container className={classes.cartGrid} maxWidth='md'>
-                <Grid container spacing={2}>
-                    <Grid item xs={10} sm={10} md={10}>
+            <Container className={classes.cartGrid}>
+                <Container maxWidth="md">
+                    <Grid container spacing={2} className={classes.cartList} >
                         <CartItems />
                     </Grid>
-                </Grid>
+                </Container>
 
                 <Box width={450} maxHeight={300}>
                     <Card className={classes.cartCard}>
