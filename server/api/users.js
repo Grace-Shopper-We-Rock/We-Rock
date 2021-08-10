@@ -62,11 +62,15 @@ router.put(
 			res.json(updatedUser)
 		} catch (error) {
 			if (error.name === 'SequelizeUniqueConstraintError') {
-				res
-					.status(401)
-					.send('User account with this email address already exists.')
+				next({
+					status: 401,
+					message: 'User account with this email address already exists.',
+				})
 			} else if (error.name === 'SequelizeValidationError') {
-				res.status(401).send('Please provide valid email address.')
+				next({
+					status: 401,
+					message: 'Please provide valid email address.',
+				})
 			}
 			next(error)
 		}
@@ -84,23 +88,19 @@ router.put(
 			if (!req.body.email) {
 				req.body.email === email
 			}
-			const addresses = await ShippingAddress.findAll({
+
+			const [address, wasCreated] = await ShippingAddress.findOrCreate({
 				where: {
 					userId: id,
 				},
 			})
-			if (!addresses.length) {
-				const newAddress = await ShippingAddress.create(req.body)
-				req.user.addShippingAddress(newAddress)
-				res.json([newAddress])
+
+			if (wasCreated) {
+				req.user.addShippingAddress(address)
+				res.json(address)
 			} else {
-				const updatedAddress = await addresses[0].update(req.body)
-				const allAddresses = await ShippingAddress.findAll({
-					where: {
-						userId: id,
-					},
-				})
-				res.json(allAddresses)
+				const updatedAddress = await address.update(req.body)
+				res.json(updatedAddress)
 			}
 		} catch (error) {
 			if (error.name === 'SequelizeValidationError') {
@@ -116,7 +116,10 @@ router.put(
 						message += 'Please provide valid email address.'
 					}
 				}
-				res.status(401).send(message)
+				next({
+					status: 401,
+					message: message,
+				})
 			} else {
 				next(error)
 			}

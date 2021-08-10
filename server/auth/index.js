@@ -43,9 +43,10 @@ router.post('/signup', async (req, res, next) => {
 		res.send({ token: await user.generateToken() })
 	} catch (err) {
 		if (err.name === 'SequelizeUniqueConstraintError') {
-			res
-				.status(401)
-				.send('User account with this email address already exists.')
+			next({
+				status: 401,
+				message: 'User account with this email address already exists.',
+			})
 		} else if (err.name === 'SequelizeValidationError') {
 			let message = ''
 			let errors = err.errors
@@ -57,7 +58,10 @@ router.post('/signup', async (req, res, next) => {
 					message += ' Please provide valid zip code. '
 				}
 			}
-			res.status(401).send(message)
+			next({
+				status: 401,
+				message: message,
+			})
 		} else {
 			next(err)
 		}
