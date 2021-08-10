@@ -46,7 +46,7 @@ router.post('/products', async (req, res, next) => {
 //UPDATE ProductInOrder:
 router.put('/products/:productInOrderId', async (req, res, next) => {
     try {
-        const order = await ProductInOrder.findByPk(req.params.productInOrderId);
+        const order = await ProductInOrder.findByPk(req.params.productInOrderId, { include: [{ model: Product }] });
         res.send(await order.update(req.body))
     } catch (error) {
         next(error);

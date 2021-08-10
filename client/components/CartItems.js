@@ -9,7 +9,7 @@ import { withStyles } from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
-import ProductInCartListItem from './ProductInCartListItem'
+import ProductListItem from './ProductListItem'
 import { addCartItemThunk, fetchCart, deleteCartItemThunk } from '../store/cart'
 
 class CartItems extends Component {
@@ -17,22 +17,11 @@ class CartItems extends Component {
         super()
         this.state = {
             loading: true,
-            selectedProduct: {}
         }
     }
 
     componentDidMount() {
         this.setState({ loading: false })
-    }
-
-    handleAddToCart(evt) {
-        evt.preventDefault();
-        this.props.cart.id ? (
-            this.props.addCartItem({ ...this.state.selectedProduct })
-        ) : (
-            this.setState({ productsInGuestOrder: [...productsInGuestOrder, selectedProduct] })
-        )
-        this.setState({ selectedProduct: {} })
     }
 
     render() {
@@ -42,8 +31,8 @@ class CartItems extends Component {
         else return (
             this.props.cart.productInOrders ? (
                 this.props.cart.productInOrders.map(prodInOrder =>
-                    <ProductInCartListItem
-                        key={prodInOrder.productId} quantity={prodInOrder.quantity}
+                    <ProductListItem
+                        key={prodInOrder.productId}
                         product={prodInOrder.product}
                     />
                 )

@@ -2,7 +2,7 @@ import axios from 'axios'
 
 //PRODUCTS ACTIONS:
 const SET_CART = 'SET_CART'
-const UPDATE_CART_ITEMS = 'UPDATE_CART_ITEMS'
+const UPDATE_CART_ITEM = 'UPDATE_CART_ITEM'
 const ADD_CART_ITEM = 'ADD_CART_ITEM'
 const DELETE_CART_ITEM = 'DELETE_CART_ITEM'
 const UPDATE_CART = 'UPDATE_CART'
@@ -31,7 +31,7 @@ export const deleteCartItem = (product) => {
 
 export const updateCartItem = (product) => {
     return {
-        type: UPDATE_CART_ITEMS,
+        type: UPDATE_CART_ITEM,
         product
     }
 }
@@ -79,10 +79,10 @@ export const deleteCartItemThunk = (prodId) => {
     }
 };
 
-export const updateCartItemThunk = (productInOrderId) => {
+export const updateCartItemThunk = (update, productInOrderId) => {
     return async (dispatch) => {
-        const { data: updated } = await axios.put(`/api/products/${productInOrderId}`);
-        dispatch(updateCartItems(updated));
+        const { data: updated } = await axios.put(`/api/cart/products/${productInOrderId}`, update);
+        dispatch(updateCartItem(updated));
     }
 };
 
@@ -100,14 +100,14 @@ export default function (state = {}, action) {
         case SET_CART:
             return action.cart
         case ADD_CART_ITEM:
-            let newProductsArray = [...state.products, action.product]
+            let newProductsArray = [...state.productInOrders, action.product]
             return { ...state, productInOrders: newProductsArray }
         case DELETE_CART_ITEM:
-            let deletedProductsArray = state.products.filter((product) =>
+            let deletedProductsArray = state.productInOrders.filter((product) =>
                 product.id !== action.productInOrder.id)
             return { ...state, productInOrders: deletedProductsArray }
-        case UPDATE_CART_ITEMS:
-            let updatedProductsArray = state.map((product) =>
+        case UPDATE_CART_ITEM:
+            let updatedProductsArray = state.productInOrders.map((product) =>
                 (product.id === action.product.id ? action.product : product))
             return { ...state, productInOrders: updatedProductsArray }
         case UPDATE_CART:

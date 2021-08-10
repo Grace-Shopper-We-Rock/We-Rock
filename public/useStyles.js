@@ -43,7 +43,7 @@ const useStyles = (theme) => ({
     card: {
         height: '100%',
         display: 'flex',
-        width: 280,
+        width: 300,
         flexDirection: 'column',
     },
     cardMedia: {
