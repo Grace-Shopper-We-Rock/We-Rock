@@ -26,9 +26,9 @@ router.post('/signup', async (req, res, next) => {
 			zipCode,
 			state,
 		} = req.body
-		const user = await User.create({ email, firstName, lastName, password })
+		let address
 		if (streetAddress) {
-			const address = await ShippingAddress.create({
+			address = await ShippingAddress.create({
 				email,
 				firstName,
 				lastName,
@@ -37,9 +37,9 @@ router.post('/signup', async (req, res, next) => {
 				state,
 				zipCode,
 			})
-			//associate the address with the user - magic methods
-			user.addShippingAddress(address)
 		}
+		const user = await User.create({ email, firstName, lastName, password })
+		user.addShippingAddress(address)
 		res.send({ token: await user.generateToken() })
 	} catch (err) {
 		if (err.name === 'SequelizeUniqueConstraintError') {
@@ -54,7 +54,7 @@ router.post('/signup', async (req, res, next) => {
 				if (error.path === 'email') {
 					message += ' Please provide valid email address. '
 				}
-				if (error.path === 'zipCode') {
+				if (error.path === 'zipCode' && !message.includes('zip code')) {
 					message += ' Please provide valid zip code. '
 				}
 			}
