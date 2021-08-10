@@ -18,7 +18,6 @@ import Button from '@material-ui/core/Button'
 
 const OrderProductList = (props) => {
     const { classes, order } = props
-    console.log(order)
     return (
         <Grid container spacing={2}>
             {Object.keys(order).length ? (

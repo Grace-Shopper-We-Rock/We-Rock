@@ -15,7 +15,6 @@ import Container from '@material-ui/core/Container'
  */
 export const UserHome = (props) => {
 	const { classes, user, isLoggedIn } = props
-
 	return (
 		<div className={classes.heroContent}>
 			<Container maxWidth='md'>
@@ -46,9 +45,11 @@ export const UserHome = (props) => {
 							</Link>
 						</Grid>
 						<Grid item sm={4}>
-							<Button variant='contained' color='primary'>
-								Previous Orders!
-							</Button>
+							<Link to={`/orders/user/${user.id}`}>
+								<Button variant='contained' color='primary'>
+									Previous Orders!
+								</Button>
+							</Link>
 						</Grid>
 						<Grid item sm={3}>
 							<Link to='/editProfile'>
