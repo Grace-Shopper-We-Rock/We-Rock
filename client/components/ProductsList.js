@@ -9,6 +9,7 @@ import { withStyles } from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
 import useStyles from '../../public/useStyles'
+import { fetchCart } from '../store/cart'
 
 class ProductsList extends Component {
     constructor() {
@@ -18,9 +19,10 @@ class ProductsList extends Component {
         }
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         this.props.getProducts()
         this.props.clearProduct()
+        await this.props.loadCart(undefined, 3)
         this.setState({ loading: false })
     }
 
@@ -52,6 +54,7 @@ const mapDispatch = (dispatch) => {
     return {
         clearProduct: () => dispatch(setSingleProduct({})),
         getProducts: () => dispatch(fetchProducts()),
+        loadCart: (userId, orderId) => dispatch(fetchCart(userId, orderId))
     }
 }
 

@@ -9,19 +9,18 @@ import { withStyles } from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
-import ProductInCartListItem from './ProductInCartListItem'
+import ProductListItem from './ProductListItem'
+import { addCartItemThunk, fetchCart, deleteCartItemThunk } from '../store/cart'
 
 class CartItems extends Component {
     constructor() {
         super()
         this.state = {
             loading: true,
-            productsInOrder: [{ productId: 1, quantity: 1 }, { productId: 2, quantity: 3 }],
         }
     }
 
     componentDidMount() {
-        this.props.getProducts()
         this.setState({ loading: false })
     }
 
@@ -29,12 +28,12 @@ class CartItems extends Component {
         const { classes, products } = this.props
 
         if (this.state.loading) return <p> Loading...</p>
-        return (
-            this.props.products.length ? (
-                this.state.productsInOrder.map(product =>
-                    <ProductInCartListItem
-                        key={product.productId} quantity={product.quantity}
-                        product={products.find(prod => prod.id === product.productId)}
+        else return (
+            this.props.cart.productInOrders ? (
+                this.props.cart.productInOrders.map(prodInOrder =>
+                    <ProductListItem
+                        key={prodInOrder.productId}
+                        product={prodInOrder.product}
                     />
                 )
             ) : (
@@ -50,13 +49,15 @@ class CartItems extends Component {
 
 const mapState = (state) => {
     return {
-        products: state.products
+        products: state.products,
+        cart: state.cart
     }
 }
 
 const mapDispatch = (dispatch) => {
     return {
         getProducts: () => dispatch(fetchProducts()),
+        loadCart: (userId) => dispatch(fetchCart(userId))
     }
 }
 
