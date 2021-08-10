@@ -95,7 +95,7 @@ class ProductListItem extends Component {
 
 	render() {
 		const { classes, cart, product } = this.props
-		const { handleSubmit, handleChange } = this
+		const { handleChange } = this
 		const { productInCartId, quantity } = this.state
 
 		return (
