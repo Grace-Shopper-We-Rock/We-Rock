@@ -12,51 +12,56 @@ import useStyles from '../../public/useStyles'
 import { fetchCart } from '../store/cart'
 
 class ProductsList extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            loading: true,
-        }
-    }
+	constructor(props) {
+		super(props)
+		this.state = {
+			loading: true,
+		}
+	}
 
-    async componentDidMount() {
-        this.props.getProducts()
-        this.props.clearProduct()
-        await this.props.loadCart(undefined, 1)
-        this.setState({ loading: false })
-    }
+	async componentDidMount() {
+		this.props.getProducts()
+		this.props.clearProduct()
+		//await this.props.loadCart(undefined, 1)
+		this.setState({ loading: false })
+	}
 
-    render() {
-        const { classes, products } = this.props
-        return (
-            <main>
-                {this.state.loading ? (<p> Loading...</p >) : (
-                    <Container className={classes.cardGrid} maxWidth="md">
-                        <Grid container spacing={4}>
-                            {products.map((product) => (
-                                <ProductListItem key={product.id} product={product} />
-                            ))}
-                        </Grid>
-                    </Container>
-                )}
-            </main >
-        );
-    }
+	render() {
+		const { classes, products, cart } = this.props
+		return (
+			<main>
+				{this.state.loading ? (
+					<p> Loading...</p>
+				) : (
+					<Container className={classes.cardGrid} maxWidth='md'>
+						<Grid container spacing={4}>
+							{products.map((product) => (
+								<ProductListItem key={product.id} product={product} />
+							))}
+						</Grid>
+					</Container>
+				)}
+			</main>
+		)
+	}
 }
 
 const mapState = (state) => {
-    return {
-        products: state.products
-    }
+	return {
+		products: state.products,
+		cart: state.cart,
+	}
 }
 
 const mapDispatch = (dispatch) => {
-    return {
-        clearProduct: () => dispatch(setSingleProduct({})),
-        getProducts: () => dispatch(fetchProducts()),
-        loadCart: (userId, orderId) => dispatch(fetchCart(userId, orderId))
-    }
+	return {
+		clearProduct: () => dispatch(setSingleProduct({})),
+		getProducts: () => dispatch(fetchProducts()),
+		loadCart: (userId, orderId) => dispatch(fetchCart(userId, orderId)),
+	}
 }
 
-
-export default connect(mapState, mapDispatch)(withStyles(useStyles)(ProductsList))
+export default connect(
+	mapState,
+	mapDispatch
+)(withStyles(useStyles)(ProductsList))

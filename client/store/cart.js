@@ -57,7 +57,7 @@ export const fetchCart = (userId, orderId) => {
 				dispatch(setCart(data))
 			} else {
 				//Set cart to empty!
-				dispatch(setCart({}))
+				dispatch(setCart({ status: 'noCart' }))
 			}
 		} catch (err) {
 			console.log(err)
@@ -106,6 +106,7 @@ export const updateCartItemThunk = (update, productInOrderId) => {
 export const updateCartThunk = (update, orderId) => {
 	return async (dispatch) => {
 		const { data: updated } = await axios.put(`/api/orders/${orderId}`, update)
+		console.log('RESPONSE ON UPDATE CART: ', updated)
 		dispatch(updateCart(updated))
 	}
 }
@@ -129,7 +130,7 @@ export default function (state = {}, action) {
 			)
 			return { ...state, productInOrders: updatedProductsArray }
 		case UPDATE_CART:
-			return { ...state }
+			return action.cart
 		default:
 			return state
 	}

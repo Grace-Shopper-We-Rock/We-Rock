@@ -16,6 +16,7 @@ import Checkout from './components/CheckoutPage'
 import EditProfile from './components/EditProfile'
 import OrderDetails from './components/OrderDetails'
 import AllOrders from './components/AllOrders'
+import { fetchCart } from './store/cart'
 
 /**
  * COMPONENT
@@ -23,6 +24,7 @@ import AllOrders from './components/AllOrders'
 class Routes extends Component {
 	componentDidMount() {
 		this.props.loadInitialData()
+		//await this.props.loadCart(this.props.user.id)
 	}
 
 	render() {
@@ -35,7 +37,10 @@ class Routes extends Component {
 					<Route path='/products' exact component={ProductsList} />
 					<Route path='/products/:productId' component={SingleProduct} />
 					<Route path='/cart' component={Cart} />
-					<Route path='/confirmationpage/:orderId' component={ConfirmationPage} />
+					<Route
+						path='/confirmationpage/:orderId'
+						component={ConfirmationPage}
+					/>
 					<Route path='/orderdetails' exact component={AllOrders} />
 					<Route path='/orderdetails/:orderId' component={OrderDetails} />
 					<Route path='/checkout' component={Checkout} />
@@ -64,6 +69,7 @@ const mapState = (state) => {
 		// Being 'logged in' for our purposes will be defined has having a state.auth that has a truthy id.
 		// Otherwise, state.auth will be an empty object, and state.auth.id will be falsey
 		isLoggedIn: !!state.auth.id,
+		user: state.auth,
 	}
 }
 
@@ -72,6 +78,7 @@ const mapDispatch = (dispatch) => {
 		loadInitialData() {
 			dispatch(me())
 		},
+		loadCart: (userId, orderId) => dispatch(fetchCart(userId, orderId)),
 	}
 }
 

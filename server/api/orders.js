@@ -42,7 +42,6 @@ router.get('/:orderId', async (req, res, next) => {
 	}
 })
 
-
 router.get('/:orderId/', async (req, res, next) => {
 	try {
 		const order = await Order.findByPk(req.params.orderId, {
@@ -66,26 +65,37 @@ router.get('/:orderId/', async (req, res, next) => {
 //POST ROUTES:
 
 router.post('/', async (req, res, next) => {
-    try {
-        res.status(201).send(await Order.create(req.body, {
-            include: [{ model: User }, { model: ProductInOrder, include: { model: Product } }, { model: ShippingAddress }]
-        }));
-    } catch (error) {
-        next(error);
-    }
-});
-
+	try {
+		res.status(201).send(
+			await Order.create(req.body, {
+				include: [
+					{ model: User },
+					{ model: ProductInOrder, include: { model: Product } },
+					{ model: ShippingAddress },
+				],
+			})
+		)
+	} catch (error) {
+		next(error)
+	}
+})
 
 //PUT ROUTES:
 //DEFAULT UPDATE CART ROUTE
 router.put('/:orderId', async (req, res, next) => {
-    try {
-        const order = await Order.findByPk(req.params.orderId)
-        res.send(await order.update(req.body))
-    } catch (error) {
-        next(error);
-    }
-});
+	try {
+		const order = await Order.findByPk(req.params.orderId, {
+			include: [
+				{ model: User },
+				{ model: ProductInOrder, include: { model: Product } },
+				{ model: ShippingAddress },
+			],
+		})
+		res.send(await order.update(req.body))
+	} catch (error) {
+		next(error)
+	}
+})
 
 //DELETE ROUTES:
 router.delete('/:orderId', async (req, res, next) => {

@@ -26,7 +26,7 @@ class ProductListItem extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			quantity: 0,
+			quantity: null,
 			productInCartId: null,
 		}
 		this.handleChange = this.handleChange.bind(this)
@@ -55,14 +55,16 @@ class ProductListItem extends Component {
 			0
 		)
 		await this.props.updateCart({ totalAmount: newTotal }, cartId)
-		this.props.loadCart(undefined, cartId)
+		//this.props.loadCart(undefined, cartId)
 	}
 
-	handleDelete() {
-		//const cartId = this.props.cart.id
-		//console.log(this.state.productInCartId)
-		this.props.deleteCartItem(this.state.productInCartId)
+	async handleDelete() {
+		await this.props.deleteCartItem(this.state.productInCartId)
 		this.updateTotal(this.props.cart.id)
+		this.setState({
+			quantity: 0,
+			productInCartId: null,
+		})
 	}
 
 	handleChange(evt) {
@@ -71,6 +73,7 @@ class ProductListItem extends Component {
 
 	async handleSubmit(evt, cartId) {
 		evt.preventDefault()
+
 		if (this.state.productInCartId) {
 			await this.props.updateProductInCart(
 				{ quantity: this.state.quantity },
@@ -83,6 +86,9 @@ class ProductListItem extends Component {
 				cartId,
 				this.props.product
 			)
+			this.setState({
+				productInCartId: this.props.product.id,
+			})
 			this.updateTotal(this.props.cart.id)
 		}
 	}

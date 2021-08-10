@@ -1,5 +1,6 @@
 import axios from 'axios'
 import history from '../history'
+import { fetchCart } from '../store/cart'
 
 const TOKEN = 'token'
 
@@ -47,7 +48,8 @@ export const me = () => async (dispatch) => {
 				authorization: token,
 			},
 		})
-		return dispatch(setAuth(res.data))
+		dispatch(setAuth(res.data))
+		return dispatch(fetchCart(res.data.id))
 	}
 }
 

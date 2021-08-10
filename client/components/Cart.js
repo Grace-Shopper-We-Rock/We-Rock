@@ -15,7 +15,7 @@ import CardHeader from '@material-ui/core/CardHeader'
 import Grid from '@material-ui/core/Grid'
 import Box from '@material-ui/core/Box'
 import CartItems from './CartItems'
-import { fetchCart } from '../store/cart'
+import { fetchCart, updateCartThunk } from '../store/cart'
 
 class Cart extends Component {
 	constructor() {
@@ -24,10 +24,18 @@ class Cart extends Component {
 			loading: true,
 		}
 	}
-
+	async updateTotal(cartId) {
+		let newTotal = this.props.cart.productInOrders.reduce(
+			(acc, curr) => acc + curr.product.price * curr.quantity,
+			0
+		)
+		await this.props.updateCart({ totalAmount: newTotal }, cartId)
+		//this.props.loadCart(undefined, cartId)
+	}
 	componentDidMount() {
-		this.props.loadCart(undefined, 1)
-		console.log(this.props.cart)
+		if (this.props.cart.id) {
+			this.updateTotal(this.props.cart.id)
+		}
 		this.setState({ loading: false })
 	}
 
@@ -86,7 +94,7 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
 	return {
 		// addToCart: (newProductInOrder) => dispatch(addCartItemThunk(newProductInOrder)),
-		// updateCart: (userId) => dispatch(updateCartItemsThunk(userId)),
+		updateCart: (update, orderId) => dispatch(updateCartThunk(update, orderId)),
 		loadCart: (userId, orderId) => dispatch(fetchCart(userId, orderId)),
 	}
 }
