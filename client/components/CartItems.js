@@ -25,9 +25,10 @@ class CartItems extends Component {
     }
 
     render() {
-        const { classes, products } = this.props
+        const { classes } = this.props
 
         if (this.state.loading) return <p> Loading...</p>
+
         else return (
             this.props.cart.productInOrders ? (
                 this.props.cart.productInOrders.map(prodInOrder =>

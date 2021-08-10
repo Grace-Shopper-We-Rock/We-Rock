@@ -14,7 +14,7 @@ import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart'
 import DeleteIcon from '@material-ui/icons/Delete'
-import { addCartItemThunk, fetchCart, deleteCartItemThunk, updateCartThunk, updateCartItemThunk } from '../store/cart'
+import cart, { addCartItemThunk, fetchCart, deleteCartItemThunk, updateCartThunk, updateCartItemThunk } from '../store/cart'
 
 
 
@@ -30,15 +30,23 @@ class ProductListItem extends Component {
     }
 
     async componentDidMount() {
-        const product = await this.props.cart.productInOrders.find((prodInOrder) => prodInOrder.product.id === this.props.product.id)
-        if (product) this.setState({ quantity: product.quantity, productInCartId: product.id })
+        //Is this product in our cart??
+        if (this.props.cart.id) {
+            const product = await this.props.cart.productInOrders.find((prodInOrder) => {
+                return prodInOrder.product.id === this.props.product.id
+            })
+            if (product) this.setState({ quantity: product.quantity, productInCartId: product.id })
+        }
     }
 
     async updateTotal(cartId) {
-        console.log(this.props.cart.productInOrders)
         let newTotal = this.props.cart.productInOrders.reduce((acc, curr) => acc + curr.product.price * curr.quantity, 0)
         await this.props.updateCart({ totalAmount: newTotal }, cartId)
         this.props.loadCart(undefined, cartId)
+    }
+
+    handleDelete() {
+
     }
 
     handleChange(evt) {
@@ -51,8 +59,8 @@ class ProductListItem extends Component {
             await this.props.updateProductInCart({ quantity: this.state.quantity }, this.state.productInCartId)
             this.updateTotal(cartId)
         } else {
-            await this.props.addToCart({ quantity: this.state.quantity, product: this.props.product }, cartId)
-            this.updateTotal(cartId)
+            await this.props.addToCart({ quantity: this.state.quantity, productId: this.props.product.id }, cartId, this.props.product)
+            this.updateTotal(this.props.cart.id)
         }
 
     }
@@ -128,7 +136,7 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
     return {
-        addToCart: (newProductInOrder) => dispatch(addCartItemThunk(newProductInOrder)),
+        addToCart: (newProductInOrder, cartId, product) => dispatch(addCartItemThunk(newProductInOrder, cartId, product)),
         updateCart: (update, orderId) => dispatch(updateCartThunk(update, orderId)),
         loadCart: (userId, orderId) => dispatch(fetchCart(userId, orderId)),
         updateProductInCart: (update, productInOrderId) => dispatch(updateCartItemThunk(update, productInOrderId))

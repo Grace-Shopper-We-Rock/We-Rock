@@ -65,7 +65,7 @@ export const fetchCart = (userId, orderId) => {
 	}
 }
 
-export const addCartItemThunk = (newProductInOrder, cartId) => {
+export const addCartItemThunk = (newProductInOrder, cartId, product) => {
 	return async (dispatch) => {
 		if (!cartId) {
 			const { data: created } = await axios.post('/api/orders', {
@@ -77,8 +77,9 @@ export const addCartItemThunk = (newProductInOrder, cartId) => {
 				...newProductInOrder,
 				orderId: cartId,
 			})
-			console.log('thunk', created)
-			dispatch(addCartItem(created))
+			let newProduct = { ...created, product: product }
+			console.log(newProduct)
+			dispatch(addCartItem(newProduct))
 		}
 	}
 }
