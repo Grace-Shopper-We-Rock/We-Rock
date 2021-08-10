@@ -21,6 +21,7 @@ const OrderProductListItem = (props) => {
                 className={classes.cardMedia}
                 image={product.imageUrl}
                 title="Image title"
+                image="/images/defaultPetRock.jpg"
             />
             <CardContent className={classes.cardContent}>
                 <Typography gutterBottom variant="h5" component="h2">

@@ -83,7 +83,7 @@ class OrderDetails extends Component {
                     <div className={classes.heroButtons}>
                         <Grid container spacing={2} justifyContent="center">
                             <Grid item>
-                                <Link to={`/orderdetails`}>
+                                <Link to={`/orders/user/${order.user.id}`}>
                                     <Button variant="outlined" color="primary">
                                         Return to all orders
                                     </Button>
