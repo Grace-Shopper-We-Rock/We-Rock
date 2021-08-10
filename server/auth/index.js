@@ -29,6 +29,7 @@ router.post('/signup', async (req, res, next) => {
 		const user = await User.create({ email, firstName, lastName, password })
 		if (streetAddress) {
 			const address = await ShippingAddress.create({
+				email,
 				firstName,
 				lastName,
 				streetAddress,
@@ -45,6 +46,18 @@ router.post('/signup', async (req, res, next) => {
 			res
 				.status(401)
 				.send('User account with this email address already exists.')
+		} else if (err.name === 'SequelizeValidationError') {
+			let message = ''
+			let errors = err.errors
+			for (const error of errors) {
+				if (error.path === 'email') {
+					message += ' Please provide valid email address. '
+				}
+				if (error.path === 'zipCode') {
+					message += ' Please provide valid zip code. '
+				}
+			}
+			res.status(401).send(message)
 		} else {
 			next(err)
 		}

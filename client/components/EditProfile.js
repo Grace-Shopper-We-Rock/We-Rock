@@ -17,7 +17,7 @@ import { NameEmailForm } from './NameEmailForm'
 import { AddressForm } from './AddressForm'
 import { PasswordForm } from './PasswordForm'
 import { fetchUserAddresses, updateUserAddress } from '../store/address'
-import { updateUserInfo } from '../store/auth'
+import { me, updateUserInfo } from '../store/auth'
 
 export class EditProfile extends React.Component {
 	constructor(props) {
@@ -93,7 +93,7 @@ export class EditProfile extends React.Component {
 		let errors = []
 
 		let allDataKeys = Object.keys(info)
-		console.log(allDataKeys)
+		//console.log(allDataKeys)
 		for (const element of allDataKeys) {
 			if (
 				info[element] === '' &&
@@ -109,7 +109,7 @@ export class EditProfile extends React.Component {
 			errors.push('Passwords do not match.')
 		}
 
-    //check done on backend
+		//check done on backend
 		// let regexZipCode = /^[0-9]{5}(?:-[0-9]{4})?$/
 		// if (info.zipCode !== '' && !regexZipCode.test(info.zipCode)) {
 		// 	errors.push('Please provide a valid zip code.')
@@ -136,26 +136,25 @@ export class EditProfile extends React.Component {
 			state,
 		} = this.state
 		const { id } = this.props.auth
-		console.log('ID: ', id)
+		//console.log('ID: ', id)
 		//await validation of the data - zipcode if changed and passwords match?
 
 		//if there are no errors
 		if (!this.state.errors.length) {
 			if (password) {
-				this.props.updateUserInfo(
+				await this.props.updateUserInfo(
 					{ firstName, lastName, email, password },
 					this.props.auth.id
 				)
 			} else {
-				this.props.updateUserInfo(
+				await this.props.updateUserInfo(
 					{ firstName, lastName, email },
 					this.props.auth.id
 				)
 			}
 			//dispatch address update information w/ all address fields included AND email
-			this.props.updateUserAddress(
+			await this.props.updateUserAddress(
 				{
-					email,
 					firstName: addressFirstName,
 					lastName: addressLastName,
 					streetAddress,
@@ -166,7 +165,9 @@ export class EditProfile extends React.Component {
 				this.props.auth.id
 			)
 
-			this.handleOpen()
+			if (!this.props.auth.error && !this.props.addresses.error) {
+				this.handleOpen()
+			}
 		}
 	}
 	async componentDidMount() {
@@ -193,6 +194,16 @@ export class EditProfile extends React.Component {
 				lastName: this.props.auth.lastName,
 				email: this.props.auth.email,
 			})
+		}
+	}
+	componentWillUnmount() {
+		console.log('auth error present: ', this.props.auth.error)
+		console.log('address error present: ', this.props.addresses.error)
+		if (this.props.auth.error || this.props.addresses.error) {
+			//remove the errors from state
+			this.props.me()
+			this.props.fetchUserAddresses(this.props.auth.id)
+			//reauthenticate with me thunk
 		}
 	}
 	render() {
@@ -322,6 +333,7 @@ export class EditProfile extends React.Component {
 									Submit Changes
 								</Button>
 							</Grid>
+							{/* {toast} */}
 							{this.state.snackbarOpen ? (
 								<Snackbar
 									open={this.state.snackbarOpen}
@@ -363,6 +375,7 @@ const mapDispatch = (dispatch) => {
 			dispatch(updateUserAddress(newInfo, userId)),
 		updateUserInfo: (newInfo, userId) =>
 			dispatch(updateUserInfo(newInfo, userId)),
+		me: () => dispatch(me()),
 	}
 }
 

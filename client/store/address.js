@@ -3,7 +3,6 @@ import axios from 'axios'
 const TOKEN = 'token'
 
 const GET_USER_ADDRESSES = 'GET_USER_ADDRESSES'
-const UPDATE_USER_ADDRESS = 'UPDATE_USER_ADDRESS'
 
 const haveAddresses = (addresses) => {
 	return {
