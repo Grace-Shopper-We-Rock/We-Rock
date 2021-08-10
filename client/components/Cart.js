@@ -26,7 +26,7 @@ class Cart extends Component {
     }
 
     componentDidMount() {
-        this.props.loadCart(undefined, 3)
+        this.props.loadCart(undefined, 1)
         this.setState({ loading: false })
     }
 

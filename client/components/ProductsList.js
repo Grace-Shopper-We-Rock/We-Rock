@@ -12,8 +12,8 @@ import useStyles from '../../public/useStyles'
 import { fetchCart } from '../store/cart'
 
 class ProductsList extends Component {
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
         this.state = {
             loading: true,
         }
@@ -22,7 +22,7 @@ class ProductsList extends Component {
     async componentDidMount() {
         this.props.getProducts()
         this.props.clearProduct()
-        await this.props.loadCart(undefined, 3)
+        await this.props.loadCart(undefined, 1)
         this.setState({ loading: false })
     }
 
