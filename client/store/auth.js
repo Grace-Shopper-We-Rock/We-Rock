@@ -14,6 +14,7 @@ const UPDATE_USER_INFO = 'UPDATE_USER_INFO'
  * ACTION CREATORS
  */
 const setAuth = (auth) => ({ type: SET_AUTH, auth })
+const updateAuth = (auth) => ({ type: UPDATE_USER_INFO, auth })
 export const clearAuth = () => ({ type: CLEAR_AUTH })
 
 /**
@@ -33,7 +34,7 @@ export const updateUserInfo = (newInfo, userId) => {
 				dispatch(setAuth(data))
 			}
 		} catch (error) {
-			dispatch(setAuth({ error: error }))
+			dispatch(updateAuth({ error: error }))
 		}
 	}
 }
@@ -55,6 +56,7 @@ export const authenticate = (userInfoObj, method) => async (dispatch) => {
 		const res = await axios.post(`/auth/${method}`, userInfoObj)
 		window.localStorage.setItem(TOKEN, res.data.token)
 		dispatch(me())
+		history.push('/')
 	} catch (authError) {
 		return dispatch(setAuth({ error: authError }))
 	}
@@ -78,6 +80,15 @@ export default function (state = {}, action) {
 			return action.auth
 		case CLEAR_AUTH:
 			return {}
+		case UPDATE_USER_INFO:
+			//if action has an error in its current
+			if (action.auth.error) {
+				let newState = { ...state }
+				newState.error = action.auth.error
+				return newState
+			} else {
+				return action.auth
+			}
 		default:
 			return state
 	}

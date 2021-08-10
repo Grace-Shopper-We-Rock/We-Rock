@@ -73,9 +73,6 @@ async function seed() {
     await Address15.setOrders([15])
 
     // Create associations between Users and Orders
-    await [Order1, Order7].map(order => order.belongsTo(User1))
-
-
     await User1.setOrders([1, 7])
     await User2.setOrders([3])
     await User3.setOrders([2, 10, 12])
@@ -213,17 +210,17 @@ async function seed() {
  The `seed` function is concerned only with modifying the database.
 */
 async function runSeed() {
-  console.log('seeding...')
-  try {
-    await seed()
-  } catch (err) {
-    console.error(err)
-    process.exitCode = 1
-  } finally {
-    console.log('closing db connection')
-    await db.close()
-    console.log('db connection closed')
-  }
+	console.log('seeding...')
+	try {
+		await seed()
+	} catch (err) {
+		console.error(err)
+		process.exitCode = 1
+	} finally {
+		console.log('closing db connection')
+		await db.close()
+		console.log('db connection closed')
+	}
 }
 
 /*
@@ -232,7 +229,7 @@ async function runSeed() {
   any errors that might occur inside of `seed`.
 */
 if (module === require.main) {
-  runSeed()
+	runSeed()
 }
 
 // we export the seed function for testing purposes (see `./seed.spec.js`)

@@ -9,24 +9,24 @@ const UPDATE_CART = 'UPDATE_CART'
 
 //ACTION CREATORS:
 export const setCart = (cart) => {
-    return {
-        type: SET_CART,
-        cart
-    }
+	return {
+		type: SET_CART,
+		cart,
+	}
 }
 
 export const addCartItem = (product) => {
-    return {
-        type: ADD_CART_ITEM,
-        product
-    }
+	return {
+		type: ADD_CART_ITEM,
+		product,
+	}
 }
 
 export const deleteCartItem = (product) => {
-    return {
-        type: DELETE_CART_ITEM,
-        product
-    }
+	return {
+		type: DELETE_CART_ITEM,
+		product,
+	}
 }
 
 export const updateCartItem = (product) => {
@@ -44,6 +44,7 @@ export const updateCart = (cart) => {
 }
 
 //ASYNC ACTION CREATORS/ THUNKS:
+
 export const fetchCart = (userId, orderId) => {
     return async (dispatch) => {
         try {
@@ -80,11 +81,14 @@ export const addCartItemThunk = (newProductInOrder, cartId) => {
 }
 
 export const deleteCartItemThunk = (prodId) => {
-    return async (dispatch) => {
-        const { data: productInOrder } = await axios.delete(`/api/orders/${userId}/cart/${prodId}`)
-        dispatch(deleteCartItem(productInOrder))
-    }
-};
+	return async (dispatch) => {
+		const { data: productInOrder } = await axios.delete(
+			`/api/orders/${userId}/cart/${prodId}`
+		)
+		dispatch(deleteCartItem(productInOrder))
+	}
+}
+
 
 export const updateCartItemThunk = (update, productInOrderId) => {
     return async (dispatch) => {
@@ -92,6 +96,7 @@ export const updateCartItemThunk = (update, productInOrderId) => {
         dispatch(updateCartItem(updated));
     }
 };
+
 
 export const updateCartThunk = (update, orderId) => {
     return async (dispatch) => {
@@ -122,4 +127,3 @@ export default function (state = {}, action) {
         default:
             return state
     }
-}
