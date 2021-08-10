@@ -44,7 +44,6 @@ export const updateCart = (cart) => {
 }
 
 //ASYNC ACTION CREATORS/ THUNKS:
-
 export const fetchCart = (userId, orderId) => {
 	return async (dispatch) => {
 		try {
@@ -68,7 +67,6 @@ export const fetchCart = (userId, orderId) => {
 
 export const addCartItemThunk = (newProductInOrder, cartId) => {
 	return async (dispatch) => {
-		console.log(cartId)
 		if (!cartId) {
 			const { data: created } = await axios.post('/api/orders', {
 				productInOrders: [newProductInOrder],

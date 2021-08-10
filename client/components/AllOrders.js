@@ -1,5 +1,7 @@
 import React from 'react'
 
-export const AllOrders = (props) => {
-	return <h1>a</h1>
+export default AllOrders = (props) => {
+    return (
+        <h1>a</h1>
+    )
 }
