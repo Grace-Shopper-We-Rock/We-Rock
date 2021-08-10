@@ -103,8 +103,8 @@ class ProductListItem extends Component {
 				<Card className={classes.card}>
 					<CardMedia
 						className={classes.cardMedia}
-						image='/images/defaultPetRock.jpg'
-						title='Image title'
+						image={product.imageUrl}
+						title={product.name}
 					/>
 					<CardContent className={classes.cardContent}>
 						<Typography gutterBottom variant='h5' component='h2'>

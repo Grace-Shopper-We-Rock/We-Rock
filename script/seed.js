@@ -145,26 +145,6 @@ async function seed() {
 			Product28,
 			Product29,
 			Product30,
-			Product31,
-			Product32,
-			Product33,
-			Product34,
-			Product35,
-			Product36,
-			Product37,
-			Product38,
-			Product39,
-			Product40,
-			Product41,
-			Product42,
-			Product43,
-			Product44,
-			Product45,
-			Product46,
-			Product47,
-			Product48,
-			Product49,
-			Product50,
 		] = productInstances
 		const [
 			Address1,
@@ -247,51 +227,43 @@ async function seed() {
 		// Create associations between Orders and ProductInOrder
 		await Order1.setProductInOrders([1, 2, 3])
 		await Order2.setProductInOrders([4, 5])
-		await Order3.setProductInOrders([8, 28])
+		await Order3.setProductInOrders([8])
 		await Order4.setProductInOrders([9, 10, 13])
 		await Order5.setProductInOrders([11])
-		await Order6.setProductInOrders([12, 14, 25, 26])
-		await Order7.setProductInOrders([15, 16, 17, 7])
+		await Order6.setProductInOrders([12])
+		await Order7.setProductInOrders([15, 16])
 		await Order8.setProductInOrders([20])
 		await Order9.setProductInOrders([18, 19])
 		await Order10.setProductInOrders([22])
-		await Order11.setProductInOrders([24])
-		await Order12.setProductInOrders([29, 27])
-		await Order13.setProductInOrders([6])
-		await Order14.setProductInOrders([21, 23])
-		await Order15.setProductInOrders([30])
+		await Order11.setProductInOrders([17])
+		await Order12.setProductInOrders([23])
+		await Order13.setProductInOrders([6, 7])
+		await Order14.setProductInOrders([21])
+		await Order15.setProductInOrders([14])
 
 		// Create associations between ProductInOrder and Products
 		await ProductInOrder1.setProduct([1])
 		await ProductInOrder2.setProduct([5])
 		await ProductInOrder3.setProduct([3])
 		await ProductInOrder4.setProduct([8])
-		await ProductInOrder5.setProduct([50])
-		await ProductInOrder6.setProduct([15])
-		await ProductInOrder7.setProduct([89])
-		await ProductInOrder8.setProduct([100])
-		await ProductInOrder9.setProduct([92])
-		await ProductInOrder10.setProduct([65])
-		await ProductInOrder11.setProduct([34])
-		await ProductInOrder12.setProduct([38])
-		await ProductInOrder13.setProduct([29])
-		await ProductInOrder14.setProduct([17])
-		await ProductInOrder15.setProduct([62])
-		await ProductInOrder16.setProduct([91])
-		await ProductInOrder17.setProduct([77])
-		await ProductInOrder18.setProduct([87])
-		await ProductInOrder19.setProduct([53])
-		await ProductInOrder20.setProduct([72])
-		await ProductInOrder21.setProduct([59])
-		await ProductInOrder22.setProduct([10])
-		await ProductInOrder23.setProduct([27])
-		await ProductInOrder24.setProduct([34])
-		await ProductInOrder25.setProduct([33])
-		await ProductInOrder26.setProduct([44])
-		await ProductInOrder27.setProduct([12])
-		await ProductInOrder28.setProduct([2])
-		await ProductInOrder29.setProduct([13])
-		await ProductInOrder30.setProduct([14])
+		await ProductInOrder5.setProduct([15])
+		await ProductInOrder6.setProduct([24])
+		await ProductInOrder7.setProduct([28])
+		await ProductInOrder8.setProduct([29])
+		await ProductInOrder9.setProduct([17])
+		await ProductInOrder10.setProduct([23])
+		await ProductInOrder11.setProduct([12])
+		await ProductInOrder13.setProduct([19])
+		await ProductInOrder14.setProduct([10])
+		await ProductInOrder15.setProduct([27])
+		await ProductInOrder16.setProduct([24])
+		await ProductInOrder17.setProduct([23])
+		await ProductInOrder18.setProduct([12])
+		await ProductInOrder19.setProduct([2])
+		await ProductInOrder20.setProduct([13])
+		await ProductInOrder21.setProduct([14])
+		await ProductInOrder22.setProduct([2])
+		await ProductInOrder23.setProduct([3])
 
 		// Create associations between Products and Reviews
 		await Product1.setReviews([1, 2, 3, 4, 5, 6, 7, 8])
@@ -324,36 +296,6 @@ async function seed() {
 		await Product28.setReviews([86, 87, 88])
 		await Product29.setReviews([89])
 		await Product30.setReviews([90])
-		await Product31.setReviews([91, 92, 93, 94, 95, 96, 97, 98])
-		await Product32.setReviews([99, 100, 101])
-		await Product33.setReviews([102])
-		await Product34.setReviews([103, 104, 105])
-		await Product35.setReviews([106, 107, 108])
-		await Product36.setReviews([109, 110])
-		await Product37.setReviews([111])
-		await Product38.setReviews([
-			112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125,
-		])
-		await Product39.setReviews([126, 127, 128])
-		await Product40.setReviews([129, 130])
-		await Product41.setReviews([131])
-		await Product42.setReviews([132, 133, 134])
-		await Product43.setReviews([135, 136, 137])
-		await Product44.setReviews([138, 139, 140, 141, 142, 143])
-		await Product45.setReviews([144])
-		await Product46.setReviews([145, 146])
-		await Product47.setReviews([147])
-		await Product48.setReviews([148])
-		await Product49.setReviews([
-			149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163,
-			164, 165,
-		])
-		await Product50.setReviews([
-			166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 180, 181,
-			182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 192, 193, 194, 195, 196,
-			197, 198, 199, 200,
-		])
-
 		// Create associates between Users and Reviews
 
 		const arrayOf200 = Array.from(Array(200).keys())
