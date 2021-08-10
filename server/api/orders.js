@@ -77,12 +77,18 @@ router.post('/', async (req, res, next) => {
 //DEFAULT UPDATE CART ROUTE
 router.put('/:orderId', async (req, res, next) => {
 	try {
-		const order = await Order.findByPk(req.params.orderId)
+		const order = await Order.findByPk(req.params.orderId, {
+			include: [
+				{ model: User },
+				{ model: ProductInOrder, include: { model: Product } },
+				{ model: ShippingAddress },
+			],
+		})
 		res.send(await order.update(req.body))
 	} catch (error) {
-		next(error);
+		next(error)
 	}
-});
+})
 
 //DELETE ROUTES:
 router.delete('/:orderId', async (req, res, next) => {

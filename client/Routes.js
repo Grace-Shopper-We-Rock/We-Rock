@@ -23,6 +23,7 @@ import AllUserOrders from './components/AllUserOrders'
 class Routes extends Component {
 	componentDidMount() {
 		this.props.loadInitialData()
+		//await this.props.loadCart(this.props.user.id)
 	}
 
 	render() {
@@ -35,9 +36,18 @@ class Routes extends Component {
 					<Route path='/products' exact component={ProductsList} />
 					<Route path='/products/:productId' component={SingleProduct} />
 					<Route path='/cart' component={Cart} />
+<<<<<<< HEAD
+					<Route
+						path='/confirmationpage/:orderId'
+						component={ConfirmationPage}
+					/>
+					<Route path='/orderdetails' exact component={AllOrders} />
+					<Route path='/orderdetails/:orderId' component={OrderDetails} />
+=======
 					<Route path='/confirmationpage/:orderId' component={ConfirmationPage} />
 					<Route path='/orders/user/:userId' exact component={AllUserOrders} />
 					<Route path='/orders/:orderId' component={OrderDetails} />
+>>>>>>> fc9d0b2a3d21193e8eb111c14396e1660eaece57
 					<Route path='/checkout' component={Checkout} />
 					{!isLoggedIn ? (
 						<React.Fragment>
@@ -64,6 +74,7 @@ const mapState = (state) => {
 		// Being 'logged in' for our purposes will be defined has having a state.auth that has a truthy id.
 		// Otherwise, state.auth will be an empty object, and state.auth.id will be falsey
 		isLoggedIn: !!state.auth.id,
+		user: state.auth,
 	}
 }
 
@@ -72,6 +83,7 @@ const mapDispatch = (dispatch) => {
 		loadInitialData() {
 			dispatch(me())
 		},
+		loadCart: (userId, orderId) => dispatch(fetchCart(userId, orderId)),
 	}
 }
 
