@@ -11,7 +11,6 @@ export const StyledRating = withStyles({
     },
 })(Rating)
 
-
 const useStyles = (theme) => ({
     icon: {
         marginRight: theme.spacing(2),

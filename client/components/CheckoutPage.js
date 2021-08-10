@@ -211,12 +211,12 @@ export class Checkout extends React.Component {
 						>
 							{this.state.errors.length
 								? this.state.errors.map((error, index) => (
-										<Grid item style={{ padding: 5 }}>
-											<Typography key={index} color='error' component='h4'>
-												{error}
-											</Typography>
-										</Grid>
-								  ))
+									<Grid item style={{ padding: 5 }}>
+										<Typography key={index} color='error' component='h4'>
+											{error}
+										</Typography>
+									</Grid>
+								))
 								: ''}
 						</Grid>
 						{/* insert rendering of confirmation page where says null if active step is steps.lenght */}
