@@ -31,7 +31,7 @@ class ConfirmationPage extends Component {
 
     componentDidMount() {
         try {
-            this.props.loadSingleOrder(this.props.match.params.orderId)
+            this.props.loadSingleOrder(this.props.order.id)
             this.setState({ loading: false })
         } catch (err) {
             console.error(err)
@@ -43,7 +43,6 @@ class ConfirmationPage extends Component {
         const order = this.props.singleOrder
         const shippingAddress = order.shippingAddress
 
-        // const productsInOrder = order.productInOrders
         if (this.state.loading) return <p> Loading...</p>
         if (!order.id) return <p> Order Not Found! </p>
         return (
