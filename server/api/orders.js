@@ -26,8 +26,9 @@ router.get('/user/:userId', async (req, res, next) => {
 	try {
 		const orders = await Order.findAll({
 			where: {
-				userId: req.params.userId
-			}, include: [
+				userId: req.params.userId,
+			},
+			include: [
 				{ model: User },
 				{ model: ProductInOrder, include: { model: Product } },
 				{ model: ShippingAddress },
@@ -64,13 +65,19 @@ router.get('/:orderId', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
 	try {
-		res.status(201).send(await Order.create(req.body, {
-			include: [{ model: User }, { model: ProductInOrder, include: { model: Product } }, { model: ShippingAddress }]
-		}));
+		res.status(201).send(
+			await Order.create(req.body, {
+				include: [
+					{ model: User },
+					{ model: ProductInOrder, include: { model: Product } },
+					{ model: ShippingAddress },
+				],
+			})
+		)
 	} catch (error) {
-		next(error);
+		next(error)
 	}
-});
+})
 
 //PUT ROUTES:
 //UPDATE ORDER

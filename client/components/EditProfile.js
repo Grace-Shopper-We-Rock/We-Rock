@@ -157,6 +157,7 @@ export class EditProfile extends React.Component {
 				{
 					firstName: addressFirstName,
 					lastName: addressLastName,
+					email,
 					streetAddress,
 					city,
 					zipCode,

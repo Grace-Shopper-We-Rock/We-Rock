@@ -103,6 +103,13 @@ export class Checkout extends React.Component {
 			state: evt.target.value,
 		})
 	}
+	async handleConfirm() {
+		if (this.state.activeStep === 1) {
+			await this.props.updateCart({ status: 'inProcess' }, this.props.cart.id)
+			//dispatch a thunk that will create a user's address and associate it with the order ID
+			this.setState({ confirmationPage: true })
+		}
+	}
 	getStepContent(step) {
 		switch (step) {
 			case 0:
@@ -130,12 +137,6 @@ export class Checkout extends React.Component {
 				return <ReviewOrder order={this.props.cart} />
 			default:
 				throw new Error('Unknown step')
-		}
-	}
-	async handleConfirm() {
-		if (this.state.activeStep === 1) {
-			await updateCartThunk({ status: 'inProcess' }, this.props.cart.id)
-			this.setState({ confirmationPage: true })
 		}
 	}
 	async validateFormData(formInfo) {
@@ -221,12 +222,12 @@ export class Checkout extends React.Component {
 							>
 								{this.state.errors.length
 									? this.state.errors.map((error, index) => (
-										<Grid item style={{ padding: 5 }}>
-											<Typography key={index} color='error' component='h4'>
-												{error}
-											</Typography>
-										</Grid>
-									))
+											<Grid item style={{ padding: 5 }}>
+												<Typography key={index} color='error' component='h4'>
+													{error}
+												</Typography>
+											</Grid>
+									  ))
 									: ''}
 							</Grid>
 
@@ -269,11 +270,8 @@ export class Checkout extends React.Component {
 					</Paper>
 				</Container>
 			)
-		}
-		else {
-			return (
-				<ConfirmationPage order={this.props.cart} />
-			)
+		} else {
+			return <ConfirmationPage order={this.props.cart} />
 		}
 	}
 }
@@ -289,6 +287,7 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
 	return {
 		fetchUserAddresses: (userId) => dispatch(fetchUserAddresses(userId)),
+		updateCart: (update, cartId) => dispatch(updateCartThunk(update, cartId)),
 	}
 }
 
