@@ -229,6 +229,7 @@ export class Checkout extends React.Component {
 									))
 									: ''}
 							</Grid>
+
 							{/* insert rendering of confirmation page where says null if active step is steps.lenght */}
 							{this.state.activeStep === this.steps.length ? null : (
 								<Grid
