@@ -14,32 +14,33 @@ import Button from '@material-ui/core/Button'
 
 
 const OrderProductListItem = (props) => {
-    const { product, classes } = props
+    const { product, key, quantity, classes } = props
     return (
-        <Grid item key={product.id}>
-            <Card className={classes.card}>
-                <CardMedia
-                    className={classes.cardMedia}
-                    image="/images/defaultPetRock.jpg"
-                    title="Image title"
-                />
-                <CardContent className={classes.cardContent}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                        {product.name}
-                    </Typography>
-                    <Typography>
-                        {product.price / 100}$
-                    </Typography>
-                </CardContent>
-                <CardActions>
-                    <Link to={`/products/${product.id}`}>
-                        <Button size="small" color="primary">
-                            See more
-                        </Button>
-                    </Link>
-                </CardActions>
-            </Card>
-        </Grid>
+        <Card className={classes.card} key={key}>
+            <CardMedia
+                className={classes.cardMedia}
+                image={product.imageUrl}
+                title="Image title"
+            />
+            <CardContent className={classes.cardContent}>
+                <Typography gutterBottom variant="h5" component="h2">
+                    {product.name}
+                </Typography>
+                <Typography>
+                    ${product.price / 100}
+                </Typography>
+                <Typography>
+                    Quantity: {quantity}
+                </Typography>
+            </CardContent>
+            <CardActions>
+                <Link to={`/products/${product.id}`}>
+                    <Button size="small" color="primary">
+                        More information
+                    </Button>
+                </Link>
+            </CardActions>
+        </Card>
     )
 }
 
