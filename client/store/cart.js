@@ -22,10 +22,10 @@ export const addCartItem = (product) => {
 	}
 }
 
-export const deleteCartItem = (product) => {
+export const deleteCartItem = (prodId) => {
 	return {
 		type: DELETE_CART_ITEM,
-		product,
+		prodId,
 	}
 }
 
@@ -87,9 +87,9 @@ export const addCartItemThunk = (newProductInOrder, cartId, product) => {
 export const deleteCartItemThunk = (prodId) => {
 	return async (dispatch) => {
 		const { data: productInOrder } = await axios.delete(
-			`/api/orders/${userId}/cart/${prodId}`
+			`/api/cart/products/${prodId}`
 		)
-		dispatch(deleteCartItem(productInOrder))
+		dispatch(deleteCartItem(prodId))
 	}
 }
 
@@ -120,7 +120,7 @@ export default function (state = {}, action) {
 			return { ...state, productInOrders: newProductsArray }
 		case DELETE_CART_ITEM:
 			let deletedProductsArray = state.productInOrders.filter(
-				(product) => product.id !== action.productInOrder.id
+				(product) => product.id !== action.prodId
 			)
 			return { ...state, productInOrders: deletedProductsArray }
 		case UPDATE_CART_ITEM:
