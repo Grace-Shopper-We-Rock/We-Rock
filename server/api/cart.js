@@ -1,41 +1,54 @@
 const router = require('express').Router()
-const { models: { User, Product, Review, ProductInOrder, Order, ShippingAddress } } = require('../db')
+const {
+	models: { User, Product, Review, ProductInOrder, Order, ShippingAddress },
+} = require('../db')
 module.exports = router
 
 //CART GET ROUTES:
 // admin & protected middleware
 router.get('/', async (req, res, next) => {
-    try {
-        const carts = await Order.findAll({
-            where: { status: 'inCart' },
-            include: [{ model: User }, { model: ProductInOrder, include: { model: Product } }]
-        })
-        res.json(carts)
-    } catch (err) {
-        next(err)
-    }
+	try {
+		const carts = await Order.findAll({
+			where: { status: 'inCart' },
+			include: [
+				{ model: User },
+				{ model: ProductInOrder, include: { model: Product } },
+			],
+		})
+		res.json(carts)
+	} catch (err) {
+		next(err)
+	}
 })
 
 //add auth user
 router.get('/:userId', async (req, res, next) => {
-    try {
-        const order = await Order.findOrCreate({
-            where: { userId: req.params.userId, status: 'inCart' },
-            include: [{ model: User }, { model: ProductInOrder, include: { model: Product } }]
-        })
-        if (order) res.json(order[0])
-        else res.status(404).json('Sorry! We can\'t find this order!')
-    }
-    catch (err) {
-        next(err)
-    }
+	try {
+		const order = await Order.findOrCreate({
+			where: { userId: req.params.userId, status: 'inCart' },
+			include: [
+				{ model: User },
+				{ model: ProductInOrder, include: { model: Product } },
+			],
+		})
+		if (order) res.json(order[0])
+		else
+			next({
+				status: 404,
+				message: "Sorry! We can't find this order!",
+			})
+	} catch (err) {
+		next(err)
+	}
 })
 
 //POST ROUTES:
-//Create a new ProductInCart:
+//Create a new ProductInOrder:
 router.post('/products', async (req, res, next) => {
     try {
-        res.status(201).send(await ProductInCart.create(req.body));
+        res.status(201).send(await ProductInOrder.create(req.body, {
+            include: [{ model: Product }]
+        }));
     } catch (error) {
         next(error);
     }
@@ -43,10 +56,10 @@ router.post('/products', async (req, res, next) => {
 
 
 //PUT ROUTES:
-//UPDATE ProductInCart:
-router.put('/products/:productInCartId', async (req, res, next) => {
+//UPDATE ProductInOrder:
+router.put('/products/:productInOrderId', async (req, res, next) => {
     try {
-        const order = await ProductInCart.findByPk(req.params.productInCartId);
+        const order = await ProductInOrder.findByPk(req.params.productInOrderId, { include: [{ model: Product }] });
         res.send(await order.update(req.body))
     } catch (error) {
         next(error);
@@ -54,13 +67,14 @@ router.put('/products/:productInCartId', async (req, res, next) => {
 });
 
 //DELETE ROUTES:
-//delete ProductInCart:
-router.delete('/products/:productInCartId', async (req, res, next) => {
+//delete ProductInOrder:
+router.delete('/products/:productInOrderId', async (req, res, next) => {
     try {
-        const product = await ProductInCart.findByPk(req.params.productInCartId);
+        const product = await ProductInOrder.findByPk(req.params.productInOrderId);
         await product.destroy();
         res.json(product);
     } catch (error) {
         next(error);
     }
 });
+

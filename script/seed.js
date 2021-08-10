@@ -73,9 +73,6 @@ async function seed() {
     await Address15.setOrders([15])
 
     // Create associations between Users and Orders
-    // await [Order1, Order7].map(order => order.belongsTo(User1))
-
-
     await User1.setOrders([1, 7])
     await User2.setOrders([3])
     await User3.setOrders([2, 10, 12])

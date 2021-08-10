@@ -11,7 +11,6 @@ export const StyledRating = withStyles({
     },
 })(Rating)
 
-
 const useStyles = (theme) => ({
     icon: {
         marginRight: theme.spacing(2),
@@ -40,10 +39,13 @@ const useStyles = (theme) => ({
         paddingTop: theme.spacing(5),
         paddingBottom: theme.spacing(5),
     },
+    cartList: {
+        flexDirection: 'column'
+    },
     card: {
         height: '100%',
         display: 'flex',
-        width: 280,
+        width: 300,
         flexDirection: 'column',
     },
     cardMedia: {

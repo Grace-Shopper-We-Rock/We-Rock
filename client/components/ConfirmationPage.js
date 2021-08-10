@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { fetchSingleOrder } from '../store/singleOrder'
+import OrderProductListItem from './OrderProductListItem'
+import OrderProductList from './OrderProductList'
 
 //Matieral-UI elements:
 import useStyles from '../../public/useStyles'
@@ -31,7 +33,6 @@ class ConfirmationPage extends Component {
         try {
             this.props.loadSingleOrder(this.props.match.params.orderId)
             this.setState({ loading: false })
-            console.log(this.props)
         } catch (err) {
             console.error(err)
         }
@@ -43,44 +44,46 @@ class ConfirmationPage extends Component {
         const shippingAddress = order.shippingAddress
 
         // const productsInOrder = order.productInOrders
-
         if (this.state.loading) return <p> Loading...</p>
         if (!order.id) return <p> Order Not Found! </p>
         return (
             <div className={classes.heroContent}>
                 <Container maxWidth="sm">
                     <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
-                        Thank you, your order has been confirmed!
+                        Thank you!
                     </Typography>
-                    <Typography variant="h5" align="center" color="textSecondary" paragraph>
-                        Your order number is {order.id}
+                    <Typography variant="h6" align="center" color="textSecondary" paragraph>
+                        Your order (#{order.id}) has been confirmed and will be shipped.
                     </Typography>
                     <Typography variant="h5" align="center" color="textSecondary" paragraph>
                         Delivery address: {shippingAddress.firstName} {shippingAddress.lastName}, {shippingAddress.streetAddress}, {shippingAddress.city}, {shippingAddress.state}, {shippingAddress.zipCode}
                     </Typography>
-                    <Typography variant="h5" align="center" color="textSecondary" paragraph>
+                    <Typography variant="body1" align="center" color="textSecondary" paragraph>
                         An email will be sent containing information about your purchase. If you have any questions about your purchase please email us at customerservice@yourock.com.
                     </Typography>
-                    {/* <main>
+                    <Typography variant="h6" align="center" color="textSecondary" paragraph>
+                        Order summary:
+                    </Typography>
+                    <main>
                         {this.state.loading ? (<p> Loading...</p >) : (
-                            <Container className={classes.cardGrid} maxWidth="md">
-                                <Grid container spacing={4}>
-                                    {productsInOrder.map((product) => (
-                                        <ProductListItem key={product.id} product={product} />
-                                    ))}
-                                </Grid>
+                            <Container>
+                                <OrderProductList order={order} />
                             </Container>
                         )}
-                    </main > */}
+                    </main >
                     <div className={classes.heroButtons}>
                         <Grid container spacing={2} justifyContent="center">
                             <Grid item>
-                                <Button variant="outlined" color="primary">
-                                    View more pet rocks!
-                                </Button>
-                                <Button variant="outlined" color="primary">
-                                    Check my order status
-                                </Button>
+                                <Link to={'/products'}>
+                                    <Button variant="outlined" color="primary">
+                                        View more pet rocks!
+                                    </Button>
+                                </Link>
+                                <Link to={`/orderdetails/${order.id}`}>
+                                    <Button variant="outlined" color="primary">
+                                        Check order status
+                                    </Button>
+                                </Link>
                             </Grid>
                         </Grid>
                     </div>

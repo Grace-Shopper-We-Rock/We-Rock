@@ -61,38 +61,68 @@ router.put(
 			})
 			res.json(updatedUser)
 		} catch (error) {
+			if (error.name === 'SequelizeUniqueConstraintError') {
+				next({
+					status: 401,
+					message: 'User account with this email address already exists.',
+				})
+			} else if (error.name === 'SequelizeValidationError') {
+				next({
+					status: 401,
+					message: 'Please provide valid email address.',
+				})
+			}
 			next(error)
 		}
 	}
 )
 
+//EDIT TO USE FIND OR CREATE
 router.put(
 	'/:userId/addresses',
 	requireToken,
 	tokenMatchRequest,
 	async (req, res, next) => {
 		try {
-			const { id } = req.user
-			const addresses = await ShippingAddress.findAll({
+			const { id, email } = req.user
+			if (!req.body.email) {
+				req.body.email === email
+			}
+
+			const [address, wasCreated] = await ShippingAddress.findOrCreate({
 				where: {
 					userId: id,
 				},
 			})
-			if (!addresses.length) {
-				const newAddress = await ShippingAddress.create(req.body)
-				req.user.addShippingAddress(newAddress)
-				res.json([newAddress])
+
+			if (wasCreated) {
+				req.user.addShippingAddress(address)
+				res.json(address)
 			} else {
-				const updatedAddress = await addresses[0].update(req.body)
-				const allAddresses = await ShippingAddress.findAll({
-					where: {
-						userId: id,
-					},
-				})
-				res.json(allAddresses)
+				const updatedAddress = await address.update(req.body)
+				res.json(updatedAddress)
 			}
 		} catch (error) {
-			next(error)
+			if (error.name === 'SequelizeValidationError') {
+				let message = ''
+				let errors = error.errors
+				console.log('ERRORS ARRAY: ', error.errors)
+
+				for (const error of errors) {
+					if (error.path === 'zipCode' && !message.includes('zip code')) {
+						message += 'Please provide valid zip code.'
+					}
+					if (error.path === 'email') {
+						message += 'Please provide valid email address.'
+					}
+				}
+				next({
+					status: 401,
+					message: message,
+				})
+			} else {
+				next(error)
+			}
 		}
 	}
 )

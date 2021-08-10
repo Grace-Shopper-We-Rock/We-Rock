@@ -10,12 +10,12 @@ import cart from './cart'
 import userAddresses from './address'
 
 const reducer = combineReducers({
-  auth,
-  products,
-  singleProduct,
-  cart,
-  userAddresses,
-  singleOrder,
+	auth,
+	products,
+	singleProduct,
+	cart,
+	userAddresses,
+	singleOrder,
 })
 
 const middleware = composeWithDevTools(
