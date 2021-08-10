@@ -1,5 +1,12 @@
 import React from 'react'
+import OrderProductList from './OrderProductList'
 
 export const ReviewOrder = (props) => {
-	return <h1>This is rendering</h1>
+	console.log(props)
+	return (
+		<Container>
+			<OrderProductList order={props.order} />
+		</Container>
+	)
 }
+
