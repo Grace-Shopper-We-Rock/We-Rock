@@ -20,7 +20,7 @@ import ConfirmationPage from './ConfirmationPage'
 import {
 	fetchUserAddresses,
 	createNewOrderAddress,
-	associateAddressToOrder,
+	//associateAddressToOrder,
 } from '../store/address'
 import { updateCartThunk } from '../store/cart'
 import OrderProductList from './OrderProductList'
@@ -321,8 +321,8 @@ const mapDispatch = (dispatch) => {
 	return {
 		fetchUserAddresses: (userId) => dispatch(fetchUserAddresses(userId)),
 		updateCart: (update, cartId) => dispatch(updateCartThunk(update, cartId)),
-		associateAddressToOrder: (orderId, addressId) =>
-			dispatch(associateAddressToOrder(orderId, addressId)),
+		// associateAddressToOrder: (orderId, addressId) =>
+		// 	dispatch(associateAddressToOrder(orderId, addressId)),
 		createNewOrderAddress: (orderId, newAddressInfo, userId) =>
 			dispatch(createNewOrderAddress(orderId, newAddressInfo, userId)),
 	}

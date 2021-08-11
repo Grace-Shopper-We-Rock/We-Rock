@@ -35,16 +35,16 @@ export const createNewOrderAddress = (orderId, newAddressInfo, userId) => {
 	}
 }
 
-export const associateAddressToOrder = (orderId, addressId, addressInfo) => {
-	return async (dispatch) => {
-		try {
-			const { data } = await axios.put(`/api/orders/${orderId}/${addressId}`, addressInfo)
-			dispatch(newOrderAddress(data))
-		} catch (error) {
-			dispatch(newOrderAddress({ error: error }))
-		}
-	}
-}
+// export const associateAddressToOrder = (orderId, addressId, addressInfo) => {
+// 	return async (dispatch) => {
+// 		try {
+// 			const { data } = await axios.put(`/api/orders/${orderId}/${addressId}`, addressInfo)
+// 			dispatch(newOrderAddress(data))
+// 		} catch (error) {
+// 			dispatch(newOrderAddress({ error: error }))
+// 		}
+// 	}
+// }
 
 export const fetchUserAddresses = (userId) => {
 	return async (dispatch) => {

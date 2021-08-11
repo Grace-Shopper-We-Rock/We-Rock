@@ -34,7 +34,6 @@ class Cart extends Component {
             cartId,
             this.props.user.id
         )
-        //this.props.loadCart(undefined, cartId)
     }
     componentDidMount() {
         if (this.props.cart.id) {

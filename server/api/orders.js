@@ -118,18 +118,18 @@ router.put('/:orderId/address/:userId', async (req, res, next) => {
 })
 
 //finds a users existing address OR creates a new address if there are changes and associates with the order
-router.put('/:orderId/:addressId', async (req, res, next) => {
-	try {
-		const address = await ShippingAddress.findByPk(
-			Number(req.params.address.id)
-		)
-		const order = await Order.findByPk(Number(req.params.orderId))
-		await address.addOrder(order)
-		res.status(200).json(address)
-	} catch (error) {
-		next(error)
-	}
-})
+// router.put('/:orderId/:addressId', async (req, res, next) => {
+// 	try {
+// 		const address = await ShippingAddress.findByPk(
+// 			Number(req.params.address.id)
+// 		)
+// 		const order = await Order.findByPk(Number(req.params.orderId))
+// 		await address.addOrder(order)
+// 		res.status(200).json(address)
+// 	} catch (error) {
+// 		next(error)
+// 	}
+// })
 
 //DELETE ROUTES:
 router.delete('/:orderId', async (req, res, next) => {
