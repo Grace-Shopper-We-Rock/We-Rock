@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { fetchSingleOrder } from './singleOrder'
 
 //PRODUCTS ACTIONS:
 const SET_CART = 'SET_CART'
@@ -103,11 +104,19 @@ export const updateCartItemThunk = (update, productInOrderId) => {
 	}
 }
 
-export const updateCartThunk = (update, orderId) => {
+export const updateCartThunk = (update, orderId, userId) => {
 	return async (dispatch) => {
 		const { data: updated } = await axios.put(`/api/orders/${orderId}`, update)
 		console.log('RESPONSE ON UPDATE CART: ', updated)
 		dispatch(updateCart(updated))
+		dispatch(fetchSingleOrder(updated.id))
+		if (updated.status === 'inProcess') {
+			if (userId) {
+				dispatch(fetchCart(userId))
+			} else {
+				dispatch(fetchCart())
+			}
+		}
 	}
 }
 

@@ -23,6 +23,7 @@ import {
 	associateAddressToOrder,
 } from '../store/address'
 import { updateCartThunk } from '../store/cart'
+import OrderProductList from './OrderProductList'
 
 export class Checkout extends React.Component {
 	constructor(props) {
@@ -132,7 +133,11 @@ export class Checkout extends React.Component {
 				},
 				userId
 			)
-			await this.props.updateCart({ status: 'inProcess' }, this.props.cart.id)
+			await this.props.updateCart(
+				{ status: 'inProcess' },
+				this.props.cart.id,
+				userId
+			)
 			this.setState({ confirmationPage: true })
 		}
 	}
@@ -160,7 +165,8 @@ export class Checkout extends React.Component {
 					</Grid>
 				)
 			case 1:
-				return <ReviewOrder order={this.props.cart} />
+				return <OrderProductList order={this.props.cart} />
+			// return <ReviewOrder orderId={orderId} />
 			default:
 				throw new Error('Unknown step')
 		}
@@ -297,7 +303,9 @@ export class Checkout extends React.Component {
 				</Container>
 			)
 		} else {
-			return <ConfirmationPage order={this.props.cart} />
+			let orderId = this.props.cart.id
+			console.log('ORDER ID:', orderId)
+			return <ConfirmationPage orderId={orderId} />
 		}
 	}
 }
