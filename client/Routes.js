@@ -22,8 +22,8 @@ import { fetchCart } from './store/cart'
  * COMPONENT
  */
 class Routes extends Component {
-	constructor(props) {
-		super(props)
+	constructor() {
+		super()
 
 		this.saveCartToLocalStorage = this.saveCartToLocalStorage.bind(this)
 	}
@@ -33,7 +33,7 @@ class Routes extends Component {
 	}
 
 	saveCartToLocalStorage() {
-		if (this.props.cart.id) {
+		if (this.props.cart.id && !this.props.isLoggedIn) {
 			let myStorage = window.localStorage
 			myStorage.removeItem('orderId')
 			myStorage.setItem('orderId', this.props.cart.id)

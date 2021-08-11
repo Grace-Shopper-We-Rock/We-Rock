@@ -19,21 +19,22 @@ import FavoriteIcon from '@material-ui/icons/Favorite'
 import Box from '@material-ui/core/Box'
 import Grid from '@material-ui/core/Grid'
 import { StyledRating } from '../../public/useStyles'
+import DeleteIcon from '@material-ui/icons/Delete'
 import {
 	updateCartThunk,
 	deleteCartItemThunk,
 	addCartItemThunk,
 	updateCartItemThunk,
 } from '../store/cart'
-
+import { formatter } from './Cart'
 class SingleProduct extends Component {
 	constructor() {
 		super()
 		this.state = {
 			loading: true,
 			seeReviews: false,
-			quantity: 0,
-			productInCardId: null,
+			quantity: 1,
+			productInCartId: null,
 		}
 		this.handleReviewsClick = this.handleReviewsClick.bind(this)
 		this.handleChange = this.handleChange.bind(this)
@@ -74,11 +75,11 @@ class SingleProduct extends Component {
 	}
 	async handleDelete() {
 		await this.props.deleteCartItem(this.state.productInCartId)
-		this.updateTotal(this.props.cart.id)
 		this.setState({
 			quantity: 1,
 			productInCartId: null,
 		})
+		this.updateTotal(this.props.cart.id)
 	}
 	handleChange(evt) {
 		this.setState({ quantity: evt.target.value })
@@ -139,7 +140,7 @@ class SingleProduct extends Component {
 						>
 							{product.description}
 							<hr />
-							$ {product.price / 100}
+							{formatter.format(product.price / 100)}
 						</Typography>
 						<Box
 							component='fieldset'
@@ -180,13 +181,10 @@ class SingleProduct extends Component {
 									Update Cart
 								</Button>
 
-								<Button
-									variant='outlined'
-									color='primary'
+								<DeleteIcon
+									fontSize='small'
 									onClick={() => this.handleDelete()}
-								>
-									Remove From Cart
-								</Button>
+								/>
 							</React.Fragment>
 						) :
 							product.stockQuantity > 0 ?

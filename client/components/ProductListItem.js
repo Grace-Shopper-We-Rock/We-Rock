@@ -12,7 +12,6 @@ import Grid from '@material-ui/core/Grid'
 import { withStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
-import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart'
 import DeleteIcon from '@material-ui/icons/Delete'
 import cart, {
 	addCartItemThunk,
@@ -21,12 +20,13 @@ import cart, {
 	updateCartThunk,
 	updateCartItemThunk,
 } from '../store/cart'
-
+import { formatter } from './Cart'
+import products from '../store/products'
 class ProductListItem extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			quantity: 0,
+			quantity: 1,
 			productInCartId: null,
 		}
 		this.handleChange = this.handleChange.bind(this)
@@ -63,11 +63,11 @@ class ProductListItem extends Component {
 
 	async handleDelete() {
 		await this.props.deleteCartItem(this.state.productInCartId)
-		this.updateTotal(this.props.cart.id)
 		this.setState({
 			quantity: 1,
 			productInCartId: null,
 		})
+		await this.updateTotal(this.props.cart.id)
 	}
 
 	handleChange(evt) {
@@ -102,7 +102,7 @@ class ProductListItem extends Component {
 		const { productInCartId, quantity } = this.state
 
 		return (
-			<Grid item key={product.id} xs={12} sm={6} md={4}>
+			<Grid item key={`grid-${product.id}`} xs={12} sm={6} md={4}>
 				<Card className={classes.card}>
 					<CardMedia
 						className={classes.cardMedia}
@@ -122,10 +122,10 @@ class ProductListItem extends Component {
 
 						<hr />
 						<Typography>
-							${product.price / 100}
+							{formatter.format(product.price / 100)}
 							<br />
 							{productInCartId &&
-								'Total: ' + '$' + (product.price * quantity) / 100}
+								'Total: ' + formatter.format((product.price * quantity) / 100)}
 						</Typography>
 					</CardContent>
 					<CardActions>
@@ -183,8 +183,10 @@ const mapDispatch = (dispatch) => {
 	return {
 		addToCart: (newProductInOrder, cartId, product) =>
 			dispatch(addCartItemThunk(newProductInOrder, cartId, product)),
-		updateCart: (update, orderId) => dispatch(updateCartThunk(update, orderId)),
-		loadCart: (userId, orderId) => dispatch(fetchCart(userId, orderId)),
+		updateCart: (update, orderId) =>
+			dispatch(updateCartThunk(update, orderId)),
+		loadCart: (userId, orderId) =>
+			dispatch(fetchCart(userId, orderId)),
 		updateProductInCart: (update, productInOrderId) =>
 			dispatch(updateCartItemThunk(update, productInOrderId)),
 		deleteCartItem: (productInOrderId) =>

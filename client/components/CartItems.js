@@ -30,12 +30,12 @@ class CartItems extends Component {
 		else
 			return this.props.cart.productInOrders &&
 				this.props.cart.productInOrders.length ? (
-				(this.props.cart.productInOrders.map((prodInOrder) => (
+				(this.props.cart.productInOrders.map((prodInOrder) =>
 					<ProductListItem
 						key={prodInOrder.productId}
 						product={prodInOrder.product}
 					/>
-				)))
+				))
 			) : (
 				<Card className={classes.card}>
 					<CardContent>No Items In Cart!</CardContent>

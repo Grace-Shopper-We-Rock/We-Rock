@@ -50,6 +50,7 @@ export const fetchCart = (userId, orderId) => {
 		try {
 			//IF we have a logged in user:
 			if (userId) {
+
 				const { data } = await axios.get(`/api/cart/${userId}`)
 				dispatch(setCart(data))
 			} else if (orderId) {
@@ -72,10 +73,8 @@ export const addCartItemThunk = (newProductInOrder, cartId, product) => {
 			const { data: created } = await axios.post('/api/orders', {
 				productInOrders: [newProductInOrder],
 			})
-
 			const newCart = created
 			newCart.productInOrders[0].product = product
-			console.log(newCart)
 			dispatch(setCart(newCart))
 		} else {
 			const { data: created } = await axios.post(`/api/cart/products`, {
