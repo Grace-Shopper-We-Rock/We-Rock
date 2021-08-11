@@ -26,7 +26,7 @@ class ProductListItem extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			quantity: null,
+			quantity: 0,
 			productInCartId: null,
 		}
 		this.handleChange = this.handleChange.bind(this)
@@ -54,6 +54,7 @@ class ProductListItem extends Component {
 			(acc, curr) => acc + curr.product.price * curr.quantity,
 			0
 		)
+
 		await this.props.updateCart(
 			{ totalAmount: newTotal },
 			cartId,
@@ -66,7 +67,7 @@ class ProductListItem extends Component {
 		await this.props.deleteCartItem(this.state.productInCartId)
 		this.updateTotal(this.props.cart.id)
 		this.setState({
-			quantity: 0,
+			quantity: 1,
 			productInCartId: null,
 		})
 	}
@@ -93,7 +94,7 @@ class ProductListItem extends Component {
 			this.setState({
 				productInCartId: this.props.product.id,
 			})
-			this.updateTotal(this.props.cart.id)
+			this.updateTotal(this.props.cart.id || null)
 		}
 	}
 
@@ -107,8 +108,8 @@ class ProductListItem extends Component {
 				<Card className={classes.card}>
 					<CardMedia
 						className={classes.cardMedia}
-						image='/images/defaultPetRock.jpg'
-						title='Image title'
+						image={product.imageUrl}
+						title={product.name}
 					/>
 					<CardContent className={classes.cardContent}>
 						<Typography gutterBottom variant='h5' component='h2'>
@@ -130,13 +131,9 @@ class ProductListItem extends Component {
 						</Typography>
 					</CardContent>
 					<CardActions>
-						<input
-							type='number'
-							min='1'
-							max='5'
-							onChange={handleChange}
-							value={this.state.quantity}
-						/>
+						<select value={this.state.quantity} onChange={handleChange}>
+							{[1, 2, 3, 4, 5].map(val => <option value={val}>{val}</option>)}
+						</select>
 						{productInCartId ? (
 							<React.Fragment>
 								<Button
