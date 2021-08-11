@@ -54,7 +54,6 @@ class ProductListItem extends Component {
 			(acc, curr) => acc + curr.product.price * curr.quantity,
 			0
 		)
-
 		await this.props.updateCart(
 			{ totalAmount: newTotal },
 			cartId,
@@ -132,7 +131,9 @@ class ProductListItem extends Component {
 					</CardContent>
 					<CardActions>
 						<select value={this.state.quantity} onChange={handleChange}>
-							{[1, 2, 3, 4, 5].map(val => <option value={val}>{val}</option>)}
+							{[1, 2, 3, 4, 5].map((val) => (
+								<option value={val}>{val}</option>
+							))}
 						</select>
 						{productInCartId ? (
 							<React.Fragment>

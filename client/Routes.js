@@ -30,7 +30,6 @@ class Routes extends Component {
 	componentDidMount() {
 		this.props.loadInitialData()
 		!this.props.isLoggedIn && this.loadCartFromLocalStorage()
-
 	}
 
 	saveCartToLocalStorage() {
@@ -38,7 +37,6 @@ class Routes extends Component {
 			let myStorage = window.localStorage
 			myStorage.removeItem('orderId')
 			myStorage.setItem('orderId', this.props.cart.id)
-			console.log(myStorage)
 		}
 	}
 	/*updates the data item on refresh*/
@@ -94,7 +92,7 @@ const mapState = (state) => {
 		// Otherwise, state.auth will be an empty object, and state.auth.id will be falsey
 		isLoggedIn: !!state.auth.id,
 		user: state.auth,
-		cart: state.cart
+		cart: state.cart,
 	}
 }
 
