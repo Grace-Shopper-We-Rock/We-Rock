@@ -116,17 +116,19 @@ class OrderDetails extends Component {
 							</Container>
 						)}
 					</main>
-					<div className={classes.heroButtons}>
-						<Grid container spacing={2} justifyContent='center'>
-							<Grid item>
-								<Link to={`/orders/user/${order.user.id}`}>
-									<Button variant='outlined' color='primary'>
-										Return to all orders
-									</Button>
-								</Link>
+					{this.props.isLoggedIn ? (
+						<div className={classes.heroButtons}>
+							<Grid container spacing={2} justifyContent='center'>
+								<Grid item>
+									<Link to={`/orders/user/${order.user.id}`}>
+										<Button variant='outlined' color='primary'>
+											Return to all orders
+										</Button>
+									</Link>
+								</Grid>
 							</Grid>
-						</Grid>
-					</div>
+						</div>
+					) : null}
 				</Container>
 			</div>
 		)
@@ -136,6 +138,7 @@ class OrderDetails extends Component {
 const mapState = (state) => {
 	return {
 		singleOrder: state.singleOrder,
+		isLoggedIn: !!state.auth.id,
 	}
 }
 
