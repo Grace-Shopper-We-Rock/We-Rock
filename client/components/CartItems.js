@@ -30,8 +30,7 @@ class CartItems extends Component {
 		else
 			return this.props.cart.productInOrders &&
 				this.props.cart.productInOrders.length ? (
-				(console.log('first part of ternary'),
-				this.props.cart.productInOrders.map((prodInOrder) => (
+				(this.props.cart.productInOrders.map((prodInOrder) => (
 					<ProductListItem
 						key={prodInOrder.productId}
 						product={prodInOrder.product}

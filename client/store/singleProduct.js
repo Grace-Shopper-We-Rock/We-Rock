@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 //SINGLE PRODUCT ACTIONS:
-const SET_SINGLE_PRODUCT = 'SET_SINGLE_PROJECT'
+const SET_SINGLE_PRODUCT = 'SET_SINGLE_PRODUCT'
 
 //ACTION CREATORS:
 export const setSingleProduct = (product) => {
