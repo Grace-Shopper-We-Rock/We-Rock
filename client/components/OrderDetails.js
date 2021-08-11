@@ -81,24 +81,30 @@ class OrderDetails extends Component {
 						If you have any questions about your purchase please email us at
 						customerservice@yourock.com.
 					</Typography>
-					<Typography
-						variant='h6'
-						align='center'
-						color='textSecondary'
-						paragraph
-					>
-						Delivery address:
-					</Typography>
-					<Typography
-						variant='body1'
-						align='center'
-						color='textSecondary'
-						paragraph
-					>
-						{order.shippingAddress.firstName} {order.shippingAddress.lastName},{' '}
-						{order.shippingAddress.streetAddress}, {order.shippingAddress.city},{' '}
-						{order.shippingAddress.state} {order.shippingAddress.zipCode}
-					</Typography>
+					{order.status === 'inCart' ? null : (
+						<React.Fragment>
+							<Typography
+								variant='h6'
+								align='center'
+								color='textSecondary'
+								paragraph
+							>
+								Delivery address:
+							</Typography>
+							<Typography
+								variant='body1'
+								align='center'
+								color='textSecondary'
+								paragraph
+							>
+								{order.shippingAddress.firstName}{' '}
+								{order.shippingAddress.lastName},{' '}
+								{order.shippingAddress.streetAddress},{' '}
+								{order.shippingAddress.city}, {order.shippingAddress.state}{' '}
+								{order.shippingAddress.zipCode}
+							</Typography>
+						</React.Fragment>
+					)}
 					<Typography
 						variant='h6'
 						align='center'
@@ -116,17 +122,19 @@ class OrderDetails extends Component {
 							</Container>
 						)}
 					</main>
-					<div className={classes.heroButtons}>
-						<Grid container spacing={2} justifyContent='center'>
-							<Grid item>
-								<Link to={`/orders/user/${order.user.id}`}>
-									<Button variant='outlined' color='primary'>
-										Return to all orders
-									</Button>
-								</Link>
+					{this.props.isLoggedIn ? (
+						<div className={classes.heroButtons}>
+							<Grid container spacing={2} justifyContent='center'>
+								<Grid item>
+									<Link to={`/orders/user/${order.user.id}`}>
+										<Button variant='outlined' color='primary'>
+											Return to all orders
+										</Button>
+									</Link>
+								</Grid>
 							</Grid>
-						</Grid>
-					</div>
+						</div>
+					) : null}
 				</Container>
 			</div>
 		)
@@ -136,6 +144,7 @@ class OrderDetails extends Component {
 const mapState = (state) => {
 	return {
 		singleOrder: state.singleOrder,
+		isLoggedIn: !!state.auth.id,
 	}
 }
 
