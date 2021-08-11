@@ -29,7 +29,11 @@ class Cart extends Component {
 			(acc, curr) => acc + curr.product.price * curr.quantity,
 			0
 		)
-		await this.props.updateCart({ totalAmount: newTotal }, cartId)
+		await this.props.updateCart(
+			{ totalAmount: newTotal },
+			cartId,
+			this.props.user.id
+		)
 		//this.props.loadCart(undefined, cartId)
 	}
 	componentDidMount() {
@@ -88,6 +92,7 @@ const mapState = (state) => {
 	return {
 		cart: state.cart,
 		products: state.products,
+		user: state.auth,
 	}
 }
 

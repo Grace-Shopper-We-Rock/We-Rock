@@ -3,10 +3,10 @@ import OrderProductList from './OrderProductList'
 import Container from '@material-ui/core/Container'
 
 export const ReviewOrder = (props) => {
+	console.log('ORDER ID: ', props.orderId)
 	return (
 		<Container>
-			<OrderProductList order={props.order} />
+			<OrderProductList orderId={props.orderId} />
 		</Container>
 	)
 }
-

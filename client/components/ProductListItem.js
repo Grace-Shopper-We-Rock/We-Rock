@@ -35,7 +35,7 @@ class ProductListItem extends Component {
 
 	async componentDidMount() {
 		//Is this product in our cart??
-		if (this.props.cart.id) {
+		if (this.props.cart.productInOrders) {
 			const product = await this.props.cart.productInOrders.find(
 				(prodInOrder) => {
 					return prodInOrder.product.id === this.props.product.id
@@ -54,7 +54,13 @@ class ProductListItem extends Component {
 			(acc, curr) => acc + curr.product.price * curr.quantity,
 			0
 		)
-		await this.props.updateCart({ totalAmount: newTotal }, cartId)
+
+		await this.props.updateCart(
+			{ totalAmount: newTotal },
+			cartId,
+			this.props.user.id
+		)
+		//this.props.loadCart(undefined, cartId)
 	}
 
 	async handleDelete() {
@@ -162,6 +168,7 @@ class ProductListItem extends Component {
 const mapState = (state) => {
 	return {
 		cart: state.cart,
+		user: state.auth,
 	}
 }
 
