@@ -20,7 +20,7 @@ import cart, {
 	updateCartThunk,
 	updateCartItemThunk,
 } from '../store/cart'
-
+import { formatter } from './Cart'
 class ProductListItem extends Component {
 	constructor(props) {
 		super(props)
@@ -122,10 +122,10 @@ class ProductListItem extends Component {
 
 						<hr />
 						<Typography>
-							${product.price / 100}
+							{formatter.format(product.price / 100)}
 							<br />
 							{productInCartId &&
-								'Total: ' + '$' + (product.price * quantity) / 100}
+								'Total: ' + formatter.format((product.price * quantity) / 100)}
 						</Typography>
 					</CardContent>
 					<CardActions>

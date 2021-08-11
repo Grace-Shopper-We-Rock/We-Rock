@@ -17,6 +17,11 @@ import Box from '@material-ui/core/Box'
 import CartItems from './CartItems'
 import { fetchCart, updateCartThunk } from '../store/cart'
 
+export const formatter = new Intl.NumberFormat('en-US', {
+	style: 'currency',
+	currency: 'USD',
+});
+
 class Cart extends Component {
 	constructor() {
 		super()
@@ -69,7 +74,7 @@ class Cart extends Component {
 										color='textSecondary'
 										paragraph
 									>
-										{cart.totalAmount / 100} $
+										{formatter.format(cart.totalAmount / 100)}
 									</Typography>
 									<Typography align='center' color='textSecondary' paragraph>
 										Ready to meet your new friends?

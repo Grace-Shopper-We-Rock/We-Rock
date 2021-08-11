@@ -25,7 +25,7 @@ import {
 	addCartItemThunk,
 	updateCartItemThunk,
 } from '../store/cart'
-
+import { formatter } from './Cart'
 class SingleProduct extends Component {
 	constructor() {
 		super()
@@ -139,7 +139,7 @@ class SingleProduct extends Component {
 						>
 							{product.description}
 							<hr />
-							$ {product.price / 100}
+							{formatter.format(product.price / 100)}
 						</Typography>
 						<Box
 							component='fieldset'
