@@ -12,7 +12,6 @@ import Grid from '@material-ui/core/Grid'
 import { withStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
-import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart'
 import DeleteIcon from '@material-ui/icons/Delete'
 import cart, {
 	addCartItemThunk,
@@ -64,11 +63,12 @@ class ProductListItem extends Component {
 
 	async handleDelete() {
 		await this.props.deleteCartItem(this.state.productInCartId)
-		this.updateTotal(this.props.cart.id)
-		this.setState({
-			quantity: 1,
-			productInCartId: null,
-		})
+		if (this.props.cart.productInOrders.length === 0)
+			this.setState({
+				quantity: 1,
+				productInCartId: null,
+			})
+		await this.updateTotal(this.props.cart.id)
 	}
 
 	handleChange(evt) {
@@ -177,8 +177,10 @@ const mapDispatch = (dispatch) => {
 	return {
 		addToCart: (newProductInOrder, cartId, product) =>
 			dispatch(addCartItemThunk(newProductInOrder, cartId, product)),
-		updateCart: (update, orderId) => dispatch(updateCartThunk(update, orderId)),
-		loadCart: (userId, orderId) => dispatch(fetchCart(userId, orderId)),
+		updateCart: (update, orderId) =>
+			dispatch(updateCartThunk(update, orderId)),
+		loadCart: (userId, orderId) =>
+			dispatch(fetchCart(userId, orderId)),
 		updateProductInCart: (update, productInOrderId) =>
 			dispatch(updateCartItemThunk(update, productInOrderId)),
 		deleteCartItem: (productInOrderId) =>

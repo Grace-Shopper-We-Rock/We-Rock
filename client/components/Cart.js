@@ -34,13 +34,15 @@ class Cart extends Component {
 			cartId,
 			this.props.user.id
 		)
-		//this.props.loadCart(undefined, cartId)
+
 	}
-	componentDidMount() {
+	async componentDidMount() {
 		if (this.props.cart.id) {
 			this.updateTotal(this.props.cart.id)
+			await this.props.loadCart(undefined, this.props.cart.id)
 		}
 		this.setState({ loading: false })
+
 	}
 
 	render() {
@@ -61,26 +63,37 @@ class Cart extends Component {
 							title={`Order Summary`}
 							style={{ textAlign: 'center' }}
 						/>
-						<CardContent className={classes.cardContent}>
-							<Typography
-								variant='h5'
-								align='center'
-								color='textSecondary'
-								paragraph
-							>
-								{cart.totalAmount / 100} $
-							</Typography>
-							<Typography align='center' color='textSecondary' paragraph>
-								Ready to meet your new friends?
-							</Typography>
-						</CardContent>
-						<CardActions>
-							<Link to='/checkout'>
-								<Button variant='contained' color='primary'>
-									CheckOut
-								</Button>
-							</Link>
-						</CardActions>
+						{cart.totalAmount ? (
+							<React.Fragment>
+								<CardContent className={classes.cardContent}>
+									<Typography
+										variant='h5'
+										align='center'
+										color='textSecondary'
+										paragraph
+									>
+										{cart.totalAmount / 100} $
+									</Typography>
+									<Typography align='center' color='textSecondary' paragraph>
+										Ready to meet your new friends?
+									</Typography>
+								</CardContent>
+								<CardActions>
+									<Link to='/checkout'>
+										<Button variant='contained' color='primary'>
+											CheckOut
+										</Button>
+									</Link>
+								</CardActions>
+							</React.Fragment>
+						) : (
+							<CardContent className={classes.cardContent}>
+								<Typography align='center' color='textSecondary' paragraph>
+									You have no friends to take home!
+								</Typography>
+
+							</CardContent>
+						)}
 					</Card>
 				</Box>
 			</Container>

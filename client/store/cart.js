@@ -76,7 +76,6 @@ export const addCartItemThunk = (newProductInOrder, cartId, product) => {
 			})
 			const newCart = created
 			newCart.productInOrders[0].product = product
-			console.log(newCart)
 			dispatch(setCart(newCart))
 		} else {
 			const { data: created } = await axios.post(`/api/cart/products`, {
