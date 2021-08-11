@@ -30,7 +30,6 @@ class Routes extends Component {
 	componentDidMount() {
 		this.props.loadInitialData()
 		!this.props.isLoggedIn && this.loadCartFromLocalStorage()
-
 	}
 
 	saveCartToLocalStorage() {
@@ -93,7 +92,7 @@ const mapState = (state) => {
 		// Otherwise, state.auth will be an empty object, and state.auth.id will be falsey
 		isLoggedIn: !!state.auth.id,
 		user: state.auth,
-		cart: state.cart
+		cart: state.cart,
 	}
 }
 

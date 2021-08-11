@@ -113,8 +113,8 @@ export const updateCartThunk = (update, orderId, userId) => {
 	return async (dispatch) => {
 		const { data: updated } = await axios.put(`/api/orders/${orderId}`, update)
 		console.log('RESPONSE ON UPDATE CART: ', updated)
-		dispatch(updateCart(updated))
-		dispatch(fetchSingleOrder(updated.id))
+		await dispatch(updateCart(updated))
+		await dispatch(fetchSingleOrder(updated.id))
 		if (updated.status === 'inProcess') {
 			if (userId) {
 				dispatch(fetchCart(userId))
