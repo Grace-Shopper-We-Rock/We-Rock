@@ -16,7 +16,9 @@ import {
 import { NameEmailForm } from './NameEmailForm'
 import { AddressForm } from './AddressForm'
 import { ReviewOrder } from './ReviewOrder'
+import ConfirmationPage from './ConfirmationPage'
 import { fetchUserAddresses } from '../store/address'
+import { updateCartThunk } from '../store/cart'
 
 export class Checkout extends React.Component {
 	constructor(props) {
@@ -32,6 +34,7 @@ export class Checkout extends React.Component {
 			zipCode: '',
 			state: '',
 			errors: [],
+			confirmationPage: false,
 		}
 		this.handleChange = this.handleChange.bind(this)
 		this.handleSelect = this.handleSelect.bind(this)
@@ -124,9 +127,15 @@ export class Checkout extends React.Component {
 					</Grid>
 				)
 			case 1:
-				return <ReviewOrder />
+				return <ReviewOrder order={this.props.cart} />
 			default:
 				throw new Error('Unknown step')
+		}
+	}
+	async handleConfirm() {
+		if (this.state.activeStep === 1) {
+			await updateCartThunk({ status: 'inProcess' }, this.props.cart.id)
+			this.setState({ confirmationPage: true })
 		}
 	}
 	async validateFormData(formInfo) {
@@ -179,82 +188,93 @@ export class Checkout extends React.Component {
 	}
 	render() {
 		const classes = this.useStyles()
-
-		return (
-			<Container
-				component='main'
-				className={classes.layout}
-				maxWidth='md'
-				styles={{ padding: 30 }}
-			>
-				<Paper className={classes.paper}>
-					<Typography component='h1' variant='h4' align='center'>
-						Checkout
-					</Typography>
-					<Stepper
-						activeStep={this.state.activeStep}
-						className={classes.stepper}
-					>
-						{this.steps.map((label) => {
-							return (
-								<Step key={label}>
-									<StepLabel>{label}</StepLabel>
-								</Step>
-							)
-						})}
-					</Stepper>
-					<React.Fragment>
-						<Grid
-							container
-							direction='column'
-							justifyContent='center'
-							alignItems='center'
+		if (!this.state.confirmationPage) {
+			return (
+				<Container
+					component='main'
+					className={classes.layout}
+					maxWidth='md'
+					styles={{ padding: 30 }}
+				>
+					<Paper className={classes.paper}>
+						<Typography component='h1' variant='h4' align='center'>
+							Checkout
+						</Typography>
+						<Stepper
+							activeStep={this.state.activeStep}
+							className={classes.stepper}
 						>
-							{this.state.errors.length
-								? this.state.errors.map((error, index) => (
-									<Grid item style={{ padding: 5 }}>
-										<Typography key={index} color='error' component='h4'>
-											{error}
-										</Typography>
-									</Grid>
-								))
-								: ''}
-						</Grid>
-						{/* insert rendering of confirmation page where says null if active step is steps.lenght */}
-						{this.state.activeStep === this.steps.length ? null : (
+							{this.steps.map((label) => {
+								return (
+									<Step key={label}>
+										<StepLabel>{label}</StepLabel>
+									</Step>
+								)
+							})}
+						</Stepper>
+						<React.Fragment>
 							<Grid
 								container
-								justifyContent='flex-end'
+								direction='column'
+								justifyContent='center'
 								alignItems='center'
-								style={{ padding: 20 }}
 							>
-								{this.getStepContent(this.state.activeStep)}
-								<div className={classes.buttons}>
-									{this.state.activeStep !== 0 && (
-										<Button
-											className={classes.button}
-											onClick={() => this.handleBack()}
-										>
-											Back
-										</Button>
-									)}
-									<Button
-										variant='contained'
-										color='primary'
-										onClick={() => this.handleNext()}
-										className={classes.button}
-									>
-										{this.state.activeStep === this.steps.length - 1
-											? 'Place Order'
-											: 'Next'}
-									</Button>
-								</div>
+								{this.state.errors.length
+									? this.state.errors.map((error, index) => (
+										<Grid item style={{ padding: 5 }}>
+											<Typography key={index} color='error' component='h4'>
+												{error}
+											</Typography>
+										</Grid>
+									))
+									: ''}
 							</Grid>
-						)}
-					</React.Fragment>
-				</Paper>
-			</Container>
-		)
+
+							{/* insert rendering of confirmation page where says null if active step is steps.lenght */}
+							{this.state.activeStep === this.steps.length ? null : (
+								<Grid
+									container
+									justifyContent='flex-end'
+									alignItems='center'
+									style={{ padding: 20 }}
+								>
+									{this.getStepContent(this.state.activeStep)}
+									<div className={classes.buttons}>
+										{this.state.activeStep !== 0 && (
+											<Button
+												className={classes.button}
+												onClick={() => this.handleBack()}
+											>
+												Back
+											</Button>
+										)}
+										<Button
+											variant='contained'
+											color='primary'
+											onClick={() => {
+												this.handleNext()
+												this.handleConfirm()
+											}}
+											// onClick={() => this.handleConfirm()}
+											className={classes.button}
+										>
+											{this.state.activeStep === this.steps.length - 1
+												? 'Place Order'
+												: 'Next'}
+										</Button>
+									</div>
+								</Grid>
+							)}
+						</React.Fragment>
+					</Paper>
+				</Container>
+			)
+		}
+		else {
+			return (
+				<ConfirmationPage order={this.props.cart} />
+			)
+		}
 	}
 }
 
@@ -262,6 +282,7 @@ const mapState = (state) => {
 	return {
 		auth: state.auth,
 		addresses: state.userAddresses,
+		cart: state.cart,
 	}
 }
 

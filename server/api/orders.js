@@ -76,9 +76,8 @@ router.post('/', async (req, res, next) => {
 	}
 });
 
-
 //PUT ROUTES:
-//DEFAULT UPDATE CART ROUTE
+//UPDATE ORDER
 router.put('/:orderId', async (req, res, next) => {
 	try {
 		const order = await Order.findByPk(req.params.orderId, {
