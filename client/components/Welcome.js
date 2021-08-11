@@ -16,11 +16,14 @@ const Welcome = (props) => {
     return (
         <div className={classes.heroContent}>
             <Container maxWidth="sm">
-                <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
+                <Typography className={classes.specialTypography} component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
                     YOU ROCK!
                 </Typography>
                 <Typography variant="h5" align="center" color="textSecondary" paragraph>
-                    Emotional support pet rocks for when you need a reminder about how amazing you are! Come meet all of our friends.
+                    Emotional support pet rocks for when you need a reminder about how amazing you are!
+                </Typography>
+                <Typography variant="h5" align="center" color="textSecondary" paragraph>
+                    Come meet all of our friends.
                 </Typography>
                 <div className={classes.heroButtons}>
                     <Grid container spacing={2} justifyContent="center">

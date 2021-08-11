@@ -25,7 +25,7 @@ class ProductListItem extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			quantity: 0,
+			quantity: 1,
 			productInCartId: null,
 		}
 		this.handleChange = this.handleChange.bind(this)
@@ -33,7 +33,6 @@ class ProductListItem extends Component {
 	}
 
 	async componentDidMount() {
-		//Is this product in our cart??
 		if (this.props.cart.productInOrders) {
 			const product = await this.props.cart.productInOrders.find(
 				(prodInOrder) => {
@@ -123,10 +122,10 @@ class ProductListItem extends Component {
 
 						<hr />
 						<Typography>
-							{product.price / 100}$
+							${product.price / 100}
 							<br />
 							{productInCartId &&
-								'Total: ' + (product.price * quantity) / 100 + '$'}
+								'Total: ' + '$' + (product.price * quantity) / 100}
 						</Typography>
 					</CardContent>
 					<CardActions>
@@ -150,7 +149,7 @@ class ProductListItem extends Component {
 									onClick={() => this.handleDelete()}
 								/>
 							</React.Fragment>
-						) : (
+						) : product.stockQuantity > 0 ? (
 							<Button
 								size='small'
 								color='primary'
@@ -158,7 +157,14 @@ class ProductListItem extends Component {
 							>
 								Add to Cart!
 							</Button>
-						)}
+						) :
+							<Button
+								size='small'
+								color='red'
+							>
+								Out of Stock!
+							</Button>
+						}
 					</CardActions>
 				</Card>
 			</Grid>

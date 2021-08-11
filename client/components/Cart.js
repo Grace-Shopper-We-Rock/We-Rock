@@ -34,15 +34,12 @@ class Cart extends Component {
 			cartId,
 			this.props.user.id
 		)
-
 	}
-	async componentDidMount() {
+	componentDidMount() {
 		if (this.props.cart.id) {
 			this.updateTotal(this.props.cart.id)
-			await this.props.loadCart(undefined, this.props.cart.id)
 		}
 		this.setState({ loading: false })
-
 	}
 
 	render() {
@@ -52,7 +49,7 @@ class Cart extends Component {
 		return (
 			<Container className={classes.cartGrid}>
 				<Container maxWidth='md'>
-					<Grid container spacing={2} className={classes.cartList}>
+					<Grid container justify='center' spacing={2} className={classes.cartList}>
 						<CartItems />
 					</Grid>
 				</Container>

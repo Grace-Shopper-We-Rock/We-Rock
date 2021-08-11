@@ -19,6 +19,7 @@ export const UserHome = (props) => {
 		<div className={classes.heroContent}>
 			<Container maxWidth='md'>
 				<Typography
+					className={classes.specialTypography}
 					component='h1'
 					variant='h2'
 					align='center'
@@ -28,7 +29,7 @@ export const UserHome = (props) => {
 					Welcome, {user.firstName}!
 				</Typography>
 				<Typography variant='h5' align='center' color='textSecondary' paragraph>
-					Maybe a little intro text?
+					We are here to help you find the pet rock of your dreams
 				</Typography>
 				<div className={classes.heroButtons}>
 					<Grid

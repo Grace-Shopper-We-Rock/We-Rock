@@ -4,14 +4,20 @@ import Rating from '@material-ui/lab/Rating'
 
 export const StyledRating = withStyles({
     iconFilled: {
-        color: '#ff6d75',
+        color: '#db7093',
     },
     iconHover: {
-        color: '#ff3d47',
+        color: '#db7093',
     },
 })(Rating)
 
 const useStyles = (theme) => ({
+    specialTypography: {
+        fontFamily: [
+            'Hanalei Fill',
+            'cursive',
+        ].join(','),
+    },
     icon: {
         marginRight: theme.spacing(2),
     },
@@ -23,8 +29,8 @@ const useStyles = (theme) => ({
         marginTop: theme.spacing(4),
     },
     cardGrid: {
-        paddingTop: theme.spacing(8),
-        paddingBottom: theme.spacing(8),
+        paddingTop: theme.spacing(5),
+        paddingBottom: theme.spacing(5),
     },
     cartGrid: {
         display: 'flex',
@@ -40,7 +46,8 @@ const useStyles = (theme) => ({
         paddingBottom: theme.spacing(5),
     },
     cartList: {
-        flexDirection: 'column'
+        flexDirection: 'column',
+
     },
     card: {
         height: '100%',
@@ -55,9 +62,15 @@ const useStyles = (theme) => ({
         flexGrow: 1,
     },
     footer: {
-        backgroundColor: '#D4B8EA',
+        backgroundColor: '#8ea2de',
         padding: theme.spacing(2),
     },
+    paginationGrid: {
+        paddingBottom: theme.spacing(5),
+    },
+    root: {
+        justifyContent: 'center'
+    }
 })
 
 export default useStyles

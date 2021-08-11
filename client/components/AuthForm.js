@@ -50,9 +50,6 @@ class AuthForm extends React.Component {
 		}))
 	}
 	async componentWillUnmount() {
-		// console.log('this.props.error: ', this.props.error)
-		// console.log('this.props.auth.id: ', this.props.auth.id)
-		console.log('clear auth running now')
 		if (this.props.error) {
 			await this.props.clearAuth()
 		}
@@ -155,7 +152,6 @@ const mapDispatch = (dispatch) => {
 			evt.preventDefault()
 			const email = evt.target.email.value
 			const password = evt.target.password.value
-			console.log('authenticate running now')
 			await dispatch(authenticate({ email, password }, 'login'))
 		},
 		clearAuth: () => dispatch(clearAuth()),

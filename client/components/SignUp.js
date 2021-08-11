@@ -75,7 +75,6 @@ export class SignUp extends React.Component {
 		}))
 	}
 	async validateFormData(userInfo) {
-		// console.log('validateFormData called')
 		let errors = []
 
 		if (userInfo.password !== this.state.confirmPassword) {
@@ -114,7 +113,6 @@ export class SignUp extends React.Component {
 	}
 	async handleSubmit(evt) {
 		evt.preventDefault()
-		// console.log('handleSubmit called')
 		const email = evt.target.email.value
 		const password = evt.target.password.value
 		const firstName = evt.target.firstName.value
@@ -189,10 +187,10 @@ export class SignUp extends React.Component {
 							</Typography>
 							{this.state.errors.length
 								? this.state.errors.map((error, index) => (
-										<Typography key={index} color='error' component='h4'>
-											{error}
-										</Typography>
-								  ))
+									<Typography key={index} color='error' component='h4'>
+										{error}
+									</Typography>
+								))
 								: ''}
 						</Grid>
 						<Grid container spacing={2} style={{ padding: 10 }}>
