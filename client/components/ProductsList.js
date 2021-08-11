@@ -30,7 +30,7 @@ class ProductsList extends Component {
 		const { classes, products, cart, isLoggedIn } = this.props
 		return (
 			<main>
-				{this.state.loading || (isLoggedIn && cart.status === 'noCart') ? (
+				{this.state.loading ? (
 					<p> Loading...</p>
 				) : (
 					<Container className={classes.cardGrid} maxWidth='md'>

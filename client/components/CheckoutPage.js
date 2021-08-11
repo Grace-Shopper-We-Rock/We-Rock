@@ -17,8 +17,13 @@ import { NameEmailForm } from './NameEmailForm'
 import { AddressForm } from './AddressForm'
 import { ReviewOrder } from './ReviewOrder'
 import ConfirmationPage from './ConfirmationPage'
-import { fetchUserAddresses } from '../store/address'
+import {
+	fetchUserAddresses,
+	createNewOrderAddress,
+	associateAddressToOrder,
+} from '../store/address'
 import { updateCartThunk } from '../store/cart'
+import OrderProductList from './OrderProductList'
 
 export class Checkout extends React.Component {
 	constructor(props) {
@@ -103,6 +108,39 @@ export class Checkout extends React.Component {
 			state: evt.target.value,
 		})
 	}
+	async handleConfirm() {
+		if (this.state.activeStep === 1) {
+			const {
+				firstName,
+				lastName,
+				email,
+				streetAddress,
+				city,
+				zipCode,
+				state,
+			} = this.state
+			let userId = this.props.auth.id
+			await this.props.createNewOrderAddress(
+				this.props.cart.id,
+				{
+					email,
+					firstName,
+					lastName,
+					streetAddress,
+					city,
+					zipCode,
+					state,
+				},
+				userId
+			)
+			await this.props.updateCart(
+				{ status: 'inProcess' },
+				this.props.cart.id,
+				userId
+			)
+			this.setState({ confirmationPage: true })
+		}
+	}
 	getStepContent(step) {
 		switch (step) {
 			case 0:
@@ -127,15 +165,10 @@ export class Checkout extends React.Component {
 					</Grid>
 				)
 			case 1:
-				return <ReviewOrder order={this.props.cart} />
+				return <OrderProductList order={this.props.cart} />
+			// return <ReviewOrder orderId={orderId} />
 			default:
 				throw new Error('Unknown step')
-		}
-	}
-	async handleConfirm() {
-		if (this.state.activeStep === 1) {
-			await updateCartThunk({ status: 'inProcess' }, this.props.cart.id)
-			this.setState({ confirmationPage: true })
 		}
 	}
 	async validateFormData(formInfo) {
@@ -221,12 +254,12 @@ export class Checkout extends React.Component {
 							>
 								{this.state.errors.length
 									? this.state.errors.map((error, index) => (
-										<Grid item style={{ padding: 5 }}>
-											<Typography key={index} color='error' component='h4'>
-												{error}
-											</Typography>
-										</Grid>
-									))
+											<Grid item style={{ padding: 5 }}>
+												<Typography key={index} color='error' component='h4'>
+													{error}
+												</Typography>
+											</Grid>
+									  ))
 									: ''}
 							</Grid>
 
@@ -269,11 +302,10 @@ export class Checkout extends React.Component {
 					</Paper>
 				</Container>
 			)
-		}
-		else {
-			return (
-				<ConfirmationPage order={this.props.cart} />
-			)
+		} else {
+			let orderId = this.props.cart.id
+			console.log('ORDER ID:', orderId)
+			return <ConfirmationPage orderId={orderId} />
 		}
 	}
 }
@@ -289,6 +321,11 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
 	return {
 		fetchUserAddresses: (userId) => dispatch(fetchUserAddresses(userId)),
+		updateCart: (update, cartId) => dispatch(updateCartThunk(update, cartId)),
+		associateAddressToOrder: (orderId, addressId) =>
+			dispatch(associateAddressToOrder(orderId, addressId)),
+		createNewOrderAddress: (orderId, newAddressInfo, userId) =>
+			dispatch(createNewOrderAddress(orderId, newAddressInfo, userId)),
 	}
 }
 

@@ -93,6 +93,7 @@ router.put(
 				where: {
 					userId: id,
 				},
+				defaults: req.body,
 			})
 
 			if (wasCreated) {
