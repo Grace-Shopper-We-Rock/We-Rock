@@ -16,6 +16,10 @@ const UPDATE_USER_INFO = 'UPDATE_USER_INFO'
  */
 const setAuth = (auth) => ({ type: SET_AUTH, auth })
 const updateAuth = (auth) => ({ type: UPDATE_USER_INFO, auth })
+const loggedOut = () => ({
+	type: SET_AUTH,
+	auth: {},
+})
 export const clearAuth = () => ({ type: CLEAR_AUTH })
 
 /**
@@ -64,12 +68,14 @@ export const authenticate = (userInfoObj, method) => async (dispatch) => {
 	}
 }
 
-export const logout = () => {
-	window.localStorage.removeItem(TOKEN)
-	history.push('/login')
-	return {
-		type: SET_AUTH,
-		auth: {},
+export const logout = () => async (dispatch) => {
+	try {
+		window.localStorage.removeItem(TOKEN)
+		dispatch(fetchCart())
+		dispatch(loggedOut())
+		history.push('/login')
+	} catch (error) {
+		console.log(error)
 	}
 }
 
