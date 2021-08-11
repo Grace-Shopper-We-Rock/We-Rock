@@ -32,7 +32,7 @@ const Welcome = (props) => {
                             </Link>
                         </Grid>
                         <Grid item>
-                            <Link to={`/products/${Math.floor(Math.random() * 100)}`}>
+                            <Link to={`/products/${Math.floor(Math.random() * 30)}`}>
                                 <Button variant="contained" color="primary">
                                     Meet a Random Rock!
                                 </Button>
