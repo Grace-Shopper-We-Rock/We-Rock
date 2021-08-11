@@ -35,9 +35,9 @@ class ProductsList extends Component {
 				) : (
 					<Container className={classes.cardGrid} maxWidth='md'>
 						<Grid container spacing={4}>
-							{products.map((product) => (
-								<ProductListItem key={product.id} product={product} />
-							))}
+							{products.map((product) =>
+								<ProductListItem key={`plm-${product.id}`} product={product} />
+							)}
 						</Grid>
 					</Container>
 				)}

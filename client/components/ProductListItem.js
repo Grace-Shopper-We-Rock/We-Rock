@@ -98,7 +98,7 @@ class ProductListItem extends Component {
 		const { productInCartId, quantity } = this.state
 
 		return (
-			<Grid item key={product.id} xs={12} sm={6} md={4}>
+			<Grid item key={`grid-${product.id}`} xs={12} sm={6} md={4}>
 				<Card className={classes.card}>
 					<CardMedia
 						className={classes.cardMedia}
