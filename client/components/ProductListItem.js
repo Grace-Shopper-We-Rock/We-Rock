@@ -21,6 +21,7 @@ import cart, {
 	updateCartItemThunk,
 } from '../store/cart'
 import { formatter } from './Cart'
+import products from '../store/products'
 class ProductListItem extends Component {
 	constructor(props) {
 		super(props)
@@ -62,11 +63,10 @@ class ProductListItem extends Component {
 
 	async handleDelete() {
 		await this.props.deleteCartItem(this.state.productInCartId)
-		if (this.props.cart.productInOrders.length === 0)
-			this.setState({
-				quantity: 1,
-				productInCartId: null,
-			})
+		this.setState({
+			quantity: 1,
+			productInCartId: null,
+		})
 		await this.updateTotal(this.props.cart.id)
 	}
 

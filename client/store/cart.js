@@ -50,7 +50,6 @@ export const fetchCart = (userId, orderId) => {
 		try {
 			//IF we have a logged in user:
 			if (userId) {
-				console.log(window.localStorage)
 
 				const { data } = await axios.get(`/api/cart/${userId}`)
 				dispatch(setCart(data))
