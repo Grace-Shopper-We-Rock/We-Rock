@@ -126,7 +126,7 @@ class SingleProduct extends Component {
 					/>
 					<CardMedia
 						className={classes.cardMedia}
-						image='/images/defaultPetRock.jpg'
+						image={product.imageUrl}
 						title='Image title'
 					/>
 					<CardContent className={classes.cardContent}>
