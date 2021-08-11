@@ -45,7 +45,7 @@ class AllUserOrders extends Component {
         return (
             <div className={classes.heroContent}>
                 <Container maxWidth="sm">
-                    <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
+                    <Typography component="h1" variant="h2" align="center" color="textPrimary" className={classes.specialTypography} gutterBottom>
                         Your orders:
                     </Typography>
                     <main>

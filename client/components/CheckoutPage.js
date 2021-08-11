@@ -254,12 +254,12 @@ export class Checkout extends React.Component {
 							>
 								{this.state.errors.length
 									? this.state.errors.map((error, index) => (
-											<Grid item style={{ padding: 5 }}>
-												<Typography key={index} color='error' component='h4'>
-													{error}
-												</Typography>
-											</Grid>
-									  ))
+										<Grid item style={{ padding: 5 }}>
+											<Typography key={index} color='error' component='h4'>
+												{error}
+											</Typography>
+										</Grid>
+									))
 									: ''}
 							</Grid>
 
@@ -304,7 +304,6 @@ export class Checkout extends React.Component {
 			)
 		} else {
 			let orderId = this.props.cart.id
-			console.log('ORDER ID:', orderId)
 			return <ConfirmationPage orderId={orderId} />
 		}
 	}

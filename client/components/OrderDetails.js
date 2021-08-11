@@ -61,7 +61,7 @@ class OrderDetails extends Component {
 						align='center'
 						color='textPrimary'
 						gutterBottom
-					>
+						className={classes.specialTypography}>
 						Order details
 					</Typography>
 					<Typography

@@ -31,8 +31,6 @@ class ConfirmationPage extends Component {
 
 	componentDidMount() {
 		try {
-			// console.log('ORDER ID: ', this.props.orderId)
-			// this.props.loadSingleOrder(this.props.orderId)
 			if (this.props.singleOrder.id) {
 				this.setState({ loading: false })
 			}
@@ -44,7 +42,6 @@ class ConfirmationPage extends Component {
 	render() {
 		const { classes } = this.props
 		const order = this.props.singleOrder
-		console.log('ORDER: ', order)
 		const shippingAddress = order.shippingAddress
 
 		if (this.state.loading) return <p> Loading...</p>
@@ -58,6 +55,7 @@ class ConfirmationPage extends Component {
 						align='center'
 						color='textPrimary'
 						gutterBottom
+						className={classes.specialTypography}
 					>
 						Thank you!
 					</Typography>

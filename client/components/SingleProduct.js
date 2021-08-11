@@ -17,6 +17,7 @@ import CardMedia from '@material-ui/core/CardMedia'
 import CardHeader from '@material-ui/core/CardHeader'
 import FavoriteIcon from '@material-ui/icons/Favorite'
 import Box from '@material-ui/core/Box'
+import Grid from '@material-ui/core/Grid'
 import { StyledRating } from '../../public/useStyles'
 import {
 	updateCartThunk,
@@ -138,7 +139,7 @@ class SingleProduct extends Component {
 						>
 							{product.description}
 							<hr />
-							{product.price / 100}$
+							$ {product.price / 100}
 						</Typography>
 						<Box
 							component='fieldset'
@@ -187,15 +188,19 @@ class SingleProduct extends Component {
 									Remove From Cart
 								</Button>
 							</React.Fragment>
-						) : (
-							<Button
-								variant='contained'
-								color='primary'
-								onClick={(evt) => this.handleSubmit(evt, this.props.cart.id)}
-							>
-								Take Me Home!
-							</Button>
-						)}
+						) :
+							product.stockQuantity > 0 ?
+								(<Button
+									variant='contained'
+									color='primary'
+									onClick={(evt) => this.handleSubmit(evt, this.props.cart.id)}>
+									Take Me Home!
+								</Button>)
+								:
+								(<Button variant="contained" color="red">
+									Out Of Stock!
+								</Button>)
+						}
 						<Button
 							variant='outlined'
 							color='primary'
