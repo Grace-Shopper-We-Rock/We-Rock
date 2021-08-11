@@ -29,7 +29,11 @@ class Cart extends Component {
             (acc, curr) => acc + curr.product.price * curr.quantity,
             0
         )
-        await this.props.updateCart({ totalAmount: newTotal }, cartId)
+        await this.props.updateCart(
+            { totalAmount: newTotal },
+            cartId,
+            this.props.user.id
+        )
         //this.props.loadCart(undefined, cartId)
     }
     componentDidMount() {
@@ -46,7 +50,7 @@ class Cart extends Component {
         return (
             <Container className={classes.cartGrid}>
                 <Container maxWidth='md'>
-                    <Grid container spacing={2} className={classes.cartList}>
+                    <Grid container justify='center' spacing={2} className={classes.cartList}>
                         <CartItems />
                     </Grid>
                 </Container>
@@ -55,7 +59,9 @@ class Cart extends Component {
                     <Card className={classes.cartCard}>
                         <CardHeader
                             title={`Order Summary`}
-                            style={{ textAlign: 'center' }}
+                            style={{
+                                textAlign: 'center',
+                            }}
                         />
                         <CardContent className={classes.cardContent}>
                             <Typography
@@ -64,13 +70,13 @@ class Cart extends Component {
                                 color='textSecondary'
                                 paragraph
                             >
-                                {cart.totalAmount / 100} $
+                                $ {cart.totalAmount ? cart.totalAmount / 100 : 0}
                             </Typography>
                             <Typography align='center' color='textSecondary' paragraph>
                                 Ready to meet your new friends?
                             </Typography>
                         </CardContent>
-                        <CardActions>
+                        <CardActions classes={{ root: classes.root }}>
                             <Link to='/checkout'>
                                 <Button variant='contained' color='primary'>
                                     CheckOut
@@ -79,7 +85,7 @@ class Cart extends Component {
                         </CardActions>
                     </Card>
                 </Box>
-            </Container>
+            </Container >
         )
     }
 }
@@ -88,6 +94,7 @@ const mapState = (state) => {
     return {
         cart: state.cart,
         products: state.products,
+        user: state.auth,
     }
 }
 

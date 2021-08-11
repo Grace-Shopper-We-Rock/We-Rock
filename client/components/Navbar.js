@@ -18,9 +18,16 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1,
+    fontFamily: [
+      'Hanalei Fill',
+      'cursive',
+    ].join(','),
   },
   rightNav: {
     display: 'flex',
+  },
+  link: {
+    color: "#373736",
   },
 }));
 
@@ -30,25 +37,25 @@ const Navbar = ({ user, handleClick, isLoggedIn }) => {
   return (
     <div>
       <nav>
-        <AppBar style={{ background: '#D4B8EA' }} position="relative">
+        <AppBar style={{ background: '#8ea2de' }} position="relative">
           <Toolbar>
-            <Link to="/">< HomeIcon /> </Link>
+            <Link to="/">< HomeIcon style={{ fill: "#373736" }} /> </Link>
             <Typography className={classes.title} variant="h6" noWrap>
-              <Link to="/products">Meet Our Rocks!</Link>
+              <Link className={classes.link} to="/products" >Meet Our Rocks! </Link>
             </Typography>
             {isLoggedIn ? (
               <div className={classes.rightNav}>
-                <Link to="/home">Hi {user.firstName}!</Link>
-                <a href="#" onClick={handleClick}> Logout </a>
+                <Link className={classes.link} to="/home">Hi {user.firstName}!</Link>
+                <a href="#" className={classes.link} onClick={handleClick}> Logout </a>
               </div>
             ) : (
-              <div className={classes.rightNav}>
-                <Link to="/login">Login</Link>
-                <Link to="/signup">Sign Up</Link>
+              <div className={classes.rightNav} >
+                <Link className={classes.link} to="/login">Login</Link>
+                <Link className={classes.link} to="/signup">Sign Up</Link>
               </div>
             )}
             <div className={classes.rightNav}>
-              <Link to="/cart">< ShoppingCartIcon /> </Link>
+              <Link to="/cart">< ShoppingCartIcon style={{ fill: "#373736" }} /> </Link>
             </div>
 
           </Toolbar>

@@ -26,7 +26,7 @@ class ProductListItem extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			quantity: null,
+			quantity: 0,
 			productInCartId: null,
 		}
 		this.handleChange = this.handleChange.bind(this)
@@ -34,8 +34,7 @@ class ProductListItem extends Component {
 	}
 
 	async componentDidMount() {
-		//Is this product in our cart??
-		if (this.props.cart.id) {
+		if (this.props.cart.productInOrders) {
 			const product = await this.props.cart.productInOrders.find(
 				(prodInOrder) => {
 					return prodInOrder.product.id === this.props.product.id
@@ -54,7 +53,11 @@ class ProductListItem extends Component {
 			(acc, curr) => acc + curr.product.price * curr.quantity,
 			0
 		)
-		await this.props.updateCart({ totalAmount: newTotal }, cartId)
+		await this.props.updateCart(
+			{ totalAmount: newTotal },
+			cartId,
+			this.props.user.id
+		)
 		//this.props.loadCart(undefined, cartId)
 	}
 
@@ -62,7 +65,7 @@ class ProductListItem extends Component {
 		await this.props.deleteCartItem(this.state.productInCartId)
 		this.updateTotal(this.props.cart.id)
 		this.setState({
-			quantity: 0,
+			quantity: 1,
 			productInCartId: null,
 		})
 	}
@@ -89,7 +92,7 @@ class ProductListItem extends Component {
 			this.setState({
 				productInCartId: this.props.product.id,
 			})
-			this.updateTotal(this.props.cart.id)
+			this.updateTotal(this.props.cart.id || null)
 		}
 	}
 
@@ -119,20 +122,18 @@ class ProductListItem extends Component {
 
 						<hr />
 						<Typography>
-							{product.price / 100}$
+							${product.price / 100}
 							<br />
 							{productInCartId &&
-								'Total: ' + (product.price * quantity) / 100 + '$'}
+								'Total: ' + '$' + (product.price * quantity) / 100}
 						</Typography>
 					</CardContent>
 					<CardActions>
-						<input
-							type='number'
-							min='1'
-							max='5'
-							onChange={handleChange}
-							value={this.state.quantity}
-						/>
+						<select value={this.state.quantity} onChange={handleChange}>
+							{[1, 2, 3, 4, 5].map((val) => (
+								<option value={val}>{val}</option>
+							))}
+						</select>
 						{productInCartId ? (
 							<React.Fragment>
 								<Button
@@ -148,7 +149,7 @@ class ProductListItem extends Component {
 									onClick={() => this.handleDelete()}
 								/>
 							</React.Fragment>
-						) : (
+						) : product.stockQuantity > 0 ? (
 							<Button
 								size='small'
 								color='primary'
@@ -156,7 +157,14 @@ class ProductListItem extends Component {
 							>
 								Add to Cart!
 							</Button>
-						)}
+						) :
+							<Button
+								size='small'
+								color='red'
+							>
+								Out of Stock!
+							</Button>
+						}
 					</CardActions>
 				</Card>
 			</Grid>
@@ -167,6 +175,7 @@ class ProductListItem extends Component {
 const mapState = (state) => {
 	return {
 		cart: state.cart,
+		user: state.auth,
 	}
 }
 

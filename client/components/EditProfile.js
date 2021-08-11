@@ -93,7 +93,6 @@ export class EditProfile extends React.Component {
 		let errors = []
 
 		let allDataKeys = Object.keys(info)
-		//console.log(allDataKeys)
 		for (const element of allDataKeys) {
 			if (
 				info[element] === '' &&
@@ -121,7 +120,6 @@ export class EditProfile extends React.Component {
 	}
 	async handleSubmit() {
 		//pull all the current form data from state
-		console.log('handle submit called')
 		await this.validateFormData(this.state)
 		const {
 			firstName,
@@ -136,8 +134,6 @@ export class EditProfile extends React.Component {
 			state,
 		} = this.state
 		const { id } = this.props.auth
-		//console.log('ID: ', id)
-		//await validation of the data - zipcode if changed and passwords match?
 
 		//if there are no errors
 		if (!this.state.errors.length) {
@@ -157,6 +153,7 @@ export class EditProfile extends React.Component {
 				{
 					firstName: addressFirstName,
 					lastName: addressLastName,
+					email,
 					streetAddress,
 					city,
 					zipCode,
@@ -171,10 +168,8 @@ export class EditProfile extends React.Component {
 		}
 	}
 	async componentDidMount() {
-		//console.log('component has mounted')
 		const userId = this.props.auth.id
 		if (userId) {
-			//console.log('userId is present on auth')
 			await this.props.fetchUserAddresses(userId)
 			if (this.props.addresses.length) {
 				const { firstName, lastName, streetAddress, city, zipCode, state } =
@@ -197,8 +192,6 @@ export class EditProfile extends React.Component {
 		}
 	}
 	componentWillUnmount() {
-		console.log('auth error present: ', this.props.auth.error)
-		console.log('address error present: ', this.props.addresses.error)
 		if (this.props.auth.error || this.props.addresses.error) {
 			//remove the errors from state
 			this.props.me()
@@ -245,10 +238,10 @@ export class EditProfile extends React.Component {
 								</Typography>
 								{this.state.errors.length
 									? this.state.errors.map((error, index) => (
-											<Typography key={index} color='error' component='h4'>
-												{error}
-											</Typography>
-									  ))
+										<Typography key={index} color='error' component='h4'>
+											{error}
+										</Typography>
+									))
 									: ''}
 							</Grid>
 							<Grid item style={{ padding: 10, width: '100%' }} md={12}>
@@ -351,8 +344,8 @@ export class EditProfile extends React.Component {
 									</React.Fragment>
 								</Snackbar>
 							) : //can either redirect to home or do a toast/snackbar
-							// (<Redirect to='/home' />))
-							null}
+								// (<Redirect to='/home' />))
+								null}
 						</Grid>
 					</Grid>
 				</Paper>

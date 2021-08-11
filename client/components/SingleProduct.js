@@ -17,6 +17,7 @@ import CardMedia from '@material-ui/core/CardMedia'
 import CardHeader from '@material-ui/core/CardHeader'
 import FavoriteIcon from '@material-ui/icons/Favorite'
 import Box from '@material-ui/core/Box'
+import Grid from '@material-ui/core/Grid'
 import { StyledRating } from '../../public/useStyles'
 class SingleProduct extends Component {
     constructor() {
@@ -41,7 +42,6 @@ class SingleProduct extends Component {
         this.setState({
             seeReviews: !this.state.seeReviews,
         })
-        console.log(this.state.seeReviews)
     }
 
 
@@ -60,14 +60,14 @@ class SingleProduct extends Component {
                     />
                     <CardMedia
                         className={classes.cardMedia}
-                        image="/images/defaultPetRock.jpg"
+                        image={product.imageUrl}
                         title="Image title"
                     />
                     <CardContent className={classes.cardContent}>
-                        <Typography variant="h5" align="center" color="textSecondary" paragraph>
+                        <Typography variant="h6" align="center" color="textSecondary" paragraph>
                             {product.description}
                             <hr />
-                            {product.price / 100}$
+                            ${product.price / 100}
                         </Typography>
                         <Box component="fieldset" mb={3} borderColor="transparent" align="center">
                             <Typography component="legend">Avg Support Rating</Typography>
@@ -81,22 +81,29 @@ class SingleProduct extends Component {
                         <Typography align="center" color="textSecondary" paragraph>
                             Would you like to take me home?
                         </Typography>
-
                     </CardContent>
-                    <CardActions>
-                        <Button variant="contained" color="primary">
-                            Take Me Home!
-                        </Button>
-                        <Button variant="outlined" color="primary">
-                            Remove From Cart
-                        </Button>
-                        <Button variant="outlined" color="primary"
-                            onClick={() => this.handleReviewsClick()}>
-                            See Reviews
-                        </Button>
-                    </CardActions>
+                    <Grid container justify="center">
+                        <CardActions>
+                            {product.stockQuantity > 0 ?
+                                <Button variant="contained" color="primary">
+                                    Take Me Home!
+                                </Button>
+                                :
+                                <Button variant="contained" color="red">
+                                    Out Of Stock!
+                                </Button>
+                            }
+                            <Button variant="outlined" color="primary">
+                                Remove From Cart
+                            </Button>
+                            <Button variant="outlined" color="primary"
+                                onClick={() => this.handleReviewsClick()}>
+                                See Reviews
+                            </Button>
+                        </CardActions>
+                    </Grid>
+                    {this.state.seeReviews && <Reviews reviews={product.reviews} />}
                 </Card>
-                {this.state.seeReviews && <Reviews reviews={product.reviews} />}
             </Container>
         )
     }

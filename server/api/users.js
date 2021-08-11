@@ -1,3 +1,4 @@
+
 const router = require('express').Router()
 const {
 	models: { User, ShippingAddress },
@@ -93,6 +94,7 @@ router.put(
 				where: {
 					userId: id,
 				},
+				defaults: req.body,
 			})
 
 			if (wasCreated) {

@@ -4,7 +4,7 @@ import { withRouter, Route, Switch, Redirect } from 'react-router-dom'
 
 import { Login } from './components/AuthForm'
 import SignUp from './components/SignUp'
-import { me } from './store'
+import store, { me } from './store'
 import ProductsList from './components/ProductsList'
 import SingleProduct from './components/SingleProduct'
 import Cart from './components/Cart'
@@ -16,14 +16,37 @@ import Checkout from './components/CheckoutPage'
 import EditProfile from './components/EditProfile'
 import OrderDetails from './components/OrderDetails'
 import AllUserOrders from './components/AllUserOrders'
+import { fetchCart } from './store/cart'
 
 /**
  * COMPONENT
  */
 class Routes extends Component {
+	constructor(props) {
+		super(props)
+
+		this.saveCartToLocalStorage = this.saveCartToLocalStorage.bind(this)
+	}
 	componentDidMount() {
 		this.props.loadInitialData()
-		//await this.props.loadCart(this.props.user.id)
+		!this.props.isLoggedIn && this.loadCartFromLocalStorage()
+	}
+
+	saveCartToLocalStorage() {
+		if (this.props.cart.id) {
+			let myStorage = window.localStorage
+			myStorage.removeItem('orderId')
+			myStorage.setItem('orderId', this.props.cart.id)
+		}
+	}
+	/*updates the data item on refresh*/
+
+	loadCartFromLocalStorage() {
+		if (window.localStorage.orderId) {
+			window.data = window.localStorage.getItem('orderId')
+			this.props.loadCart(null, window.data)
+		}
+		setInterval(this.saveCartToLocalStorage, 3000)
 	}
 
 	render() {
@@ -69,6 +92,7 @@ const mapState = (state) => {
 		// Otherwise, state.auth will be an empty object, and state.auth.id will be falsey
 		isLoggedIn: !!state.auth.id,
 		user: state.auth,
+		cart: state.cart,
 	}
 }
 

@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { fetchSingleOrder } from './singleOrder'
 
 //PRODUCTS ACTIONS:
 const SET_CART = 'SET_CART'
@@ -71,7 +72,11 @@ export const addCartItemThunk = (newProductInOrder, cartId, product) => {
 			const { data: created } = await axios.post('/api/orders', {
 				productInOrders: [newProductInOrder],
 			})
-			dispatch(setCart(created))
+
+			const newCart = created
+			newCart.productInOrders[0].product = product
+			console.log(newCart)
+			dispatch(setCart(newCart))
 		} else {
 			const { data: created } = await axios.post(`/api/cart/products`, {
 				...newProductInOrder,
@@ -103,11 +108,19 @@ export const updateCartItemThunk = (update, productInOrderId) => {
 	}
 }
 
-export const updateCartThunk = (update, orderId) => {
+export const updateCartThunk = (update, orderId, userId) => {
 	return async (dispatch) => {
 		const { data: updated } = await axios.put(`/api/orders/${orderId}`, update)
 		console.log('RESPONSE ON UPDATE CART: ', updated)
-		dispatch(updateCart(updated))
+		await dispatch(updateCart(updated))
+		await dispatch(fetchSingleOrder(updated.id))
+		if (updated.status === 'inProcess') {
+			if (userId) {
+				dispatch(fetchCart(userId))
+			} else {
+				dispatch(fetchCart())
+			}
+		}
 	}
 }
 
@@ -117,8 +130,12 @@ export default function (state = {}, action) {
 		case SET_CART:
 			return action.cart
 		case ADD_CART_ITEM:
-			let newProductsArray = [...state.productInOrders, action.product]
-			return { ...state, productInOrders: newProductsArray }
+			if (state.productInOrders) {
+				let newProductsArray = [...state.productInOrders, action.product]
+				return { ...state, productInOrders: newProductsArray }
+			} else {
+				return { ...state, productInOrders: action.product }
+			}
 		case DELETE_CART_ITEM:
 			let deletedProductsArray = state.productInOrders.filter(
 				(product) => product.id !== action.prodId

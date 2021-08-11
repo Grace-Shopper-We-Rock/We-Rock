@@ -5,8 +5,7 @@ import Container from '@material-ui/core/Container'
 export const ReviewOrder = (props) => {
 	return (
 		<Container>
-			<OrderProductList order={props.order} />
+			<OrderProductList orderId={props.orderId} />
 		</Container>
 	)
 }
-
