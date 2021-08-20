@@ -1,77 +1,28 @@
-# FS-App-Template
+# You Rock!
 
-## Setup
+## Description
 
-To use this as boilerplate, you'll need to take the following steps:
+You Rock is an eCommerce site that allows visitors to browse and purchase emotional support pet rocks. The app is designed to allow visitors to have both a guest and logged-in user experience.
 
-* Don't fork or clone this repo! Instead, create a new, empty
-  directory on your machine and `git init` (or create an empty repo on
-  Github and clone it to your local machine)
+You Rock has been deployed through Heroku and is mobile compatible.
+Heroku: http://you-rock.herokuapp.com/
 
-* Now you will have to add the fs-app-template as a remote and merge it into your own repository.
+## Technologies Used
 
-```
-git remote add boilermaker https://github.com/FullstackAcademy/fs-app-template.git
-git fetch boilermaker
-git merge boilermaker/main
-git branch -m master main
-```
+You Rock was built in 10 days using an Agile workflow, React-Redux, Webpack, Node.js, Postgres, Express, Sequelize, Javascript, HTML, CSS, and Material-UI.
 
-## Customize
+## Preview
+<img width="1280" alt="Screen Shot 2021-08-17 at 9 04 44 AM" src="https://user-images.githubusercontent.com/84352176/130264280-190cfdcf-ffce-43ee-8dcd-186fe59b7780.png">
 
-Now that you've got the code, follow these steps to get acclimated:
+## Meet the team behind You Rock!
+Alex Fox
+- https://www.linkedin.com/in/alex-c-fox/
+- https://github.com/acfox7
 
-* Update project name and description in `package.json`
-* `npm install`
-* Create two postgres databases (`MY_APP_NAME` should match the `name`
-  parameter in `package.json`):
-* These commands will create both your **development** and **test** databases
+Julia Crooijmans
+- https://www.linkedin.com/in/juliacro/
+- https://github.com/juliaxcr
 
-```
-createdb <YOUR APP NAME HERE FROM package.json>
-createdb <YOUR APP NAME HERE FROM package.json>-test
-```
-
-* By default, running `npm test` will use your test database, while
-  regular development uses development database
-
-## Start
-
-Sync and seed your database by running `npm run seed`. Running `npm run start:dev` will make great things happen!
-
-- start:dev will both start your server and build your client side files using webpack
-- start:dev:logger is the same as start:dev, but you will see your SQL queries (can be helpful for debugging)
-- start:dev:seed will start your server and also seed your database (this is useful when you are making schema changes and you don't want to run your seed script separately)
-
-
-### Heroku
-
-1.  Set up the [Heroku command line tools][heroku-cli]
-2.  `heroku login`
-3.  Add a git remote for heroku:
-
-[heroku-cli]: https://devcenter.heroku.com/articles/heroku-cli
-
-* **If you are creating a new app...**
-
-  1.  `heroku create` or `heroku create your-app-name` if you have a
-      name in mind.
-  2.  `heroku config:set JWT=<your secret here!>` to set a secret for JWT signing
-
-Database Setup
-
-  3.  `heroku addons:create heroku-postgresql:hobby-dev` to add
-      ("provision") a postgres database to your heroku dyno (This creates your production database)
-
-  4.  `heroku config:set SEED=true` to get heroku to sync and seed your database
-
-  5.   note everytime your app restarts, the database tables will be dropped and re-created. To avoid this you can `config:unset SEED`
-
-
-* **If you already have a Heroku app...**
-
-  1.  `heroku git:remote your-app-name` You'll need to be a
-      collaborator on the app.
-
-
-Now, you should be deployed!
+Tika Llyn
+- https://www.linkedin.com/in/tika-llyn/
+- https://github.com/tikallyn
