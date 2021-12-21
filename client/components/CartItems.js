@@ -5,11 +5,10 @@ import { fetchProducts } from '../store/products'
 //Matieral-UI elements:
 import useStyles from '../../public/useStyles'
 import { withStyles } from '@material-ui/core/styles'
-import Container from '@material-ui/core/Container'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import ProductListItem from './ProductListItem'
-import { addCartItemThunk, fetchCart, deleteCartItemThunk } from '../store/cart'
+import { fetchCart } from '../store/cart'
 
 class CartItems extends Component {
 	constructor() {
